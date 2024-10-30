@@ -10,14 +10,15 @@ dotenv.config();
 //app
 const app = express();
 
-//use routers
-app.use('/api/v2/auth', router);
-
 //port
 const port = process.env.PORT || 5000;
 
 //middleware for accept json
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
+
+//use routers
+app.use('/api/v2/auth', router);
 
 //listen
 app.listen(port, () => {
