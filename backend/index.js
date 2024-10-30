@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import router from "./routers/auth.router.js";
+import connectToMongoDB from "./db/connectMongoDB.js";
 
 //env
 dotenv.config();
@@ -20,4 +21,6 @@ app.use(express.json());
 //listen
 app.listen(port, () => {
     console.log(`app is listning at port : ${port}`)
+    //mongo db
+    connectToMongoDB();
 });
