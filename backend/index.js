@@ -1,3 +1,4 @@
+//imports
 import express from "express";
 import dotenv from "dotenv";
 import router from "./routers/auth.router.js";
@@ -15,12 +16,12 @@ app.use('/api/v2/auth', router);
 //port
 const port = process.env.PORT || 5000;
 
-// middleware for accept json
+//middleware for accept json
 app.use(express.json());
 
 //listen
 app.listen(port, () => {
     console.log(`app is listning at port : ${port}`)
-    //mongo db
+    //mongo db connection
     connectToMongoDB();
 });
