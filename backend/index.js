@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import router from "./routers/auth.router.js";
 import connectToMongoDB from "./db/connectMongoDB.js";
+import cookieParser from "cookie-parser";
 
 //env
 dotenv.config();
@@ -16,6 +17,7 @@ const port = process.env.PORT || 5000;
 //middleware for accept json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser());
 
 //use routers
 app.use('/api/v2/auth', router);

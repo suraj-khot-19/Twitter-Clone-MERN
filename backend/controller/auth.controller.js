@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 export const signUp = async (req, res) => {
     try {
         //take from body
-        const { fullName, username, email, password } = req.body;
+        const { username, fullname, email, password } = req.body;
 
         //check valid email
         const emailRgx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -26,6 +26,11 @@ export const signUp = async (req, res) => {
             return res.status(400).json({ msg: 'email already exists!' })
         }
 
+        //validate  password
+        if (password.length < 6) {
+            return res.status(400).json({ msg: 'password must be at least 6 characters!' })
+        }
+
         //hash password before save
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
@@ -35,23 +40,19 @@ export const signUp = async (req, res) => {
             username,
             email,
             password: hashPassword,
-            fullName
+            fullname
         });
 
         //then genrate a token 
         if (newUser) {
+            //save
+            await newUser.save();
+
+            //genrate token
             generateToken(newUser._id, res);
-            //send user back
-            res.status(201).json({
-                _id: newUser._id,
-                username: newUser.username,
-                fullName: newUser.fullname,
-                email: newUser.email,
-                followers: newUser.followers,
-                following: newUser.following,
-                coverImg: newUser.coverImg,
-                profileImg: newUser.profileImg,
-            });
+
+            //send user back to frontend
+            res.status(201).json({ user: newUser });
         }
         else {
             res.status(400).json({ msg: "Invalid user" })
