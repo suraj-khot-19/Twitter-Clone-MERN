@@ -32,6 +32,14 @@
                 <li>jwt code in cookie<img src="./output/i9.png"></li>
             </ul>
         </li>
+    <!-- get user data only if his/her session is valid -->
+    <li>
+        get user data only if his/her session is valid
+            <ul>
+                <li>no jwt in cookie<img src="./output/i10.png"></li>
+                <li>jwt code in cookie then user<img src="./output/i11.png"></li>
+            </ul>
+        </li>
     </ul>
     </li>
 

@@ -2,7 +2,6 @@ import cookieParser from 'cookie-parser';
 import generateToken from '../config/generateToken.js';
 import User from '../model/user.model.js';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 
 // !    sign up
 export const signUp = async (req, res) => {
@@ -54,7 +53,10 @@ export const signUp = async (req, res) => {
             generateToken(newUser._id, res);
 
             //send user back to frontend
-            res.status(201).json({ user: newUser });
+            //remove password while sending user
+            const userObj = newUser.toObject();
+            delete userObj.password;
+            res.status(201).json({ user: userObj });
         }
         else {
             return res.status(400).json({ msg: "Invalid user" })
@@ -87,7 +89,10 @@ export const login = async (req, res) => {
         //if ok genrate token
         generateToken(user._id, res);
 
-        res.status(200).json({ user });
+        //remove password while sending user
+        const userObj = user.toObject();
+        delete userObj.password;
+        res.status(200).json({ user: userObj });
     } catch (error) {
         console.log("error in login, ", error.message)
         res.status(500).json({ error: error.message })
@@ -103,5 +108,17 @@ export const logout = async (req, res) => {
     } catch (error) {
         console.log('error in logout, ', error.message)
         res.status(500).json({ error: error.message })
+    }
+}
+
+// !    get user data but pass middleware first
+export const getUserData = async (req, res) => {
+    try {
+        //get user from middleware
+        const user = await User.findById(req.user._id).select('-password');
+        res.status(200).json({ user });
+    } catch (error) {
+        console.log('error in get user data, ', error.message);
+        res.status(500).json({ error: error.message });
     }
 }
