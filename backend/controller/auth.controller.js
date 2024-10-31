@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import generateToken from '../config/generateToken.js';
 import User from '../model/user.model.js';
 import bcrypt from 'bcryptjs';
@@ -96,7 +97,11 @@ export const login = async (req, res) => {
 
 // !    logout
 export const logout = async (req, res) => {
-    res.json({
-        data: 'listning to logout'
-    })
+    try {
+        res.cookie('jwt', '', { maxAge: 0 });
+        res.status(200).json({ msg: "Logged out sucessfuly!" })
+    } catch (error) {
+        console.log('error in logout, ', error.message)
+        res.status(500).json({ error: error.message })
+    }
 }

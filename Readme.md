@@ -14,14 +14,22 @@
                 <li>new<img src="./output/i1.png"></li>
             </ul>
         </li>
-<!-- login -->
- <li>
+    <!-- login -->
+    <li>
         Login
             <ul>
                 <li>username incorrect<img src="./output/i6.png"></li>
                 <li>username/pass incorrect<img src="./output/i5.png"></li>
                 <li>login<img src="./output/i4.png"></li>
                 <li>jwt code in cookie<img src="./output/i7.png"></li>
+            </ul>
+        </li>  
+    <!-- logout -->
+    <li>
+        Logout
+            <ul>
+                <li>logout<img src="./output/i8.png"></li>
+                <li>jwt code in cookie<img src="./output/i9.png"></li>
             </ul>
         </li>
     </ul>
