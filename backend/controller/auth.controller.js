@@ -1,6 +1,7 @@
 import generateToken from '../config/generateToken.js';
 import User from '../model/user.model.js';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 // !    sign up
 export const signUp = async (req, res) => {
@@ -55,7 +56,7 @@ export const signUp = async (req, res) => {
             res.status(201).json({ user: newUser });
         }
         else {
-            res.status(400).json({ msg: "Invalid user" })
+            return res.status(400).json({ msg: "Invalid user" })
         }
     } catch (error) {
         console.log('sign up error, ', error.message);
@@ -66,9 +67,30 @@ export const signUp = async (req, res) => {
 
 // !    login
 export const login = async (req, res) => {
-    res.json({
-        data: 'listning to login'
-    })
+    try {
+        //take from req
+        const { username, password } = req.body;
+
+        //search for user in db
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json({ msg: "User Not exists!" })
+        }
+
+        //if user then check password
+        const verifyPassword = await bcrypt.compare(password, user?.password || '');//check not nullable
+        if (!verifyPassword) {
+            return res.status(400).json({ msg: "username or password is incorrect!" });
+        }
+
+        //if ok genrate token
+        generateToken(user._id, res);
+
+        res.status(200).json({ user });
+    } catch (error) {
+        console.log("error in login, ", error.message)
+        res.status(500).json({ error: error.message })
+    }
 }
 
 

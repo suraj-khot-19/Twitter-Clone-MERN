@@ -15,6 +15,15 @@
             </ul>
         </li>
 <!-- login -->
+ <li>
+        Login
+            <ul>
+                <li>username incorrect<img src="./output/i6.png"></li>
+                <li>username/pass incorrect<img src="./output/i5.png"></li>
+                <li>login<img src="./output/i4.png"></li>
+                <li>jwt code in cookie<img src="./output/i7.png"></li>
+            </ul>
+        </li>
     </ul>
     </li>
 
