@@ -2,6 +2,7 @@
     Twitter Clone Using MERN
 </div>
 <ul>
+<!-- auth -->
     <li>
     AUTH ROUTERS
     <ul>
@@ -42,5 +43,18 @@
         </li>
     </ul>
     </li>
-
+<!-- user -->
+<li>
+    USER ROUTERS
+    <ul>
+    <!-- get user profile -->
+        <li>
+        get user profile
+            <ul>
+                <li>if user not logged in<img src="./output/i13.png"></li>
+                <li>if user not found<img src="./output/i14.png"></li>
+                <li>if user<img src="./output/i12.png"></li>
+            </ul>
+        </li>
+    </ul>
 </ul>
