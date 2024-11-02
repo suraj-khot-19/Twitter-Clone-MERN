@@ -56,5 +56,14 @@
                 <li>if user<img src="./output/i12.png"></li>
             </ul>
         </li>
+        <!-- follow/unfollow -->
+         <li>
+        follow/unfollow
+            <ul>
+                <li>if trying to follow self<img src="./output/i15.png"></li>
+                <li>follow if :id is not include in current user array <img src="./output/i16.png"></li>
+                <li>unfollow if :id is include in current user array <img src="./output/i17.png"></li>
+            </ul>
+        </li>
     </ul>
 </ul>
