@@ -1,3 +1,4 @@
+import Notification from "../model/notification.model.js";
 import User from "../model/user.model.js";
 
 // !    get profile localhost:5000/api/v2/user/profile/username
@@ -41,24 +42,45 @@ export const followOrUnfollow = async (req, res) => {
             return res.status(400).json({ msg: "no user found" });
 
         //following or unfollowing self
-        if (id === req.user._id.toString()) //this user and main user(cookie[from miiddleware]{object})
+        if (userToModify._id === req.user._id.toString()) //this user and main user(cookie[from miiddleware]{object})
             return res.status(400).json({ msg: "you cannot follow or unfollow self" });
 
         //follow (check with id)
-        const isFollowing = currentUser.following.includes(id);
+        const isFollowing = currentUser.following.includes(userToModify._id);
 
         //unfollow if id is includes
         if (isFollowing) {
-            await User.findByIdAndUpdate(currentUser._id, { $pull: { following: id } });
-            await User.findByIdAndUpdate(id, { $pull: { followers: currentUser._id } });
+            await User.findByIdAndUpdate(currentUser._id, { $pull: { following: userToModify._id } });
+            await User.findByIdAndUpdate(userToModify._id, { $pull: { followers: currentUser._id } });
+
+            //also sending a notification
+            const notification = new Notification({
+                from: currentUser._id,
+                to: userToModify._id,
+                type: 'follow'
+            })
+
+            //also save in model
+            await notification.save();
 
             //res
-            res.status(200).json({ msg: `${userToModify.username} unfollowed sucessfully` })
+            res.status(200).json({ msg: `${userToModify.username} unfollowed sucessfully` });
+
         }
         //follow if id *not includes
         else {
-            await User.findByIdAndUpdate(currentUser._id, { $push: { following: id } })
-            await User.findByIdAndUpdate(id, { $push: { followers: currentUser._id } })
+            await User.findByIdAndUpdate(currentUser._id, { $push: { following: userToModify._id } })
+            await User.findByIdAndUpdate(userToModify._id, { $push: { followers: currentUser._id } })
+
+            //also sending a notification
+            const notification = new Notification({
+                from: currentUser._id,
+                to: userToModify._id,
+                type: 'follow'
+            })
+
+            //also save in model
+            await notification.save();
 
             res.status(200).json({ msg: `${userToModify.username} followed  sucessfully` })
         }

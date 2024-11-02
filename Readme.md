@@ -65,5 +65,12 @@
                 <li>unfollow if :id is include in current user array <img src="./output/i17.png"></li>
             </ul>
         </li>
+        <!-- notification -->
+         <li>
+        notification
+            <ul>
+                <li>notification update <img src="./output/i18.png.png"></li>
+            </ul>
+        </li>
     </ul>
 </ul>
