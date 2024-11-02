@@ -69,8 +69,27 @@
          <li>
         notification
             <ul>
-                <li>notification update <img src="./output/i18.png.png"></li>
+                <li>notification update <img src="./output/i18.png"></li>
+            </ul>
+        </li> 
+        <!-- suggetions -->
+         <li>
+        suggetions
+            <ul>
+                <li>if followed 
+                    <ul>
+                        <li>if followed someone <img src="./output/i19.png"></li>
+                        <li>then not suggest that user <img src="./output/i20.png"></li>
+                    </ul>
+                </li>
+                <li>if *not followed 
+                    <ul>
+                        <li>if not followed someone <img src="./output/i21.png"></li>
+                        <li>then getting suggestion of that user <img src="./output/i22.png"></li>
+                    </ul>
+                </li>
             </ul>
         </li>
+        <!--  -->
     </ul>
 </ul>

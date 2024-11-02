@@ -91,4 +91,36 @@ export const followOrUnfollow = async (req, res) => {
     }
 }
 
-// !    
+// !   get suggestions
+export const getSuggestedUser = async (req, res) => {
+    try {
+        //get current user
+        const currentUser = await User.findById(req.user._id); //user from middleware
+
+        //followed user
+        const alreadyFollowed = await User.findById(req.user._id).select("following") //selecting following array
+
+        //getting random 10 users
+        const users = User.aggregate([{
+            $match: {
+                _id: { $ne: currentUser._id }
+            }
+        },
+        {
+            $sample: { size: 10 }
+        }
+        ]);
+
+        //filtering users
+        const filteredUsers = (await users).filter((user) => !alreadyFollowed.following.includes(user._id)) //those who not followed 
+
+        //taking only 5 of them
+        const suggestedUser = filteredUsers.slice(0, 5)
+
+        //send
+        res.status(200).json({ suggestedUser });
+    } catch (error) {
+        console.log("error in suggetion user, ", error.message)
+        res.status(500).json({ error: error.message });
+    }
+} 
