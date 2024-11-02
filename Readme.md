@@ -90,6 +90,14 @@
                 </li>
             </ul>
         </li>
-        <!--  -->
+        <!-- update profile  -->
+           <li>
+        update profile 
+            <ul>
+                <li>before profile update<img src="./output/i23.png"></li>
+                <li>update<img src="./output/i24.png"></li>
+                <li>after profile update<img src="./output/i25.png"></li>
+            </ul>
+        </li> 
     </ul>
 </ul>

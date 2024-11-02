@@ -1,5 +1,8 @@
+import jwt from "jsonwebtoken";
 import Notification from "../model/notification.model.js";
 import User from "../model/user.model.js";
+import bcrypt from "bcryptjs";
+import cloudinary from 'cloudinary';
 
 // !    get profile localhost:5000/api/v2/user/profile/username
 export const getProfile = async (req, res) => {
@@ -103,7 +106,7 @@ export const getSuggestedUser = async (req, res) => {
         //getting random 10 users
         const users = User.aggregate([{
             $match: {
-                _id: { $ne: currentUser._id }
+                _id: { $ne: currentUser._id } //select id's but it is not equal to cureent user id
             }
         },
         {
@@ -117,10 +120,104 @@ export const getSuggestedUser = async (req, res) => {
         //taking only 5 of them
         const suggestedUser = filteredUsers.slice(0, 5)
 
+        //! do not send a password
+        suggestedUser.forEach((u) => u.password = null);
+
         //send
         res.status(200).json({ suggestedUser });
     } catch (error) {
         console.log("error in suggetion user, ", error.message)
         res.status(500).json({ error: error.message });
     }
-} 
+}
+
+// !    update profile
+export const updateProfile = async (req, res) => {
+
+    try {
+
+        //take user id from middleware
+        const uid = req.user._id;
+
+        //take from request
+        const { username, email, bio, link, country, fullname, updatepassword, currentpassword } = req.body;
+        let { profileImg, coverImg } = req.body;
+
+        //find user
+        let user = await User.findById(uid);
+
+        //if no user found
+        if (!user) {
+            return res.status(400).json({ msg: "user not found!" })
+        }
+
+        //now check if pass updatepass is provided
+        if ((!updatepassword && currentpassword) || (!currentpassword && updatepassword)) {
+            return res.status(400).json({ msg: "both current password and update password must be provided!" })
+        }
+
+        //if botth provided
+        if (updatepassword && currentpassword) {
+            //compare passwords
+            const verify = jwt.compare(user.password, currentpassword);
+            if (!verify) return res.status(400).json({ msg: "passsword not match" });
+
+            //check new pass length
+            if (updatepassword.length < 6) return res.status(400).json({ msg: "passsword must be at least 6 char" });
+
+            //encrypt before store
+            const salt = await bcrypt.genSalt(10);
+
+            //now saay update password in user password with has
+            user.password = await bcrypt.hash(updatepassword, salt);
+
+        }
+
+        //if profile image
+        if (profileImg) {
+            //if already there
+            if (user.profileImg) {
+                //split with / and remove that all in remainng like id.png so split like "." and then select [0] th means id and destroy it
+                await cloudinary.uploader.destroy(user.profileImg.split("/").pop().split(".")[0]);
+            }
+
+            //upload on cloud
+            const upoaded = await cloudinary.uploader(profileImg);
+            profileImg = upoaded.secure_url;
+        }
+
+        //if cover image
+        if (coverImg) {
+            //if already there
+            if (user.coverImg) {
+                //split with / and remove that all in remainng like id.png so split like "." and then select [0] th means id and destroy it
+                await cloudinary.uploader.destroy(user.profileImg.split("/").pop().split(".")[0]);
+            }
+
+            //upload on cloud
+            const upoaded = await cloudinary.uploader(coverImg);
+            coverImg = upoaded.secure_url;
+        }
+
+        //now update all feilds
+        user.fullname = fullname || user.fullname;
+        user.bio = bio || user.bio;
+        user.username = username || user.username;
+        user.email = email || user.email;
+        user.profileImg = profileImg || user.profileImg;
+        user.coverImg = coverImg || user.coverImg;
+        user.link = link || user.link;
+        user.country = country || user.country;
+
+        // and then save user
+        user = await user.save();
+
+        //do not send pass in res but after save
+        user.password = null;
+
+        res.status(200).json({ msg: "profile updated successfully" })
+    } catch (error) {
+        console.log("error in profile update, ", error.message)
+        res.status(500).json({ error: error.message })
+    }
+}
