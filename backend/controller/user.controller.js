@@ -159,8 +159,13 @@ export const updateProfile = async (req, res) => {
         //if botth provided
         if (updatepassword && currentpassword) {
             //compare passwords
-            const verify = jwt.compare(user.password, currentpassword);
+            const verify = await bcrypt.compare(currentpassword, user.password); //function compare(string, hash)
+
+            //if no match
             if (!verify) return res.status(400).json({ msg: "passsword not match" });
+
+            //if both are same
+            if (currentpassword === updatepassword) return res.status(400).json({ msg: "password must not same as current password!" });
 
             //check new pass length
             if (updatepassword.length < 6) return res.status(400).json({ msg: "passsword must be at least 6 char" });

@@ -99,5 +99,18 @@
                 <li>after profile update<img src="./output/i25.png"></li>
             </ul>
         </li> 
+        <!-- update password -->
+         <li>
+        update password 
+            <ul>
+                <li>only passing update password<img src="./output/i26.png"></li>
+                <li>passing new password less than 6 char<img src="./output/i27.png"></li>
+                <li>passing current password as wrong one<img src="./output/i28.png"></li>
+                <li>passing new password same as before<img src="./output/i29.png"></li>
+                <li>evrything ok<img src="./output/i30.png"></li>
+                <li>now test login with old password<img src="./output/i31.png"></li>
+                <li>now test login with updated password<img src="./output/i32.png"></li>
+            </ul>
+        </li> 
     </ul>
 </ul>
