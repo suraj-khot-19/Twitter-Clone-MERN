@@ -18,7 +18,7 @@ const postSchma = new mongoose.Schema(
                 ref:'User',
                 required:true
             }
-        ],
+        ], //likes.length will be likes count
         comments:[
             {
                 title:{
@@ -31,7 +31,7 @@ const postSchma = new mongoose.Schema(
                     required:true
                 }
             }
-        ]
+        ] //comments.length will be comments count
     },
     {
         timestamps: true
