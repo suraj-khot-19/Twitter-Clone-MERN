@@ -1,3 +1,4 @@
+import Notification from "../model/notification.model.js";
 import Post from "../model/post.model.js";
 import User from "../model/user.model.js";
 import { v2 as cloudinary } from 'cloudinary';
@@ -82,7 +83,7 @@ export const commentOnPost = async (req, res) => {
         const { title } = req.body
 
         //check comment
-        if(!title)  return res.status(400).json({ msg: "to post a comment, comment is required!" })
+        if (!title) return res.status(400).json({ msg: "to post a comment, comment is required!" })
 
         //take current user id
         const currentUserId = req.user._id; // take from middleware
@@ -105,9 +106,52 @@ export const commentOnPost = async (req, res) => {
 
         //send res
         res.status(200).json({ msg: "commented successfully!" })
-        
+
     } catch (error) {
         console.log("error in comment,", error.message)
+        res.status(500).json({ error: error.message })
+    }
+}
+
+// !    like or unlike a post
+export const likeOrUnlikePost = async (req, res) => {
+    try {
+        //get current user id
+        const currentUserId = req.user._id;    //from middleware
+
+        //get post id from prams
+        const postId = req.params.id;
+
+        //find a post
+        let post = await Post.findById(postId);
+
+        //if no post
+        if (!post) return res.status(400).json({ msg: "No post found!" });
+
+        //if already liked then unlike
+        if (post.likes.includes(currentUserId)) {
+            await Post.updateOne({ _id: postId }, { $pull: { likes: currentUserId } })
+            res.status(200).json({ msg: "unliked the post!" })
+        }
+        //or else like
+        else {
+            //push uid and save
+            post.likes.push(currentUserId);
+            await post.save();
+
+            //sending notification to user which have the post
+            const notification = new Notification({
+                from: currentUserId,
+                to: post.user._id,
+                type: 'like',
+            });
+            await notification.save();
+
+            //send res
+            res.status(200).json({ msg: 'liked the post!' })
+        }
+    } catch (error) {
+        console.log("error in like or unlike,", error.message)
         res.status(500).json({ error: error.message })
     }
 }

@@ -2,7 +2,7 @@
     Twitter Clone Using MERN
 </div>
 <ul>
-<!-- auth -->
+<!--! auth -->
     <li>
     AUTH ROUTERS
     <ul>
@@ -43,7 +43,7 @@
         </li>
     </ul>
     </li>
-<!-- user -->
+<!--! user -->
 <li>
     USER ROUTERS
     <ul>
@@ -113,7 +113,7 @@
             </ul>
         </li> 
     </ul>
-    <!-- posts -->
+    <!--! posts -->
     <li>
     Post Routers
         <ul>
@@ -144,6 +144,17 @@
                     <li>if there then comment<img src="./output/i41.png"></li>
                     <li>comment having text empty<img src="./output/i39.png"></li>
                     <li>after comment db<img src="./output/i42.png"></li>
+                </ul>
+            </li>
+        <!-- like or unlike -->
+        <li>
+            like or unlike 
+                <ul>
+                    <li>like a post if likes array not include current logged in user id in them<img src="./output/i43.png"></li>
+                    <li>db after like<img src="./output/i44.png"></li>
+                    <li>a *notification after a like<img src="./output/i45.png"></li>
+                    <li>unlike a post if likes array includes current logged in user id in them<img src="./output/i46.png"></li>
+                    <li>db after unlike<img src="./output/i47.png"></li>
                 </ul>
             </li>
         </ul>
