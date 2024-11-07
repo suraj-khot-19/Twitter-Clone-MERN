@@ -5,6 +5,7 @@ import connectToMongoDB from "./db/connectMongoDB.js";
 import cookieParser from "cookie-parser";
 import authRouter from './routers/auth.router.js'
 import userRouter from './routers/user.router.js'
+import postRouter from './routers/post.router.js'
 import { v2 as cloudinary } from 'cloudinary'
 
 //env
@@ -31,6 +32,7 @@ app.use(cookieParser());
 //use routers
 app.use('/api/v2/auth', authRouter);
 app.use('/api/v2/user', userRouter);
+app.use('/api/v2/post',postRouter)
 
 //listen
 app.listen(port, () => {

@@ -113,4 +113,19 @@
             </ul>
         </li> 
     </ul>
+    <!-- posts -->
+    <li>
+    Post Routers
+        <ul>
+        <!-- create new post -->
+            <li>
+            create new post 
+                <ul>
+                    <li>if post is blank<img src="./output/i33.png"></li>
+                    <li>if post contains data<img src="./output/i34.png"></li>
+                    </ul>
+            </li>
+        <!--  -->
+        </ul>
+    </li>
 </ul>
