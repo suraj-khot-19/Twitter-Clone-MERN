@@ -55,11 +55,11 @@ export const deletePost = async (req, res) => {
         if (!post) return res.status(400).json({ msg: "No post found!" });
 
         //if another user try to delete a post
-        if(currentUserId!==post.user.toString()) return res.status(400).json({ msg: "No you dont have any authority to delete this post!" });
+        if (currentUserId !== post.user.toString()) return res.status(400).json({ msg: "No you dont have any authority to delete this post!" });
 
         //delete img from cloudinary
-        if(post.img){
-            const imgId=post.img.split("/").pop().split(".")[0];
+        if (post.img) {
+            const imgId = post.img.split("/").pop().split(".")[0];
             await cloudinary.uploader.destroy(imgId);
         }
 
@@ -72,5 +72,42 @@ export const deletePost = async (req, res) => {
     } catch (error) {
         console.log("error in delete post,", error.message)
         res.status(500).json({ error: error.message });
+    }
+}
+
+// !    comment on post
+export const commentOnPost = async (req, res) => {
+    try {
+        //take from body
+        const { title } = req.body
+
+        //check comment
+        if(!title)  return res.status(400).json({ msg: "to post a comment, comment is required!" })
+
+        //take current user id
+        const currentUserId = req.user._id; // take from middleware
+
+        //take post id from params
+        const postId = req.params.id;
+
+        //check post exists or not
+        const post = await Post.findById(postId);
+        if (!post) return res.status(400).json({ msg: "no post found!" })
+
+        //new comment
+        const newComment = { user: currentUserId, title }
+
+        //push new comment in post.comments array
+        post.comments.push(newComment);
+
+        //and then save post
+        await post.save()
+
+        //send res
+        res.status(200).json({ msg: "commented successfully!" })
+        
+    } catch (error) {
+        console.log("error in comment,", error.message)
+        res.status(500).json({ error: error.message })
     }
 }

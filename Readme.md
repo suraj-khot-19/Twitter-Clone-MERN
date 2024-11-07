@@ -134,7 +134,17 @@
                     <li>if post not exists<img src="./output/i36.png"></li>
                     <li>if there then delete<img src="./output/i35.png"></li>
                     <li>after delete db<img src="./output/i38.png"></li>
-                    </ul>
+                </ul>
+            </li>
+        <!-- comment on a post -->
+        <li>
+            comment on a post 
+                <ul>
+                    <li>if post not exists<img src="./output/i40.png"></li>
+                    <li>if there then comment<img src="./output/i41.png"></li>
+                    <li>comment having text empty<img src="./output/i39.png"></li>
+                    <li>after comment db<img src="./output/i42.png"></li>
+                </ul>
             </li>
         </ul>
     </li>
