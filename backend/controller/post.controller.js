@@ -227,3 +227,35 @@ export const likedByMe = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+// !    getting posts of users followed by current users haaaa
+export const getPostOfMyFollowing = async (req, res) => {
+    try {
+        //get current user from middleware
+    const uid = req.user._id;
+
+    //find
+    const user = await User.findById(uid);
+
+    //if not
+    if (!user) return res.status(400).json({ msg: "no user found!" });
+
+    //only following user array
+    const following = user.following;
+
+    //sort all post with following users
+    const posts = await Post.find({user: {$in: following }})
+        .populate({
+            path: 'user',
+            select: "-password"
+        }).populate({
+            path: 'comments.user',
+            select: '-password'
+        });
+
+    res.status(200).json({ posts })
+    } catch (error) {
+        console.log("error in getPostOfMyFollowing,",error.message);
+        res.status(500).json({ error:error.message })
+    }
+}

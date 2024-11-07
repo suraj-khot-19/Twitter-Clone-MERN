@@ -204,7 +204,7 @@
             </li> 
             <hr/>
             <!-- get all posts -->
-            <li>5. get all posts 
+        <li>5. get all posts 
             <ul>
                  <li>treditional way<img src="./output/i49.png"></li> <hr/>
                  <li>best way to populate user detials in comments and post<img src="./output/i50.png">
@@ -224,25 +224,43 @@
             </li>
             <!-- liked post by user -->
             <li>liked post by user
-             <ul>
-             <li>changing user model with refrence to post model
-             <pre>
-liked: [
-    {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post',
-        default: []
-    }
-]
-             </pre>
-             <hr/>
-             </li>
-                    <li>if user is new<img src="./output/i51.png"></li> <hr/>
+                <ul>
+                    <li>changing user model with refrence to post model
+                        <pre>
+                            liked: [
+                                {
+                                    type: mongoose.Schema.Types.ObjectId,
+                                    ref: 'Post',
+                                    default: []
+                                }
+                            ]
+                        </pre>
+                    </li>
+                    <hr/>
+                    <li>if user is new<img src="./output/i51.png"></li> 
+                    <hr/>
                     <li>if user liked two posts(also populating user and post details by using post id itself)<img src="./output/i53.png"></li>
                     <hr/>
                     <li>cross checking me endpoint<img src="./output/i52.png"></li>
                 </ul>
             </li>
+        </li>
+        <!-- post of following of this user -->
+        <li>
+        post of following of current user
+            <ul>
+                <li>if no following<img src="./output/i54.png"></li> <hr/>
+                <li>if following<img src="./output/i55.png"></li> 
+            </ul>
+        </li>
+        <hr/>
+        <!-- post this user -->
+        <li>
+        post current user
+            <ul>
+                <li>  <img src="./output/i.png"></li> <hr/>
+                <li>  <img src="./output/i.png"></li> 
+            </ul>
+        </li>
+        <hr/>
         </ul>
-
-### 
