@@ -222,6 +222,27 @@
                  <hr/>
             </ul>
             </li>
+            <!-- liked post by user -->
+            <li>liked post by user
+             <ul>
+             <li>changing user model with refrence to post model
+             <pre>
+liked: [
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post',
+        default: []
+    }
+]
+             </pre>
+             <hr/>
+             </li>
+                    <li>if user is new<img src="./output/i51.png"></li> <hr/>
+                    <li>if user liked two posts(also populating user and post details by using post id itself)<img src="./output/i53.png"></li>
+                    <hr/>
+                    <li>cross checking me endpoint<img src="./output/i52.png"></li>
+                </ul>
+            </li>
         </ul>
 
 ### 
