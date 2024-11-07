@@ -41,3 +41,36 @@ export const createPost = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+// !    delete an existing post
+export const deletePost = async (req, res) => {
+    try {
+        //take current user id from middleware
+        const currentUserId = req.user._id.toString();
+
+        //post
+        const post = await Post.findById(req.params.id);
+
+        //if not found any of post
+        if (!post) return res.status(400).json({ msg: "No post found!" });
+
+        //if another user try to delete a post
+        if(currentUserId!==post.user.toString()) return res.status(400).json({ msg: "No you dont have any authority to delete this post!" });
+
+        //delete img from cloudinary
+        if(post.img){
+            const imgId=post.img.split("/").pop().split(".")[0];
+            await cloudinary.uploader.destroy(imgId);
+        }
+
+        //if post then delete
+        await Post.findByIdAndDelete(req.params.id);
+
+        //send res
+        res.status(200).json({ msg: "post deleted successfully!" });
+
+    } catch (error) {
+        console.log("error in delete post,", error.message)
+        res.status(500).json({ error: error.message });
+    }
+}

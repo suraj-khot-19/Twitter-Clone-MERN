@@ -123,9 +123,19 @@
                 <ul>
                     <li>if post is blank<img src="./output/i33.png"></li>
                     <li>if post contains data<img src="./output/i34.png"></li>
+                    <li>db<img src="./output/i37.png"></li>
                     </ul>
             </li>
-        <!--  -->
+        <!-- delete a post -->
+        <li>
+            delete a post 
+                <ul>
+                    <li>all posts in db<img src="./output/i37.png"></li>
+                    <li>if post not exists<img src="./output/i36.png"></li>
+                    <li>if there then delete<img src="./output/i35.png"></li>
+                    <li>after delete db<img src="./output/i38.png"></li>
+                    </ul>
+            </li>
         </ul>
     </li>
 </ul>
