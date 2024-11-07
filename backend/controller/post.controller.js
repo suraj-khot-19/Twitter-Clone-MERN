@@ -165,3 +165,26 @@ export const likeOrUnlikePost = async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 }
+
+// !    get all posts
+export const getAllPosts = async (req, res) => {
+    try {
+        //sort by created at and 
+        //also send userDetails from User model where id equals to the id in post using populate method
+
+        // const posts = await Post.find({}).sort({ createdAt: -1 }).populate('user').select("-password"); will not works
+        const posts = await Post.find({}).sort({ createdAt: -1 }).populate({
+            path: 'user',
+            select: '-password'
+        });
+
+        //if an empty
+        if (posts.length == 0) return res.status(200).json([])
+
+        //if there
+        res.status(200).json({ posts })
+    } catch (error) {
+        console.log("error in get all posts,", error.message)
+        res.status(500).json({ error: error.message })
+    }
+}

@@ -3,33 +3,35 @@
 ### Twitter Clone Using MERN
 </div>
 
+<div align="center">
+
 
 ## Table 
 
 <table>
     <tr>
-        <td>1</td>
+        <td>1.</td>
         <td>
 
 [Authentication Routes](#authentication-routes)
         </td>
     </tr>
     <tr>
-        <td>2</td>
+        <td>2.</td>
         <td>
 
 [User Routes](#user-routes)
         </td>
     </tr>
     <tr>
-        <td>3</td>
+        <td>3.</td>
         <td>
 
 [Post Routes](#post-routes)
         </td>
     </tr>
 </table>
-
+</div>
 
 <!--! auth -->
 ### Authentication Routes
@@ -193,7 +195,6 @@
             4. like or unlike 
                 <ul>
                     <li>like a post if likes array not include current logged in user id in them<img src="./output/i43.png"></li> <hr/>
-                    <hr/>
                     <li>db after like<img src="./output/i44.png"></li> <hr/>
                     <li>create a *notification after a like<img src="./output/i48.png"></li> <hr/>
                     <li>unlike a post if likes array includes current logged in user id in them<img src="./output/i46.png"></li> <hr/>
@@ -202,6 +203,22 @@
                 </ul>
             </li> 
             <hr/>
+            <!-- get all posts -->
+            <li>5. get all posts 
+            <ul>
+                 <li>treditional way<img src="./output/i49.png"></li> <hr/>
+                 <li>best way to populate user detials also<img src="./output/i50.png">
+                 <pre>
+                 ### this one line of code solve problem ###
+const posts = await Post.find({}).sort({ createdAt: -1 }).populate({
+    path: 'user',
+    select: '-password'
+});
+                 </pre>
+                 </li> 
+                 <hr/>
+            </ul>
+            </li>
         </ul>
 
 ### 
