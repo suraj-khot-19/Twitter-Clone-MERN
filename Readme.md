@@ -207,13 +207,16 @@
             <li>5. get all posts 
             <ul>
                  <li>treditional way<img src="./output/i49.png"></li> <hr/>
-                 <li>best way to populate user detials also<img src="./output/i50.png">
+                 <li>best way to populate user detials in comments and post<img src="./output/i50.png">
                  <pre>
                  ### this one line of code solve problem ###
-const posts = await Post.find({}).sort({ createdAt: -1 }).populate({
-    path: 'user',
-    select: '-password'
-});
+ const posts = await Post.find({}).sort({ createdAt: -1 }).populate({
+            path: 'user',
+            select: '-password'
+        }).populate({
+            path: 'comments.user',
+            select: "-password"
+        });
                  </pre>
                  </li> 
                  <hr/>
