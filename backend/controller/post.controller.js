@@ -130,7 +130,17 @@ export const likeOrUnlikePost = async (req, res) => {
 
         //if already liked then unlike
         if (post.likes.includes(currentUserId)) {
+            //pull a uid from likes array
             await Post.updateOne({ _id: postId }, { $pull: { likes: currentUserId } })
+
+            //delete notification if there
+            await Notification.deleteOne({
+                from: currentUserId,
+                to: post.user._id,
+                type: 'like'
+            });
+
+            //send res
             res.status(200).json({ msg: "unliked the post!" })
         }
         //or else like
