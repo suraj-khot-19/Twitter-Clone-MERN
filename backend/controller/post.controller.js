@@ -133,6 +133,9 @@ export const likeOrUnlikePost = async (req, res) => {
             //pull a uid from likes array
             await Post.updateOne({ _id: postId }, { $pull: { likes: currentUserId } })
 
+            //also delete a user model's liked posts
+            await User.updateOne({ _id: currentUserId }, { $pull: { liked: postId } }); //delete current users liked post with post id
+
             //delete notification if there
             await Notification.deleteOne({
                 from: currentUserId,
@@ -148,6 +151,9 @@ export const likeOrUnlikePost = async (req, res) => {
             //push uid and save
             post.likes.push(currentUserId);
             await post.save();
+
+            //also add to current users liked posts
+            await User.updateOne({ _id: currentUserId }, { $push: { liked: postId } }); //add current users liked post with post id
 
             //sending notification to user which have the post
             const notification = new Notification({
@@ -189,5 +195,35 @@ export const getAllPosts = async (req, res) => {
     } catch (error) {
         console.log("error in get all posts,", error.message)
         res.status(500).json({ error: error.message })
+    }
+}
+
+// !    get liked post of any user
+export const likedByMe = async (req, res) => {
+    try {
+        //get user id **not current user**
+        const id = req.params.id;
+
+        //find
+        const user = await User.findById(id);
+
+        //if not found
+        if (!user) {
+            return res.status(400).json({ msg: "No user founnd!" });
+        }
+
+        //if found return its post liked by him/her
+        const likedPosts = await Post.find({ _id: { $in: user.liked } })
+            .populate({
+                path: 'user',
+                select: '-password'
+            }).populate({
+                path: 'comments.user',
+                select: '-password'
+            });
+        res.status(200).json({ likedPosts });
+    } catch (error) {
+        console.log("error in liked by me,", error.message)
+        res.status(500).json({ error: error.message });
     }
 }

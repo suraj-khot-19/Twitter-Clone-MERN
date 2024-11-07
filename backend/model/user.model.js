@@ -54,6 +54,14 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: 'IN',
         },
+        //liked post by this user
+        liked: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Post',
+                default: []
+            }
+        ]
     },
     {
         //allows created/updated at feilds automatically
