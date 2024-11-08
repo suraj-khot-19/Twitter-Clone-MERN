@@ -297,4 +297,14 @@
                 </ul>
             </li> 
             <hr/>
+            <!-- delete users all notification -->
+            <li>
+            3. delete users all notification
+                <ul>
+                    <li>*before delete notifications<img src="./output/i66.png"></li> <hr/>
+                    <li>delete all notificatiions<img src="./output/i67.png"></li><hr/>
+                    <li>*after delete notification<img src="./output/i68.png"></li>
+                </ul>
+            </li> 
+            <hr/>
 </ul>

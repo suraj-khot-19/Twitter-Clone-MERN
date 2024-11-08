@@ -31,24 +31,41 @@ export const deleteNotificationById = async (req, res) => {
         const uid = req.user._id;
 
         //get notification id from prams
-        const id = req.params.id;
+        const notiId = req.params.id;
 
         //find notification
-        const notification = await Notification.findById(id);
+        const notification = await Notification.findById(notiId);
 
         //if not
         if (!notification) return res.status(400).json({ msg: "No notification found" })
 
         //if found check whether this user having rights to delete them
         if (notification.to.toString() === uid.toString()) {
-            await Notification.deleteOne(notification);
-            res.status(200).json({msg:"notification deleted sucessfully!"})
+            await Notification.findByIdAndDelete(notiId);
+            res.status(200).json({ msg: "notification deleted sucessfully!" })
         }
-        else{
-            res.status(400).json({msg:"no you dont have rights to delete this notification"})
+        else {
+            res.status(400).json({ msg: "no you dont have rights to delete this notification" })
         }
     } catch (error) {
-        console.log("error in delete notification ,",error.message)
-        res.status(500).json({error:error.message})
+        console.log("error in delete notification ,", error.message)
+        res.status(500).json({ error: error.message })
     }
 }
+
+// !    delete all notification of current user
+export const deleteAllNotification = async (req, res) => {
+    try {
+        //get user id from middleware
+        const uid = req.user._id;
+
+        //find those and delete all noti
+        await Notification.deleteMany({ to: uid })
+
+        //res.status
+        res.status(200).json({ msg: "deleted all notification!" })
+    } catch (error) {
+        console.log("error in delete all noti,", error.message)
+        res.status(500).json({ error: error.message })
+    }
+} 
