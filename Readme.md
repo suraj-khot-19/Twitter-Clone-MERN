@@ -30,6 +30,13 @@
 [Post Routes](#post-routes)
         </td>
     </tr>
+    <tr>
+        <td>4.</td>
+        <td>
+
+[Notification Routes](#notification-routes)
+        </td>
+    </tr>
 </table>
 </div>
 
@@ -265,3 +272,28 @@
         </li>
         <hr/>
     </ul>
+
+
+### Notification Routes
+<ul>
+        <!-- get users notification -->
+            <li>
+            1. get users notification
+                <ul>
+                    <li>get current user notification *only<img src="./output/i59.png"></li>
+                </ul>
+            </li> 
+            <hr/>
+            <!-- delete users notification -->
+            <!-- <li>
+            2. delete users notification
+                <ul>
+                    <li><img src="./output/i60.png"></li> <hr/>
+                    <li><img src="./output/i61.png"></li> <hr/>
+                    <li><img src="./output/i62.png"></li> <hr/>
+                    <li><img src="./output/i63.png"></li> <hr/>
+                    <li>db<img src="./output/i64.png"></li>
+                </ul>
+            </li>  -->
+            <hr/>
+</ul>
