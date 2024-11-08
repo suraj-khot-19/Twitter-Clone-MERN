@@ -232,30 +232,59 @@ export const likedByMe = async (req, res) => {
 export const getPostOfMyFollowing = async (req, res) => {
     try {
         //get current user from middleware
-    const uid = req.user._id;
+        const uid = req.user._id;
 
-    //find
-    const user = await User.findById(uid);
+        //find
+        const user = await User.findById(uid);
 
-    //if not
-    if (!user) return res.status(400).json({ msg: "no user found!" });
+        //if not
+        if (!user) return res.status(400).json({ msg: "no user found!" });
 
-    //only following user array
-    const following = user.following;
+        //only following user array
+        const following = user.following;
 
-    //sort all post with following users
-    const posts = await Post.find({user: {$in: following }})
-        .populate({
-            path: 'user',
-            select: "-password"
-        }).populate({
-            path: 'comments.user',
-            select: '-password'
-        });
+        //sort all post with following users
+        const posts = await Post.find({ user: { $in: following } })
+            .populate({
+                path: 'user',
+                select: "-password"
+            }).populate({
+                path: 'comments.user',
+                select: '-password'
+            });
 
-    res.status(200).json({ posts })
+        res.status(200).json({ posts })
     } catch (error) {
-        console.log("error in getPostOfMyFollowing,",error.message);
-        res.status(500).json({ error:error.message })
+        console.log("error in getPostOfMyFollowing,", error.message);
+        res.status(500).json({ error: error.message })
+    }
+}
+
+// !    post of user
+export const usersPosts = async (req, res) => {
+    try {
+        //take from params
+        const username = req.params.username;
+
+        //find user
+        const user = await User.findOne({ username })
+
+        //if not
+        if (!user) return res.status(400).json({ msg: "No user found!" })
+
+        //if user then sort posts
+        let posts = await Post.find({ user: user._id }).sort({createdAt:-1}).populate({
+            path:'user',
+            select:'-password'
+        }).populate({
+            path:'comments.user',
+            select:'-password'
+        })
+
+        //send to res
+        res.status(200).json({ posts })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+        console.log("error in user posts ", error.message)
     }
 }

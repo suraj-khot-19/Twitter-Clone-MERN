@@ -258,9 +258,10 @@
         <li>
         post current user
             <ul>
-                <li>  <img src="./output/i.png"></li> <hr/>
-                <li>  <img src="./output/i.png"></li> 
+                <li> if user have a posts <img src="./output/i56.png"></li> <hr/>
+                <li> if user dont have any posts<img src="./output/i57.png"></li> <hr/>
+                <li> if no user found  <img src="./output/i58.png"></li> 
             </ul>
         </li>
         <hr/>
-        </ul>
+    </ul>
