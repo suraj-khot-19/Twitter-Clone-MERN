@@ -285,15 +285,16 @@
             </li> 
             <hr/>
             <!-- delete users notification -->
-            <!-- <li>
-            2. delete users notification
+            <li>
+            2. delete users notification by id of notification
                 <ul>
-                    <li><img src="./output/i60.png"></li> <hr/>
-                    <li><img src="./output/i61.png"></li> <hr/>
-                    <li><img src="./output/i62.png"></li> <hr/>
-                    <li><img src="./output/i63.png"></li> <hr/>
-                    <li>db<img src="./output/i64.png"></li>
+                    <li>if wrong notification id<img src="./output/i60.png"></li> <hr/>
+                    <li>*before delete notification<img src="./output/i62.png"></li> <hr/>
+                    <li>delete notification<img src="./output/i61.png"></li> <hr/>
+                    <li>*after delete notification<img src="./output/i63.png"></li> <hr/>
+                    <li>another users notification<img src="./output/i64.png"></li> <hr/>
+                    <li>if current user tries to delete another users notification<img src="./output/i65.png"></li>
                 </ul>
-            </li>  -->
+            </li> 
             <hr/>
 </ul>

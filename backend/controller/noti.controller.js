@@ -23,3 +23,32 @@ export const getUsersNotification = async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 }
+
+// !    delete notification ById
+export const deleteNotificationById = async (req, res) => {
+    try {
+        ///get user from middleware
+        const uid = req.user._id;
+
+        //get notification id from prams
+        const id = req.params.id;
+
+        //find notification
+        const notification = await Notification.findById(id);
+
+        //if not
+        if (!notification) return res.status(400).json({ msg: "No notification found" })
+
+        //if found check whether this user having rights to delete them
+        if (notification.to.toString() === uid.toString()) {
+            await Notification.deleteOne(notification);
+            res.status(200).json({msg:"notification deleted sucessfully!"})
+        }
+        else{
+            res.status(400).json({msg:"no you dont have rights to delete this notification"})
+        }
+    } catch (error) {
+        console.log("error in delete notification ,",error.message)
+        res.status(500).json({error:error.message})
+    }
+}
