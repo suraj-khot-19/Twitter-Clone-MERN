@@ -37,6 +37,20 @@
 [Notification Routes](#notification-routes)
         </td>
     </tr>
+    <tr>
+        <td>5.</td>
+        <td>
+
+[Icons](#icons)
+        </td>
+    </tr>
+    <tr>
+        <td>6.</td>
+        <td>
+
+[Theme](#theme)
+        </td>
+    </tr>
 </table>
 </div>
 
@@ -306,5 +320,56 @@
                     <li>*after delete notification<img src="./output/i68.png"></li>
                 </ul>
             </li> 
-            <hr/>
 </ul>
+<hr/>
+
+# Icons
+<p>
+   <a href="https://react-icons.github.io/react-icons/">react icons</a> this for icons
+</p>
+<hr>
+
+# Theme
+<p>
+    for theme using  <a href="https://daisyui.com/">daisy ui</a>
+</p>
+<u> tailwind.config.js file => </u> 
+<pre>
+
+//daisy ui
+import daisyui from "daisyui"
+//theme
+import daisyUIThemes from "daisyui/src/theming/themes";
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [daisyui],
+
+  //theme 
+  daisyui: {
+		themes: [
+			"light",
+			{
+				black: {
+					...daisyUIThemes["black"],
+					primary: "rgb(29, 155, 240)",
+					secondary: "rgb(24, 24, 24)",
+				},
+			},
+		],
+	},
+}
+</pre>
+
+<u> index.html file => </u> 
+<pre>
+    html lang="en" data-theme="black">
+    /html>
+</pre>
