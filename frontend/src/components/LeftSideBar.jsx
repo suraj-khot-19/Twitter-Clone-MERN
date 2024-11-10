@@ -7,13 +7,16 @@ import { FaRegUser } from "react-icons/fa6";
 import { CgMoreO } from "react-icons/cg";
 import { useNavigate } from 'react-router-dom'
 import { SlLogout } from "react-icons/sl";
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 
 function LeftSideBar() {
        //client
        const queryClient = useQueryClient();
+
+       //query client
+       const { data } = useQuery({ queryKey: ["authUser"] });
 
        //navigate
        const navigate = useNavigate();
@@ -61,32 +64,32 @@ function LeftSideBar() {
                             {/* navs */}
                             <div className='my-2'>
                                    {/* home */}
-                                   <div className='flex my-7'>
+                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <GoHomeFill className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Home</span>
                                    </div>
                                    {/* explore */}
-                                   <div className='flex my-7'>
+                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <FaSearch className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Explore</span>
                                    </div>
                                    {/* Notification */}
-                                   <div className='flex my-7'>
+                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <IoNotifications className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Notification</span>
                                    </div>
                                    {/* Premium */}
-                                   <div className='flex my-7'>
+                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <X className='h-7 w-7 ml-5 mr-5 fill-white' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Premium</span>
                                    </div>
                                    {/* Profile */}
-                                   <div className='flex my-7'>
+                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <FaRegUser className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Profile</span>
                                    </div>
                                    {/* more */}
-                                   <div className='flex my-7'>
+                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300 '>
                                           <CgMoreO className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>More</span>
                                    </div>
@@ -98,7 +101,7 @@ function LeftSideBar() {
 
                             {/* secound div */}
                             {/* profile */}
-                            <div className="flex items-center justify-between w-full">
+                            <div className="flex items-center justify-between w-full p-2  hover:bg-stone-900 transition-all rounded-full duration-300 py-2 ">
                                    {/* img and name */}
                                    <div className="flex items-center cursor-pointer">
                                           {/* img */}
@@ -110,8 +113,8 @@ function LeftSideBar() {
 
                                           {/* name and username */}
                                           <div className="ms-4 flex flex-col items-start justify-center">
-                                                 <span>Rowdy Khot</span>
-                                                 <span>rowdy@45</span>
+                                                 <span>{data.user.fullname}</span>
+                                                 <span>{data.user.username}</span>
                                           </div>
                                    </div>
 
