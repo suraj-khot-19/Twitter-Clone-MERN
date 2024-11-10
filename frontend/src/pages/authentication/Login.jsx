@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import X from '../../assets/X'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
@@ -13,7 +13,7 @@ function Login() {
   const [data, setData] = useState({ username: '', password: '' })
 
   //navigator
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   //form change
   const handelOnChange = (e) => {
@@ -25,6 +25,9 @@ function Login() {
     e.preventDefault();
     mutate(data)
   }
+
+  //query client
+  const queryClient = useQueryClient();
 
   //mutate fu
   const { mutate, isError, isLoading, error } = useMutation({
@@ -43,22 +46,22 @@ function Login() {
           body: JSON.stringify({ username, password })
         });
 
-        console.log(res)
+        //res
         const jsonData = await res.json();
 
         if (!res.ok) {
           throw new Error(jsonData.msg || 'Failed to login')
         }
-
-        console.log('data', jsonData)
+        return jsonData;
       } catch (error) {
         throw error.message
       }
     },
-    onSuccess: () => {
+    onSuccess: (jsonData) => {
       toast.success(`Welcome ${jsonData.user.fullname}!`);
+      setData({ username: '', password: '' })
+      queryClient.invalidateQueries({ queryKey: ['authUser'] })
       navigate('/');
-      setData({})
     }
   });
 
@@ -109,7 +112,7 @@ function Login() {
 
           </form>
         </div>
-        
+
         <span className='text-xl font-normal mt-4'>Don't have an account?</span>
 
         <Link to='/signup' className="btn btn-outline btn-primary rounded-full w-full md:w-[60%] mt-2">Create Account</Link>
