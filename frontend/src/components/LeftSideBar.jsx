@@ -5,10 +5,52 @@ import { FaSearch } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa6";
 import { CgMoreO } from "react-icons/cg";
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { SlLogout } from "react-icons/sl";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+
 
 function LeftSideBar() {
+       //client
+       const queryClient = useQueryClient();
+
+       //navigate
+       const navigate = useNavigate();
+
+       // logout fun
+       const { mutate: loggingOut, isPending } = useMutation({
+              mutationFn: async () => {
+                     try {
+                            const res = await fetch('/api/v2/auth/logout', {
+                                   method: 'POST',
+                                   headers: {
+                                          'Content-Type': 'application/json'
+                                   }
+                            });
+
+                            const jsonData = await res.json();
+
+                            if (!res.ok) {
+                                   throw new Error(jsonData.msg || "Failed to Logout")
+                            }
+
+                     } catch (error) {
+                            throw new Error(error);
+                     }
+              },
+              //on sucess
+              onSuccess: () => {
+                     toast.success('logged out sucessfully!')
+                     queryClient.invalidateQueries({ queryKey: ['authUser'] })
+                     navigate('/login')
+                     window.location.reload(); //force reload
+              },
+              //error
+              onError: () => {
+                     toast.error('Failed to Logout')
+              }
+       })
        return (
               <div className='flex flex-col justify-center items-start ms-20 p-4 h-full'>
                      {/* logo */}
@@ -74,8 +116,12 @@ function LeftSideBar() {
                                    </div>
 
                                    {/* more button */}
-                                   <div className="flex items-center">
-                                          <SlLogout className='opacity-80 hover:opacity-100 cursor-pointer'/>
+                                   <div className="flex items-center" onClick={(e) => {
+                                          e.preventDefault();
+                                          loggingOut()
+                                   }}>
+                                          {isPending ?
+                                                 <span className="loading loading-spinner text-primary loading-lg "></span> : <SlLogout className='opacity-80 hover:opacity-100 cursor-pointer' />}
                                    </div>
                             </div>
                      </div>
