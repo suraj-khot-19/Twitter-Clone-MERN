@@ -160,6 +160,7 @@ function Signup() {
                     <input type="password" placeholder="Password" className="input input-bordered w-full " name='password' value={data.password} autoComplete='true' onChange={handelOnChange} />
                   </div>
 
+                  {/* error */}
                   {isError && <span className='my-3 text-red-400'>{error}</span>}
 
                   {/* btn */}

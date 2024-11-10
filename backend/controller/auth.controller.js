@@ -79,6 +79,10 @@ export const login = async (req, res) => {
         //take from req
         const { username, password } = req.body;
 
+        // check all feilds required
+        if (username.length === 0 || password.length === 0) {
+            return res.status(400).json({ msg: "All feilds are required!" });
+        }
         //search for user in db
         const user = await User.findOne({ username });
         if (!user) {

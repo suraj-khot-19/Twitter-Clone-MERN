@@ -1,19 +1,67 @@
 import React, { useState } from 'react'
 import X from '../../assets/X'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from 'react-hot-toast';
 
 function Login() {
   //state
-  const [data, setData] = useState({ username: '', password: '', cpassword: '' })
+  const [data, setData] = useState({ username: '', password: '' })
+
+  //navigator
+  const navigate=useNavigate();
 
   //form change
   const handelOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
   }
+
+  //form submit
+  const handlelSubmit = (e) => {
+    e.preventDefault();
+    mutate(data)
+  }
+
+  //mutate fu
+  const { mutate, isError, isLoading, error } = useMutation({
+    mutationFn: async (data) => {
+      //destructure data
+      const { username, password } = data;
+
+      //all url came from config
+      const url = '/api/v2/auth/login'
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
+        });
+
+        console.log(res)
+        const jsonData = await res.json();
+
+        if (!res.ok) {
+          throw new Error(jsonData.msg || 'Failed to login')
+        }
+
+        console.log('data', jsonData)
+      } catch (error) {
+        throw error.message
+      }
+    },
+    onSuccess: () => {
+      toast.success(`Welcome ${jsonData.user.fullname}!`);
+      navigate('/');
+      setData({})
+    }
+  });
+
 
   return (
     <div className='max-w-screen-xl mx-auto flex h-screen px-10 md:flex-row flex-col'>
@@ -22,7 +70,7 @@ function Login() {
         <X className="fill-white w-[10rem] md:w-2/3" />
       </div>
 
-      {/* form */}
+      {/* butttons  */}
       <div className='md:flex-1 h-4/5 md:h-[65%] lg:h-full flex flex-col justify-center items-center md:items-start'>
         <span className='text-2xl md:text-5xl font-bold'>Sign in to X</span>
 
@@ -36,7 +84,7 @@ function Login() {
 
         {/* login form */}
         <div className='w-full'>
-          <from>
+          <form onSubmit={handlelSubmit}>
 
             {/* username */}
             <div className='w-full md:w-[60%] my-3'>
@@ -50,22 +98,20 @@ function Login() {
             <div className='w-full md:w-[60%] my-3'>
               <label className="input input-bordered flex items-center gap-2">
                 <RiLockPasswordFill />
-                <input type="password" className="grow w-full" placeholder='password' name='password' value={data.password} onChange={handelOnChange} />
+                <input type="password" className="grow w-full" placeholder='password' name='password' value={data.password} onChange={handelOnChange} autoComplete='true' />
               </label>
             </div>
 
-            {/* c password */}
-            <div className='w-full md:w-[60%] my-3'>
-              <label className="input input-bordered flex items-center gap-2">
-                <RiLockPasswordFill />
-                <input type="password" className="grow w-full" placeholder='confirm password' name='cpassword' value={data.cpassword} onChange={handelOnChange} />
-              </label>
-            </div>
+            {/* error */}
+            {isError && <div className='my-3 text-red-400'>{error}</div>}
 
-            <button className="btn btn-active btn-primary rounded-full w-full md:w-[60%] text-white font-bold py-3">Log in</button>
-          </from>
+            <button type='submit' className="btn btn-active btn-primary rounded-full w-full md:w-[60%] text-white font-bold py-3">{isLoading ? 'Loading...' : 'Log in'}</button>
+
+          </form>
         </div>
+        
         <span className='text-xl font-normal mt-4'>Don't have an account?</span>
+
         <Link to='/signup' className="btn btn-outline btn-primary rounded-full w-full md:w-[60%] mt-2">Create Account</Link>
 
       </div>
