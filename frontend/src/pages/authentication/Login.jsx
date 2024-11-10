@@ -59,9 +59,7 @@ function Login() {
     },
     onSuccess: (jsonData) => {
       toast.success(`Welcome ${jsonData.user.fullname}!`);
-      setData({ username: '', password: '' })
       queryClient.invalidateQueries({ queryKey: ['authUser'] })
-      navigate('/');
     }
   });
 

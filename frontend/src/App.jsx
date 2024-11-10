@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/home/Home'
 import Login from './pages/authentication/Login'
@@ -11,10 +11,13 @@ function App() {
   //state
   const [timeOut, setTimeOut] = useState(true);
 
-  //timeout for logo in center
-  setTimeout(() => {
-    setTimeOut(false);
-  }, 1500);
+  //effect & timeout for logo in center
+  useEffect(() => {
+    const Id = setTimeout(() => {
+      setTimeOut(false);
+    }, 1500);
+    return () => clearTimeout(Id);
+  }, []);
 
   //query
   const { data: authUser, isLoading } = useQuery({  //data(The last successfully resolved data for the query) will be used as authUser
@@ -28,10 +31,13 @@ function App() {
         const jsonData = await res.json();
 
         //if no query client then set null
-        if (jsonData.error || jsonData.msg) return null;
+        if (jsonData.error) return null;
 
         //if not
         if (!res.ok) throw new Error(jsonData.msg || "Not Authenticate user")
+
+          //if all ok
+          return jsonData;
       } catch (error) {
         throw new Error(error);
       }
@@ -47,7 +53,8 @@ function App() {
         <X className='h-14 fill-white' />
       </div>
     )
-  } else {
+  } 
+
     //if loading
     if (isLoading) {
       return (
@@ -56,8 +63,8 @@ function App() {
         </div>
       )
     }
+
     //else and navigate with help of authUser
-    else {
       return (
         <>
           {/* toaster on top */}
@@ -74,6 +81,4 @@ function App() {
         </>
       )
     }
-  }
-}
 export default App
