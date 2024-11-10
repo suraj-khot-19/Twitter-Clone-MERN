@@ -9,6 +9,11 @@ export const signUp = async (req, res) => {
         //take from body
         const { username, fullname, email, password } = req.body;
 
+        // check all feilds required
+        if (username.length === 0 || fullname.length === 0 || email.length === 0 || password.length === 0) {
+            return res.status(400).json({ msg: "All feilds are required!" });
+        }
+
         //check valid email
         const emailRgx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         if (!emailRgx.test(email)) {

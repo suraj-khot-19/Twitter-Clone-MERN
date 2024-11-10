@@ -4,6 +4,8 @@ import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { Link, useNavigate } from 'react-router-dom'
+
 
 function Signup() {
   //state
@@ -14,6 +16,9 @@ function Signup() {
   const handelOnChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
   }
+
+  //instance of navigate
+  const navigate = useNavigate();
 
   //query client
   const queryClient = useQueryClient();
@@ -61,8 +66,13 @@ function Signup() {
 
       //client
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
-    },
 
+      //navigate to login
+      navigate('/login')
+
+      // delete form data
+      setData({ username: '', email: '', password: '', fullname: '' });
+    },
 
     // !  this provide this much functionality
     // onError:
@@ -94,7 +104,7 @@ function Signup() {
   return (
     <div className='max-w-screen-xl mx-auto flex h-screen px-10 md:flex-row flex-col' style={modalActive ? { backgroundColor: 'rgba(23,23,23,0.5)', filter: 'blur(5px)', } : {}}>
       {/* icon */}
-      <div className='md:flex-1 h-1/5 md:h-[35%] lg:h-full lg:flex items-center justify-center'>
+      <div className='md:flex-1 h-1/5 md:h-[35%] lg:h-full flex items-center justify-center'>
         <X className="fill-white w-[10rem] md:w-2/3" />
       </div>
 
@@ -114,12 +124,12 @@ function Signup() {
         <button className="btn btn-active btn-primary rounded-full w-full md:w-[60%] text-white font-bold py-3" onClick={openModal}>Create Account</button>
         <span className='text-xs w-full md:w-[60%] pt-1'>By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use.</span>
         <span className='text-xl font-normal mt-4'>Already have an account?</span>
-        <button className="btn btn-outline btn-primary rounded-full w-full md:w-[60%] mt-2">Sign in</button>
+        <Link to='/login' className="btn btn-outline btn-primary rounded-full w-full md:w-[60%] mt-2">Sign in</Link>
 
       </div>
 
       {/* formx modal */}
-      <div>
+      <div className='my-3 mx-1'>
         <button className="btn hidden" onClick={() => document.getElementById('my_modal_3').showModal()}>open modal</button>
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box border border-slate-400 rounded-lg">
@@ -142,7 +152,7 @@ function Signup() {
 
                   {/* email */}
                   <div className='my-2 w-full'>
-                    <input type="email" placeholder="Email" className="input input-bordered w-full " name='email' value={data.email} onChange={handelOnChange} />
+                    <input type="text" placeholder="Email" className="input input-bordered w-full " name='email' value={data.email} onChange={handelOnChange} />
                   </div>
 
                   {/* password */}
