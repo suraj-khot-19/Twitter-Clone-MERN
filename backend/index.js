@@ -8,6 +8,7 @@ import userRouter from './routers/user.router.js'
 import postRouter from './routers/post.router.js'
 import notificationRouter from './routers/noti.router.js'
 import { v2 as cloudinary } from 'cloudinary'
+import cors from 'cors';
 
 //env
 dotenv.config();
@@ -29,6 +30,7 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
+app.use(cors());
 
 //use routers
 app.use('/api/v2/auth', authRouter);
