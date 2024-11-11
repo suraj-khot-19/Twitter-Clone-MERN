@@ -12,12 +12,12 @@ function Home() {
       </div>
 
       {/* main page */}
-      <div className='w-[64%] h-screen'>
+      <div className='w-[58%] h-screen'>
 
       </div>
 
       {/* right sidebar */}
-      <div className='w-[23%] h-screen'>
+      <div className='w-[26%] h-screen'>
         <RightSideBar />
       </div>
     </div>

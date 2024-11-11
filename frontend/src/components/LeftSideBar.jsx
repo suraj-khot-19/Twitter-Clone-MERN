@@ -64,37 +64,37 @@ function LeftSideBar() {
                             {/* navs */}
                             <div className='my-2'>
                                    {/* home */}
-                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
+                                   <div className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <GoHomeFill className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Home</span>
                                    </div>
                                    {/* explore */}
-                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
+                                   <div className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <FaSearch className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Explore</span>
                                    </div>
                                    {/* Notification */}
-                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
+                                   <div className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <IoNotifications className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Notification</span>
                                    </div>
                                    {/* Premium */}
-                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
+                                   <div className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <X className='h-7 w-7 ml-5 mr-5 fill-white' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Premium</span>
                                    </div>
                                    {/* Profile */}
-                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
+                                   <div className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <FaRegUser className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Profile</span>
                                    </div>
                                    {/* more */}
-                                   <div className='flex my-7 py-2 hover:bg-stone-900 transition-all rounded-full duration-300 '>
+                                   <div className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300 '>
                                           <CgMoreO className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>More</span>
                                    </div>
                                    {/* post btn */}
-                                   <div className='flex my-7'>
+                                   <div className='flex my-3'>
                                           <button className="btn btn-active btn-primary rounded-full w-full text-white font-bold py-3">Post</button>
                                    </div>
                             </div>
