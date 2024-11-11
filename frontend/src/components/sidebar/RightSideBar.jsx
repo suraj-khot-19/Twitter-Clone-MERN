@@ -1,8 +1,8 @@
 import React from 'react'
 import { FaSearch } from "react-icons/fa";
-import SoloUserFollowContainer from './SoloUserFollowContainer';
+import SoloUserFollowContainer from '../SoloUserFollowContainer';
 import { useQuery } from '@tanstack/react-query';
-import WhoToFollowSkelton from './skeletons/WhoToFollow';
+import WhoToFollowSkelton from '../skeletons/WhoToFollow';
 
 function RightSideBar() {
        // function to fetch

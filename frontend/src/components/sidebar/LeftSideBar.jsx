@@ -1,5 +1,5 @@
 import React from 'react'
-import X from '../assets/X'
+import X from '../../assets/X'
 import { GoHomeFill } from "react-icons/go";
 import { FaSearch } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { SlLogout } from "react-icons/sl";
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import userimg from '../assets/userimg.png'
+import userimg from '../../assets/userimg.png'
 
 function LeftSideBar() {
        //client
@@ -55,7 +55,7 @@ function LeftSideBar() {
               }
        })
        return (
-              <div className='flex flex-col justify-center items-start ms-20 p-4 h-full'>
+              <div className='flex flex-col justify-center items-start ms-0 xl:ms-20  p-4 h-full'>
                      {/* logo */}
                      <X className='w-8 ml-5 fill-white' />
 
