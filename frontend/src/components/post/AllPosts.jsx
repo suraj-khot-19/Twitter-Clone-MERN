@@ -1,53 +1,72 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SinglePostWithProp from './SinglePostWithProp'
+import { useQuery } from '@tanstack/react-query'
+import AllPostsSkelton from '../skeletons/AllPostsSkelton';
+
 function AllPosts(props) {
-  const post = {
-    "_id": "672c6be0dacfcb57052077bc",
-    "user": {
-           "_id": "672331e547164cb57c43e931",
-           "username": "rowdy",
-           "fullname": "Rowdy Khot",
-           "profileImg": "",
-           "coverImg": "",
-           "createdAt": "2024-10-31T07:29:41.224Z",
-           "updatedAt": "2024-11-08T07:03:48.619Z",
-           "liked": [
-                  "672cacc59fc5e50704c9de6a",
-                  "672c6be0dacfcb57052077bc"
-           ]
-    },
-    "title": "my new post",
-    "likes": [
-           "672ca79ad138c88f53da3c90",
-           "672331e547164cb57c43e931"
-    ],
-    "comments": [
-           {
-                  "title": "great post.",
-                  "user": {
-                         "_id": "672331e547164cb57c43e931",
-                         "username": "rowdy",
-                         "fullname": "Rowdy Khot",
-                         "profileImg": "",
-                         "createdAt": "2024-10-31T07:29:41.224Z",
-                         "updatedAt": "2024-11-08T07:03:48.619Z",
-                         "liked": [
-                                "672cacc59fc5e50704c9de6a",
-                                "672c6be0dacfcb57052077bc"
-                         ]
-                  },
-                  "_id": "672c9f50f56afe785ce2e43c"
-           }
-    ],
-    "img":'',
-    "createdAt": "2024-11-07T07:27:28.119Z",
-    "updatedAt": "2024-11-08T07:03:21.092Z",
-}
-  return (
-    <div>
-     <SinglePostWithProp post={post}/>
-    </div>
-  )
+       // destructure props
+       const { url } = props;
+
+       //function to fetch the url as for props.url
+       const getUrl = () => {
+              switch (url) {              //loop through url
+                     case 'all':
+                            return '/api/v2/post'
+                     case 'following':
+                            return '/api/v2/post/following'
+                     default:
+                            return '/api/v2/post'
+              }
+       }
+
+       //call a function
+       const getCorrectedUrl = getUrl();
+
+       // api call
+       const { data: posts, refetch, isLoading, isRefetching } = useQuery({
+              queryKey: ['posts'],
+              queryFn: async () => {
+                     try {
+                            const res = await fetch(getCorrectedUrl) //getting url from props
+                            const jsonData = await res.json();
+
+                            if (!res.ok) {
+                                   throw new Error(jsonData.error || jsonData.msg || "Something is wrong at backend")
+                            }
+                            return jsonData;
+                     } catch (error) {
+                            throw new Error(error);
+                     }
+              },
+              retry: false,
+       })
+
+       //effect to change/refech after url change
+       useEffect(() => {
+              refetch(); //callling refectch from query client
+       }, [url, refetch])
+
+       if (isLoading || isRefetching) {
+              return (
+                     <div>
+                            <AllPostsSkelton />
+                            <AllPostsSkelton />
+                            <AllPostsSkelton />
+                            <AllPostsSkelton />
+                     </div>
+              )
+       }
+
+       return (
+              <div>
+                     {/* map through posts */}
+                     {
+                            posts?.posts?.map((e) => {
+                                   return <SinglePostWithProp post={e} key={e._id} />
+                            })
+                     }
+              </div>
+       )
 }
 
 export default AllPosts

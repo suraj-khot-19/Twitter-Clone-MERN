@@ -47,7 +47,6 @@ function LeftSideBar() {
                      toast.success('logged out sucessfully!')
                      queryClient.invalidateQueries({ queryKey: ['authUser'] })
                      navigate('/login')
-                     window.location.reload(); //force reload
               },
               //error
               onError: () => {

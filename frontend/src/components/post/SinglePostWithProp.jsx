@@ -9,7 +9,7 @@ import demo from '../../assets/demo.png'
 
 function SinglePostWithProp(props) {
        // destructure post
-       const { user, createdAt, title, img,comments,likes } = props.post;
+       const { user, createdAt, title, img, comments, likes } = props.post;
 
        return (
               <div className='border-b border-slate-200 border-opacity-30 flex flex-col items-start justify-between'>
@@ -63,7 +63,7 @@ function SinglePostWithProp(props) {
                             </div>
 
                             {/* repost */}
-                            <div className='w-[25%] flex'>
+                            <div className='w-[25%]'>
                                    <div className='flex justify-center items-center w-full '>
                                           <BiRepost className='h-5 w-5 cursor-pointer' />
                                           <span className='ms-1 text-base text-stone-500'>{'0'}</span>
@@ -71,14 +71,14 @@ function SinglePostWithProp(props) {
                             </div>
 
                             {/* like */}
-                            <div className='w-[25%] flex'>
+                            <div className='w-[25%]'>
                                    <div className='flex justify-center items-center w-full '>
                                           <FaRegHeart className='h-5 w-5 cursor-pointer' />
                                           <span className='ms-1 text-base text-stone-500'>{likes.length}</span>
                                    </div>
                             </div>
                             {/* view */}
-                            <div className='w-[25%] flex'>
+                            <div className='w-[25%]'>
                                    <div className='flex justify-center items-center w-full '>
                                           <ViewSvg className='fill-white h-5 w-5 cursor-pointer' />
                                           <span className='ms-1 text-base text-stone-500'>{'19'}</span>
