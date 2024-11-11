@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { SlLogout } from "react-icons/sl";
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-
+import userimg from '../assets/userimg.png'
 
 function LeftSideBar() {
        //client
@@ -107,7 +107,7 @@ function LeftSideBar() {
                                           {/* img */}
                                           <div className="avatar">
                                                  <div className="w-11 h-11 rounded-full">
-                                                        <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Profile" />
+                                                        <img src={data.user.profileImg || userimg} alt="Profile" />
                                                  </div>
                                           </div>
 
