@@ -1,8 +1,29 @@
 import React from 'react'
 import { FaSearch } from "react-icons/fa";
 import SoloUserFollowContainer from './SoloUserFollowContainer';
+import { useQuery } from '@tanstack/react-query';
+import WhoToFollowSkelton from './skeletons/WhoToFollow';
 
 function RightSideBar() {
+       // function to fetch
+       const { data: whoToFollow, isLoading, isError, error } = useQuery({
+              queryKey: ['whoToFollow'],
+              queryFn: async () => {
+                     const url = '/api/v2/user/suggetion'
+                     try {
+                            const res = await fetch(url)
+                            const jsonData = await res.json();
+
+                            if (!res.ok) {
+                                   throw new Error(jsonData.msg || "Something went wrong")
+                            }
+                            return jsonData;
+                     } catch (error) {
+                            throw new Error(error)
+                     }
+              }
+       });
+
        return (
               <div className='w-full py-2 px-4'>
                      {/* search */}
@@ -26,8 +47,26 @@ function RightSideBar() {
                      {/* who to follow */}
                      <div className='rounded-2xl border-2 border-stone-700 px-4 py-2 my-3'>
                             <p className='text-xl font-bold my-1'>Who to follow</p>
-                            <SoloUserFollowContainer user={{fullname:'rowdy',username:'rowdy'}}/>
-                            <label className='text-blue-400 cursor-pointer mt-5'>show more</label>
+
+                            {isError && <span className='text-center text-red-500 font-semibold'>{error}</span>}
+
+                            {/* map through suggested user */}
+                            {!isError && isLoading ?
+                                   <div>
+                                          <WhoToFollowSkelton />
+                                          <WhoToFollowSkelton />
+                                          <WhoToFollowSkelton />
+                                          <WhoToFollowSkelton />
+                                   </div>
+                                   :
+                                   whoToFollow?.suggestedUser?.length === 0 ? <p className='text-xsl text-slate-200 font-semibold text-center'>No Suggestions</p> : whoToFollow?.suggestedUser?.map((e) => {
+                                          return <SoloUserFollowContainer key={e._id} user={e} />
+                                   })
+                            }
+
+                            {/* show more btn */}
+                            <label className='text-blue-400 cursor-pointer mt-5'>{whoToFollow?.suggestedUser?.length === 0 ? '' : 'show more'}</label>
+
                      </div>
               </div>
        )
