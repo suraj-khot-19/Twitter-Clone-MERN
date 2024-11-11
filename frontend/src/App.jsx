@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/home/Home'
 import Login from './pages/authentication/Login'
 import Signup from './pages/authentication/Signup'
 import { Toaster } from "react-hot-toast";
 import { useQuery } from '@tanstack/react-query'
-import X from './assets/X'
 
 function App() {
-  //state
-  const [timeOut, setTimeOut] = useState(true);
 
   //query
   const { data: authUser, isLoading } = useQuery({  //data(The last successfully resolved data for the query) will be used as authUser
@@ -36,23 +33,6 @@ function App() {
     },
     retry: false //do not retry api request if user not found
   });
-
-  //effect & timeout for logo in center
-  useEffect(() => {
-    const Id = setTimeout(() => {
-      setTimeOut(false);
-    }, 800);
-    return () => clearTimeout(Id);
-  }, [authUser]);
-
-  //showing shimmer effect
-  if (timeOut) {
-    return (
-      <div className='flex h-screen justify-center items-center'>
-        <X className='h-14 fill-white' />
-      </div>
-    )
-  }
 
   //if loading
   if (isLoading) {

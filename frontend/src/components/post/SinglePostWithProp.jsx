@@ -11,6 +11,12 @@ function SinglePostWithProp(props) {
        // destructure post
        const { user, createdAt, title, img, comments, likes } = props.post;
 
+       // rand num
+       const rand = () => {
+              return Math.floor(100 * Math.random());
+       }
+       const randNum=rand();
+
        return (
               <div className='border-b border-slate-200 border-opacity-30 flex flex-col items-start justify-between'>
                      {/* top of post*/}
@@ -53,19 +59,19 @@ function SinglePostWithProp(props) {
                      </div>
 
                      {/* bottom of post */}
-                     <div className='flex w-full my-3'>
+                     <div className='flex w-full my-3 justify-center items-center'>
                             {/* comment */}
                             <div className='w-[25%]'>
-                                   <div className='flex justify-center items-center w-full '>
-                                          <FaRegComment className=' h-5 w-5 cursor-pointer' />
-                                          <span className=' ms-1 text-base text-stone-500'>{comments.length}</span>
+                                   <div className='flex justify-center items-center w-full'>
+                                          <FaRegComment className=' h-5 w-5 cursor-pointer opacity-80  hover:opacity-100' />
+                                          <span className='ms-1 text-base text-stone-500'>{comments.length}</span>
                                    </div>
                             </div>
 
                             {/* repost */}
                             <div className='w-[25%]'>
                                    <div className='flex justify-center items-center w-full '>
-                                          <BiRepost className='h-5 w-5 cursor-pointer' />
+                                          <BiRepost className='h-8 w-8 cursor-pointer opacity-80 hover:opacity-100' />
                                           <span className='ms-1 text-base text-stone-500'>{'0'}</span>
                                    </div>
                             </div>
@@ -73,15 +79,15 @@ function SinglePostWithProp(props) {
                             {/* like */}
                             <div className='w-[25%]'>
                                    <div className='flex justify-center items-center w-full '>
-                                          <FaRegHeart className='h-5 w-5 cursor-pointer' />
+                                          <FaRegHeart className='h-5 w-5 cursor-pointer opacity-80  hover:opacity-100' />
                                           <span className='ms-1 text-base text-stone-500'>{likes.length}</span>
                                    </div>
                             </div>
                             {/* view */}
                             <div className='w-[25%]'>
                                    <div className='flex justify-center items-center w-full '>
-                                          <ViewSvg className='fill-white h-5 w-5 cursor-pointer' />
-                                          <span className='ms-1 text-base text-stone-500'>{'19'}</span>
+                                          <ViewSvg className='fill-white h-5 w-5 cursor-pointer opacity-80  hover:opacity-100' />
+                                          <span className='ms-1 text-base text-stone-500'>{randNum}</span>
                                    </div>
                             </div>
                      </div>

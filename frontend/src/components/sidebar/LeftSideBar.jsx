@@ -5,7 +5,6 @@ import { FaSearch } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa6";
 import { CgMoreO } from "react-icons/cg";
-import { useNavigate } from 'react-router-dom'
 import { SlLogout } from "react-icons/sl";
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
@@ -17,9 +16,6 @@ function LeftSideBar() {
 
        //query client
        const { data } = useQuery({ queryKey: ["authUser"] });
-
-       //navigate
-       const navigate = useNavigate();
 
        // logout fun
        const { mutate: loggingOut, isPending } = useMutation({
@@ -44,9 +40,11 @@ function LeftSideBar() {
               },
               //on sucess
               onSuccess: () => {
-                     toast.success('logged out sucessfully!')
-                     queryClient.invalidateQueries({ queryKey: ['authUser'] })
-                     navigate('/login')
+                     toast.success(`See you again ${data?.user?.fullname+' !' || '!'}`)
+                     //removing all queryes
+                     queryClient.removeQueries({ queryKey: ['authUser'] });
+                     queryClient.invalidateQueries({ queryKey: ['authUser'] });
+                     window.location.reload(); //force reload
               },
               //error
               onError: () => {
@@ -100,7 +98,7 @@ function LeftSideBar() {
 
                             {/* secound div */}
                             {/* profile */}
-                            <div className="flex items-center justify-between w-full p-2  hover:bg-stone-900 transition-all rounded-full duration-300 py-2 ">
+                            <div className="flex items-center justify-between w-full px-4  hover:bg-stone-900 transition-all rounded-full duration-300 py-2">
                                    {/* img and name */}
                                    <div className="flex items-center cursor-pointer">
                                           {/* img */}
@@ -117,13 +115,13 @@ function LeftSideBar() {
                                           </div>
                                    </div>
 
-                                   {/* more button */}
+                                   {/* logout button */}
                                    <div className="flex items-center" onClick={(e) => {
                                           e.preventDefault();
                                           loggingOut()
                                    }}>
                                           {isPending ?
-                                                 <span className="loading loading-spinner text-primary loading-lg "></span> : <SlLogout className='opacity-80 hover:opacity-100 cursor-pointer' />}
+                                                 <span className="loading loading-spinner text-primary loading-lg "></span> : <SlLogout className='hover:scale-150 transition-all duration-100 cursor-pointer' />}
                                    </div>
                             </div>
                      </div>
