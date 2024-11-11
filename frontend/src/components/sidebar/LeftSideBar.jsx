@@ -9,6 +9,8 @@ import { SlLogout } from "react-icons/sl";
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import userimg from '../../assets/userimg.png'
+import { Link } from 'react-router-dom'
+
 
 function LeftSideBar() {
        //client
@@ -40,7 +42,7 @@ function LeftSideBar() {
               },
               //on sucess
               onSuccess: () => {
-                     toast.success(`See you again ${data?.user?.fullname+' !' || '!'}`)
+                     toast.success(`See you again ${data?.user?.fullname + ' !' || '!'}`)
                      //removing all queryes
                      queryClient.removeQueries({ queryKey: ['authUser'] });
                      queryClient.invalidateQueries({ queryKey: ['authUser'] });
@@ -109,10 +111,11 @@ function LeftSideBar() {
                                           </div>
 
                                           {/* name and username */}
-                                          <div className="ms-4 flex flex-col items-start justify-center">
+                                          {/* navigate to user profile with username */}
+                                          <Link to={`/profile/${data.user.username}`} className="ms-4 flex flex-col items-start justify-center" >
                                                  <span>{data.user.fullname}</span>
                                                  <span>{data.user.username}</span>
-                                          </div>
+                                          </Link>
                                    </div>
 
                                    {/* logout button */}

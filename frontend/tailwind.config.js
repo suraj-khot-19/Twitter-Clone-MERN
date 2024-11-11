@@ -1,6 +1,5 @@
-//daisy ui
-import daisyui from "daisyui"
-//theme
+// tailwind.config.js
+import daisyui from "daisyui";
 import daisyUIThemes from "daisyui/src/theming/themes";
 
 /** @type {import('tailwindcss').Config} */
@@ -10,21 +9,25 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customGray: '#71767B',
+      },
+    },
   },
   plugins: [daisyui],
 
-  //theme 
   daisyui: {
-		themes: [
-			"light",
-			{
-				black: {
-					...daisyUIThemes["black"],
-					primary: "rgb(29, 155, 240)",
-					secondary: "rgb(24, 24, 24)",
-				},
-			},
-		],
-	},
-}
+    themes: [
+      "light",
+      {
+        black: {
+          ...daisyUIThemes["black"],
+          primary: "rgb(29, 155, 240)",
+          secondary: "rgb(24, 24, 24)",
+          customGray: "#71767B", 
+        },
+      },
+    ],
+  },
+};
