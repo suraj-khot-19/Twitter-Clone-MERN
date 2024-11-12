@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { useQuery } from '@tanstack/react-query'
 import Profile from './pages/profile/Profile'
 import FollowerFollowingPage from './components/profile/FollowerFollowingPage'
+import BorromNavBar from './components/sidebar/BorromNavBar'
 
 function App() {
 
@@ -14,7 +15,7 @@ function App() {
   const { data: authUser, isLoading } = useQuery({  //data(The last successfully resolved data for the query) will be used as authUser
     queryKey: ['authUser'],
     queryFn: async () => {
-      const url = '/api/v2//auth/me'
+      const url = '/api/v2/auth/me'
       try {
         const res = await fetch(url)
 
@@ -52,7 +53,14 @@ function App() {
       <div style={{ filter: 'none', zIndex: '1000' }}>
         <Toaster />
       </div>
+
       <Router>
+
+      {/* bottom bar */}
+      <div className='block md:hidde'>
+        <BorromNavBar user={authUser.user} />
+      </div>
+
         <Routes>
           <Route path="/" element={authUser ? <Home /> : <Navigate to='/login' />} />
           <Route path='/login' element={!authUser ? <Login /> : <Navigate to='/' />} />

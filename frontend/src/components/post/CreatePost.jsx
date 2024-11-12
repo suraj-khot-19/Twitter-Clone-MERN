@@ -4,7 +4,7 @@ import userimg from '../../assets/userimg.png'
 
 function CreatePost() {
 	return (
-		<div>
+		<div className="hidden md:block">
 			<div className='flex p-4 items-start gap-4 border-b border-gray-700'>
 				<div className='avatar'>
 					<div className='w-8 rounded-full'>

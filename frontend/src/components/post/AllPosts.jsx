@@ -61,9 +61,15 @@ function AllPosts(props) {
               <div>
                      {/* map through posts */}
                      {
-                            posts?.posts?.map((e) => {
-                                   return <SinglePostWithProp post={e} key={e._id} />
-                            })
+                            // if no posts
+                            posts?.posts?.length === 0 ?
+                                   <div className='flex justify-center items-center h-full mt-3'>
+                                          <span className='text-center text-xl text-stone-500 font-bold'>No Posts ...</span>
+                                   </div> :
+                                   // if posts
+                                   posts?.posts?.map((e) => {
+                                          return <SinglePostWithProp post={e} key={e._id} />
+                                   })
                      }
               </div>
        )
