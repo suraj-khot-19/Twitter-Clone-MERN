@@ -6,8 +6,10 @@ import { FaRegUser } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import PostSvg from '../../assets/PostSvg';
+import { useQuery } from '@tanstack/react-query';
 
-export default function BorromNavBar(props) {
+export default function BorromNavBar() {
+       const { data: user } = useQuery({queryKey: ['authUser']})
        return (
               <div>
                      {/* // bottom bar */}
@@ -31,7 +33,7 @@ export default function BorromNavBar(props) {
                                           <IoNotificationsOutline className='text-2xl mx-auto' />
                                    </div>
                                    {/* user */}
-                                   <Link to={`/profile/${props.user.username}`} className='w-[20%]'>
+                                   <Link to={`/profile/${user?.user?.username}`} className='w-[20%]'>
                                           <FaRegUser className='text-xl mx-auto' />
                                    </Link>
                             </div>

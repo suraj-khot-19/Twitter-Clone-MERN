@@ -57,9 +57,11 @@ function App() {
       <Router>
 
       {/* bottom bar */}
-      <div className='block md:hidde'>
-        <BorromNavBar user={authUser.user} />
+      {
+       authUser && <div className='block md:hidden'>
+        <BorromNavBar/>
       </div>
+      }
 
         <Routes>
           <Route path="/" element={authUser ? <Home /> : <Navigate to='/login' />} />

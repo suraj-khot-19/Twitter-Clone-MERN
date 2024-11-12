@@ -37,7 +37,6 @@ function SoloUserFollowContainer(props) {
        const handelFollow = (e) => {
               e.preventDefault();
               mutate();
-
        }
 
        // to show what to display on btn
@@ -72,12 +71,17 @@ function SoloUserFollowContainer(props) {
                                                  {/* showing follow if only not include in following array */}
                                                  {
                                                         isPending ?
+                                                               // loading
                                                                <div className='text-center mx-auto'>
                                                                       <span className="loading loading-spinner loading-md"></span>
                                                                </div> :
                                                                trueOrFalse ?
-                                                                      <button className="btn btn-outline btn-sm px-3 py-1 rounded-full" onClick={(e) => handelFollow(e)} >UnFollow</button> :
-                                                                      <button onClick={(e) => handelFollow(e)} className='btn bg-white text-black btn-sm px-5 py-1 rounded-full hover:text-white hover:border-white'>Follow</button>
+
+                                                                      // if unfollow
+                                                                      <button className="transition-all duration-100 btn btn-outline btn-sm px-3 py-1 rounded-full hover:bg-red-600 border-red-500 hover:border-red-500" onClick={(e) => handelFollow(e)} >UnFollow</button> :
+
+                                                                      // if follow
+                                                                      <button onClick={(e) => handelFollow(e)} className='transition-all duration-100  btn bg-white text-black btn-sm px-5 py-1 rounded-full hover:text-white hover:border-white'>Follow</button>
 
                                                  }
                                           </div>

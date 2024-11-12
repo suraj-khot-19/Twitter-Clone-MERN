@@ -1,17 +1,34 @@
 import React from 'react';
 import { formatMemberSinceDate } from '../../utils/FormatDataFun';
-import { IoLocationOutline } from "react-icons/io5";
+import { IoArrowBack, IoLocationOutline } from "react-icons/io5";
 import { SlCalender } from "react-icons/sl";
 import { MdEdit, MdOutlineVerifiedUser } from "react-icons/md";
 import demo from '../../assets/demo.png';
 import userimg from '../../assets/userimg.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query'
 
 export default function UserProfile(props) {
-       const { bio, username, fullname, profileImg, country, coverImg, following, followers, link, createdAt } = props?.user;
+       // navigate instance
+       const navigate = useNavigate();
+
+       // destructure props
+       const { _id, bio, username, fullname, profileImg, country, coverImg, following, followers, link, createdAt } = props?.user;
+
+       // if current user
+       const { data: user } = useQuery({ queryKey: ['authUser'] });
+       const currentUserItIs = user.user._id === _id;
 
        return (
               <div>
+
+                     {/* back btn */}
+                     <div className='ms-3'>
+                            <div className='fixed top-4 z-50'>
+                                   <IoArrowBack onClick={() => navigate(-1)} className='text-2xl cursor-pointer hover:-scale-x-130 z-50' />
+                            </div>
+                     </div>
+
                      {/* top */}
                      <div className="relative group/cover">
 
@@ -37,9 +54,17 @@ export default function UserProfile(props) {
                             </div>
 
                             {/* Edit Profile */}
-                            <div className="absolute -bottom-25 right-10 p-1">
-                                   <button className="btn btn-outline rounded-full px-8">Edit Profile</button>
-                            </div>
+                            {
+                                   currentUserItIs ?
+                                          //currrent user then edit
+                                          <div className="absolute top-52  right-2 md:right-10 p-1">
+                                                 <button className="btn btn-outline rounded-full px-8">Edit Profile</button>
+                                          </div> :
+                                          //else fllow
+                                          <div className="absolute top-52 right-2 md:right-10 p-1">
+                                                 <button className='btn bg-white text-black px-8 py-3 rounded-full hover:text-white hover:border-white'>Follow</button>
+                                          </div>
+                            }
                      </div>
 
                      {/* below img */}
