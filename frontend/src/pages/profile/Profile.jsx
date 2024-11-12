@@ -49,7 +49,6 @@ export default function Profile() {
                      }
 
                      {/* for loading */}
-                     {/* todo:effect */}
                      {
                             (isLoading || isRefetching) &&
                             (

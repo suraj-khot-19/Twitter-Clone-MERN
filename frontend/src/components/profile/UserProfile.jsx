@@ -55,7 +55,7 @@ export default function UserProfile(props) {
                             <a href={link} className="text-blue-500 hover:underline mt-2">{link}</a>
 
                             {/* Below Info */}
-                            <div className="flex items-center gap-5 mt-2 text-gray-600">
+                            <div className="flex md:flex flex-wrap items-center gap-5 mt-2 text-gray-600">
                                    {/* Location */}
                                    <div className="flex items-center gap-1">
                                           <IoLocationOutline className="text-lg" />

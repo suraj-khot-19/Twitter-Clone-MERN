@@ -56,7 +56,9 @@ function LeftSideBar() {
        return (
               <div className='flex flex-col justify-center items-start ms-0 xl:ms-20  p-4 h-full'>
                      {/* logo */}
+                     <Link to='/'>
                      <X className='w-8 ml-5 fill-white' />
+                     </Link>
 
                      {/* first div */}
                      <div className='flex flex-col items-start justify-between w-full h-full'>
