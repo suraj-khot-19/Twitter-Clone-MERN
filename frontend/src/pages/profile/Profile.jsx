@@ -2,28 +2,16 @@ import React, { useEffect } from 'react'
 import LeftSideBar from '../../components/sidebar/LeftSideBar'
 import RightSideBar from '../../components/sidebar/RightSideBar'
 import UserProfile from '../../components/profile/UserProfile'
-import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import ProfileSkelton from '../../components/skeletons/ProfileSkelton';
+import useUserProfile from '../../hooks-Query/hooks/useUserProfile';
 
 export default function Profile() {
        //take from params
        const { username } = useParams();
 
-       const { data: userProfile, isLoading, isError, error, refetch, isRefetching } = useQuery({
-              queryKey: ['userProfile'],
-              queryFn: async () => {
-                     const url = `/api/v2/user/profile/${username}`
-                     const res = await fetch(url);
-
-                     const jsonData = await res.json();
-
-                     if (!res.ok) {
-                            throw new Error(jsonData.msg || jsonData.error || 'Somethong weong at backend!')
-                     }
-                     return jsonData;
-              },
-       })
+       // from custom hook
+       const { data: userProfile, isLoading, isError, error,refetch,isRefetching } = useUserProfile(username);
 
        //efffect
        useEffect(() => {
@@ -44,7 +32,7 @@ export default function Profile() {
                      {
                             isError &&
                             <div className='w-full lg:w-[58%] h-screen overflow-hidden'>
-                                   <span className='text-center text-red-700 font-bold'>{error}</span>
+                                   <span className='text-center text-red-700 font-bold'>{error.message}</span>
                             </div>
                      }
 

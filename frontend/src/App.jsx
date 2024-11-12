@@ -6,6 +6,7 @@ import Signup from './pages/authentication/Signup'
 import { Toaster } from "react-hot-toast";
 import { useQuery } from '@tanstack/react-query'
 import Profile from './pages/profile/Profile'
+import FollowerFollowingPage from './components/profile/FollowerFollowingPage'
 
 function App() {
 
@@ -57,6 +58,7 @@ function App() {
           <Route path='/login' element={!authUser ? <Login /> : <Navigate to='/' />} />
           <Route path='/signup' element={!authUser ? <Signup /> : <Navigate to='/' />} />
           <Route path="/profile/:username" element={authUser ? <Profile /> : <Navigate to='/login' />} />
+          <Route path="/profile/:username/:followerOrFollowing" element={authUser ? <FollowerFollowingPage /> : <Navigate to='/login' />} />
         </Routes>
       </Router>
     </>

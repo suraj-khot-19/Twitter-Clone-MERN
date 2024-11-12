@@ -5,6 +5,7 @@ import { SlCalender } from "react-icons/sl";
 import { MdEdit, MdOutlineVerifiedUser } from "react-icons/md";
 import demo from '../../assets/demo.png';
 import userimg from '../../assets/userimg.png';
+import { Link } from 'react-router-dom';
 
 export default function UserProfile(props) {
        const { bio, username, fullname, profileImg, country, coverImg, following, followers, link, createdAt } = props?.user;
@@ -78,15 +79,15 @@ export default function UserProfile(props) {
                             {/* Following and Followers */}
                             <div className="flex items-center gap-5 my-4">
                                    {/* Following */}
-                                   <div className="flex justify-center items-center cursor-pointer hover:underline">
+                                   <Link to={`following`} className="flex justify-center items-center cursor-pointer hover:underline">
                                           <span>{following?.length}</span>
                                           <span className="text-customGray ms-1">Following</span>
-                                   </div>
+                                   </Link>
                                    {/* Followers  */}
-                                   <div className="flex justify-center items-center cursor-pointer hover:underline">
+                                   <Link to={`followers`} className="flex justify-center items-center cursor-pointer hover:underline">
                                           <span>{followers?.length}</span>
                                           <span className="text-customGray ms-1">Followers</span>
-                                   </div>
+                                   </Link>
                             </div>
                      </div>
               </div>
