@@ -58,8 +58,11 @@ function Login() {
       }
     },
     onSuccess: (jsonData) => {
-      toast.success(`Welcome ${jsonData.user.fullname}!`);
+      toast.success(`Welcome ${jsonData.user.fullname}!`, { duration: 5000 });
       queryClient.invalidateQueries({ queryKey: ['authUser'] })
+    },
+    onError:(jsonData)=>{
+      toast.error(jsonData.msg||"Failed To Login!", { duration: 5000 })
     }
   });
 

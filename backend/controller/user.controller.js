@@ -13,7 +13,13 @@ export const getProfile = async (req, res) => {
         const { username } = req.params;
 
         //find user
-        const user = await User.findOne({ username }).select('-password');
+        const user = await User.findOne({ username }).select('-password').populate({
+            path:'following',
+            select:'-password'
+        }).populate({
+            path:'followers',
+            select:'-password'
+        });
 
         //if not user
         if (!user) {
@@ -45,7 +51,7 @@ export const followOrUnfollow = async (req, res) => {
             return res.status(400).json({ msg: "no user found" });
 
         //following or unfollowing self
-        if (userToModify._id === req.user._id.toString()) //this user and main user(cookie[from miiddleware]{object})
+        if (userToModify._id.toString() === req.user._id.toString()) //this user and main user(cookie[from miiddleware]{object})
             return res.status(400).json({ msg: "you cannot follow or unfollow self" });
 
         //follow (check with id)

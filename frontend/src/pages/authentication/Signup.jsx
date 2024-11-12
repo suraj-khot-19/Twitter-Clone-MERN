@@ -62,7 +62,7 @@ function Signup() {
     //if success
     onSuccess: () => {
       //send toast
-      toast.success("Account created successfully!");
+      toast.success("Account created successfully!", { duration: 5000 });
 
       //client
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
@@ -73,9 +73,11 @@ function Signup() {
       // delete form data
       setData({ username: '', email: '', password: '', fullname: '' });
     },
+    onError:()=>{
+      toast.error(jsonData.msg||"Failed To Login!", { duration: 5000 })
+    }
 
     // !  this provide this much functionality
-    // onError:
     // onMutate:
     // onSettled:
   });

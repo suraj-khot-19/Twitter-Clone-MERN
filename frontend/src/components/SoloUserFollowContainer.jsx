@@ -25,60 +25,65 @@ function SoloUserFollowContainer(props) {
                      return jsonData;
               },
               onSuccess: (jsonData) => {
-                     toast.success(`${jsonData.msg}`);
+                     toast.success(`${jsonData.msg}`, { duration: 5000 });
                      queryClient.invalidateQueries({ queryKey: ['authUser'] })
               },
-              onError: () => {
-                     toast.error(error);
+              onError: (jsonData) => {
+                     toast.error(error || jsonData.msg || "Something went wrong!", { duration: 5000 });
               }
        })
 
        // follow/unfollow on btn click
-       const handelFollow = () => {
+       const handelFollow = (e) => {
+              e.preventDefault();
               mutate();
+
        }
 
-       // function to show what to display on btn
-       function toDisplay() {
-              return currentUser.user.following.includes(props.user._id);
-       }
-       const trueOrFalse = toDisplay();
+       // to show what to display on btn
+       const trueOrFalse = currentUser?.user?.following.includes(props.user._id);;
 
        return (
               <>
-                     <Link to={`/profile/${props.user.username}`} className="flex items-center justify-between w-full px-4 py-2 hover:bg-stone-900 transition-all rounded-full duration-300">
-                            {/* img and name */}
-                            <div className="flex items-center cursor-pointer">
-                                   {/* img */}
-                                   <div className="avatar">
-                                          <div className="w-11 h-11 rounded-full">
-                                                 <img src={props.user.profileImg || userimg} alt="Profile" />
+                     <div>
+                            <Link to={`/profile/${props.user.username}`} className="flex items-center justify-between w-full px-4 py-2 hover:bg-stone-900 transition-all rounded-full duration-300">
+                                   {/* img and name */}
+                                   <div className="flex items-center cursor-pointer">
+                                          {/* img */}
+                                          <div className="avatar">
+                                                 <div className="w-11 h-11 rounded-full">
+                                                        <img src={props.user.profileImg || userimg} alt="Profile" />
+                                                 </div>
+                                          </div>
+
+                                          {/* name and username */}
+                                          <div className="ms-4 flex flex-col items-start justify-center">
+                                                 <span className="font-extrabold">{props.user.fullname}</span>
+                                                 <span className="text-customGray text-sm">{props.user.username}</span>
+                                                 <span>{props.isBio && props.user.bio}</span>
                                           </div>
                                    </div>
 
-                                   {/* name and username */}
-                                   <div className="ms-4 flex flex-col items-start justify-center">
-                                          <span>{props.user.fullname}</span>
-                                          <span>{props.user.username}</span>
-                                   </div>
-                            </div>
-
-                            {/* follow button */}
-                            <div className="flex items-center">
-                                   {/* showing on btn when loading data */}
-                                   {/* showing follow if only not include in following array */}
+                                   {/* follow button */}
                                    {
-                                          isPending ?
-                                                 <div className='text-center mx-auto'>
-                                                        <span className="loading loading-spinner loading-md"></span>
-                                                 </div> :
-                                                 trueOrFalse ?
-                                                        <button className="btn btn-outline btn-sm px-3 py-1 rounded-full">UnFollow</button> :
-                                                        <button onClick={handelFollow} className='btn bg-white text-black btn-sm px-5 py-1 rounded-full hover:text-white hover:border-white'>Follow</button>
+                                          // do not show follow btn if following self
+                                          !(currentUser?.user?._id === props.user._id) && <div className="flex items-center">
+                                                 {/* showing on btn when loading data */}
+                                                 {/* showing follow if only not include in following array */}
+                                                 {
+                                                        isPending ?
+                                                               <div className='text-center mx-auto'>
+                                                                      <span className="loading loading-spinner loading-md"></span>
+                                                               </div> :
+                                                               trueOrFalse ?
+                                                                      <button className="btn btn-outline btn-sm px-3 py-1 rounded-full" onClick={(e) => handelFollow(e)} >UnFollow</button> :
+                                                                      <button onClick={(e) => handelFollow(e)} className='btn bg-white text-black btn-sm px-5 py-1 rounded-full hover:text-white hover:border-white'>Follow</button>
 
+                                                 }
+                                          </div>
                                    }
-                            </div>
-                     </Link>
+                            </Link>
+                     </div>
               </>
        )
 }

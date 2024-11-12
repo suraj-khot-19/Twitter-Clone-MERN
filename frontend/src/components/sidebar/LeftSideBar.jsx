@@ -42,7 +42,7 @@ function LeftSideBar() {
               },
               //on sucess
               onSuccess: () => {
-                     toast.success(`See you again ${data?.user?.fullname + ' !' || '!'}`)
+                     toast.success(`See you again ${data?.user?.fullname + ' !' || '!'}`, { duration: 5000 })
                      //removing all queryes
                      queryClient.removeQueries({ queryKey: ['authUser'] });
                      queryClient.invalidateQueries({ queryKey: ['authUser'] });
@@ -50,7 +50,7 @@ function LeftSideBar() {
               },
               //error
               onError: () => {
-                     toast.error('Failed to Logout')
+                     toast.error('Failed to Logout', { duration: 5000 })
               }
        })
        return (
