@@ -63,10 +63,10 @@ function LeftSideBar() {
                             {/* navs */}
                             <div className='my-2'>
                                    {/* home */}
-                                   <div className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
+                                   <Link to='/' className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <GoHomeFill className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Home</span>
-                                   </div>
+                                   </Link>
                                    {/* explore */}
                                    <div className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <FaSearch className='h-7 w-7 ml-5 mr-5' />
@@ -83,10 +83,10 @@ function LeftSideBar() {
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Premium</span>
                                    </div>
                                    {/* Profile */}
-                                   <div className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
+                                   <Link to={`/profile/${data.user.username}`} className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <FaRegUser className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Profile</span>
-                                   </div>
+                                   </Link>
                                    {/* more */}
                                    <div className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300 '>
                                           <CgMoreO className='h-7 w-7 ml-5 mr-5' />

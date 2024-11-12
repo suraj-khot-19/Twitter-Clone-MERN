@@ -1,10 +1,11 @@
 import React from 'react'
 import userimg from '../assets/userimg.png'
+import { Link } from 'react-router-dom'
 
 function SoloUserFollowContainer(props) {
        return (
               <>
-                     <div className="flex items-center justify-between w-full p-2 py-2">
+                     <Link to={`/profile/${props.user.username}`} className="flex items-center justify-between w-full px-4 py-2 hover:bg-stone-900 transition-all rounded-full duration-300">
                             {/* img and name */}
                             <div className="flex items-center cursor-pointer"> 
                                    {/* img */}
@@ -25,7 +26,7 @@ function SoloUserFollowContainer(props) {
                             <div className="flex items-center">
                                    <button className="bg-slate-200 text-black opacity-90 rounded-full px-5 py-1 hover:opacity-100">Follow</button>
                             </div>
-                     </div>
+                     </Link>
               </>
        )
 }
