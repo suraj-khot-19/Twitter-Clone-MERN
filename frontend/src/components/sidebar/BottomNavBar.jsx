@@ -3,7 +3,7 @@ import { GoHome, FaSearch, IoNotificationsOutline, PostSvg,FaRegUser, IoSettings
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import useLogout from '../../hooks-Query/hooks/useLogout';
+import useLogout from '../../hooks/useLogout';
 
 export default function BottomNavBar() {
        const { data: user } = useQuery({ queryKey: ['authUser'] })

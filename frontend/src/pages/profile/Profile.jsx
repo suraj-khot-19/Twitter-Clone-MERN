@@ -1,7 +1,7 @@
 import { LeftSideBar, RightSideBar, UserProfile, ProfileSkelton } from '../../utils/ImportsInOneFile'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import useUserProfile from '../../hooks-Query/hooks/useUserProfile';
+import useUserProfile from '../../hooks/useUserProfile';
 
 export default function Profile() {
        //take from params

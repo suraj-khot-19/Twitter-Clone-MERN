@@ -2,8 +2,8 @@ import { BiRepost, FaRegComment, FaRegHeart, Link, MyLoading, RiDeleteBin6Line, 
 
 import { formatPostDate } from '../../utils/FormatDataFun'
 import { useQuery } from '@tanstack/react-query';
-import useDeletePost from '../../hooks-Query/hooks/useDeletePost';
-import useLikePost from '../../hooks-Query/hooks/useLikePost';
+import useDeletePost from '../../hooks/useDeletePost';
+import useLikePost from '../../hooks/useLikePost';
 
 
 function SinglePostWithProp(props) {

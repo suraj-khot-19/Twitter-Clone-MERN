@@ -3,7 +3,7 @@ import {GoHomeFill,FaSearch,IoNotifications,userimg,CgMoreO,FaRegUser ,X} from '
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom'
-import useLogout from '../../hooks-Query/hooks/useLogout';
+import useLogout from '../../hooks/useLogout';
 
 function LeftSideBar() {
        // clicked profile

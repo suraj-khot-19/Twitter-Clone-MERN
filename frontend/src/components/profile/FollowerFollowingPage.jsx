@@ -1,7 +1,7 @@
 import { RightSideBar, LeftSideBar, IoArrowBack,SoloUserFollowContainer } from '../../utils/ImportsInOneFile'
 
 import { useNavigate,useParams } from 'react-router-dom'
-import useUserProfile from '../../hooks-Query/hooks/useUserProfile';
+import useUserProfile from '../../hooks/useUserProfile';
 
 
 function FollowerFollowingPage() {

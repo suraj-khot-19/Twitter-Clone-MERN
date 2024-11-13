@@ -8,14 +8,14 @@ import demo from '../assets/demo.png'
 import cover from '../assets/cover.png'
 import { Link } from 'react-router-dom';
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { MyFollowButton, MyLoading, MyUnFollowButton } from '../components/MyButton'
+import { MyFollowButton, MyLoading, MyUnFollowButton } from '../components/common/MyButton'
 import AllPostsSkelton from '../components/skeletons/AllPostsSkelton';
 import { CiImageOn } from "react-icons/ci";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import LeftSideBar from '../components/sidebar/LeftSideBar';
 import RightSideBar from '../components/sidebar/RightSideBar';
 import { IoArrowBack, IoLocationOutline } from "react-icons/io5";
-import SoloUserFollowContainer from '../components/SoloUserFollowContainer';
+import SoloUserFollowContainer from '../components/profile/SoloUserFollowContainer';
 import { SlCalender } from "react-icons/sl";
 import { MdEdit, MdOutlineVerifiedUser } from "react-icons/md";
 import AllPosts from '../components/post/AllPosts';
@@ -34,7 +34,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
-import HomeUi from '../components/HomeUi'
+import HomeUi from '../components/home/HomeUi'
 import UserProfile from '../components/profile/UserProfile';
 import ProfileSkelton from '../components/skeletons/ProfileSkelton';
 import Login from '../pages/authentication/Login';
@@ -46,5 +46,5 @@ import BottomNavBar from '../components/sidebar/BottomNavBar'
 import SinglePostWithProp from '../components/post/SinglePostWithProp';
 
 export {
-      SinglePostWithProp, Login,Home,Signup,Profile,FollowerFollowingPage,BottomNavBar, ProfileSkelton,UserProfile, HomeUi, FcGoogle, AiOutlineUser, RiLockPasswordFill, FaApple, MyFollowButton, MyUnFollowButton, CreatePost, WhoToFollow, IoNotifications, GoHomeFill, CgMoreO, X, PostSvg, BiRepost, GoHome, FaSearch, IoNotificationsOutline, FaRegUser, FaRegComment, FaRegHeart, IoSettingsOutline, Link, MyLoading, RiDeleteBin6Line, ViewSvg, demo, userimg, AllPostsSkelton, CiImageOn, BsEmojiSmileFill, LeftSideBar, RightSideBar, IoArrowBack, SoloUserFollowContainer, IoLocationOutline, SlCalender, MdEdit, MdOutlineVerifiedUser, AllPosts, cover,
+      SinglePostWithProp, Login, Home, Signup, Profile, FollowerFollowingPage, BottomNavBar, ProfileSkelton, UserProfile, HomeUi, FcGoogle, AiOutlineUser, RiLockPasswordFill, FaApple, MyFollowButton, MyUnFollowButton, CreatePost, WhoToFollow, IoNotifications, GoHomeFill, CgMoreO, X, PostSvg, BiRepost, GoHome, FaSearch, IoNotificationsOutline, FaRegUser, FaRegComment, FaRegHeart, IoSettingsOutline, Link, MyLoading, RiDeleteBin6Line, ViewSvg, demo, userimg, AllPostsSkelton, CiImageOn, BsEmojiSmileFill, LeftSideBar, RightSideBar, IoArrowBack, SoloUserFollowContainer, IoLocationOutline, SlCalender, MdEdit, MdOutlineVerifiedUser, AllPosts, cover,
 }

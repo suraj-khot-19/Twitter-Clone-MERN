@@ -1,4 +1,4 @@
-import { MyFollowButton, MyLoading, MyUnFollowButton,userimg } from '../utils/ImportsInOneFile';
+import { MyFollowButton, MyLoading, MyUnFollowButton,userimg } from '../../utils/ImportsInOneFile';
 
 import React from 'react'
 import { Link } from 'react-router-dom'
