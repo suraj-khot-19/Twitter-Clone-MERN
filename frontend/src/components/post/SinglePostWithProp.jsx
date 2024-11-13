@@ -7,10 +7,14 @@ import { FaRegHeart } from "react-icons/fa";
 import ViewSvg from '../../assets/ViewSvg'
 import demo from '../../assets/demo.png'
 import { Link } from 'react-router-dom';
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { useQuery } from '@tanstack/react-query'
+import { MyLoading } from '../MyButton';
+import useDeletePost from '../../hooks-Query/hooks/useDeletePost';
 
 function SinglePostWithProp(props) {
        // destructure post
-       const { user, createdAt, title, img, comments, likes } = props.post;
+       const { user, createdAt, title, img, comments, likes, _id } = props.post;
 
        // rand num
        const rand = () => {
@@ -18,11 +22,18 @@ function SinglePostWithProp(props) {
        }
        const randNum = rand();
 
+       // if current user
+       const { data: currentUser } = useQuery({ queryKey: ['authUser'] });
+       const currentUserItIs = user._id === currentUser?.user?._id;
+
+       //delete post hook
+       const { mutate, isPending } = useDeletePost(_id);
+
        return (
               <>
                      <div className='border-b border-slate-200 border-opacity-30 flex flex-col items-start justify-between'>
                             {/* top of post*/}
-                            <Link to={`/profile/${user.username}`} className='flex items-center mx-5 mt-4'>
+                            <Link to={`/profile/${user.username}`} className='flex items-center md:mx-5 mt-4'>
                                    {/* img */}
                                    <div className="avatar">
                                           <div className="w-9 h-9 rounded-full">
@@ -33,11 +44,27 @@ function SinglePostWithProp(props) {
                                    {/* next to img */}
                                    <div className='ms-2 flex flex-col justify-center'>
                                           {/* info */}
-                                          <div className=''>
+                                          <div className='flex items-center gap-1 md:gap-0'>
                                                  <span className='text-base font-semibold'>{user.fullname}</span>
-                                                 <span className='text-base text-stone-500 ms-3'>@{user.username}</span>
-                                                 <span className='mx-1'>·</span>
-                                                 <span className='text-base text-stone-500 ms-3'>{formatPostDate(createdAt)}</span>
+                                                 <span className='text-base text-stone-500 ms-2'>@{user.username}</span>
+                                                 <span className='text-base text-stone-500 ms-2'><span className='me-1 text-white font-bold'>·</span>{formatPostDate(createdAt)}</span>
+
+                                                 {/* delete btn aligned to the end */}
+                                                 {
+                                                        currentUserItIs &&
+                                                        // click fun
+                                                        <div className='ms-24 md:ms-96' onClick={(e) => {
+                                                               e.preventDefault();
+                                                               mutate();
+                                                        }}>
+                                                               {
+                                                                      //loading 
+                                                                      isPending ? <MyLoading /> :
+                                                                             //if not
+                                                                             <RiDeleteBin6Line className='fill-white h-5 w-5 hover:scale-125 transition-all duration-150' />
+                                                               }
+                                                        </div>
+                                                 }
                                           </div>
 
                                           {/* post title */}

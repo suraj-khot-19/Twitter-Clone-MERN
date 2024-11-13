@@ -62,7 +62,7 @@ function AllPosts(props) {
        }
 
        return (
-              <div>
+              <div className='w-full'>
                      {/* map through posts */}
                      {
                             // if no posts
