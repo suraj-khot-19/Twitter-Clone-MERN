@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { formatMemberSinceDate } from '../../utils/FormatDataFun';
 import { IoArrowBack, IoLocationOutline } from "react-icons/io5";
 import { SlCalender } from "react-icons/sl";
@@ -8,6 +8,8 @@ import userimg from '../../assets/userimg.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query'
 import SoloUserFollowContainer from '../SoloUserFollowContainer';
+import SinglePostWithProp from '../post/SinglePostWithProp';
+import AllPosts from '../post/AllPosts';
 
 export default function UserProfile(props) {
        // navigate instance
@@ -19,7 +21,10 @@ export default function UserProfile(props) {
        // if current user
        const { data: user } = useQuery({ queryKey: ['authUser'] });
        const currentUserItIs = user.user._id === _id;
-       
+
+       //state
+       const [selected, setSelected] = useState(1)
+       const [url, setUrl] = useState('user')
        return (
               <div>
 
@@ -115,6 +120,28 @@ export default function UserProfile(props) {
                                           <span className="text-customGray ms-1">Followers</span>
                                    </Link>
                             </div>
+
+                            {/* posts likes section */}
+                            <div className='flex justify-between items-center px-auto w-full border-b border-slate-200 border-opacity-30'>
+                                   <div className={`w-[50%] px-auto py-4 text-center  ${selected === 1 ? 'border-b-4 border-blue-500' : ''} transition-all duration-100 hover:bg-stone-700 cursor-pointer`} onClick={() => {
+                                          setSelected(1)
+                                          setUrl(`user`)
+                                   }}>
+                                          <span className='font-bold'>Posts</span>
+                                   </div>
+                                   <div className={`w-[50%] px-auto py-4 text-center  ${selected === 2 ? 'border-b-4 border-blue-500' : ''} transition-all duration-100 hover:bg-stone-700 cursor-pointer`} onClick={() => {
+                                          setSelected(2)
+                                          setUrl('user/like')
+                                   }}>
+                                          <span className='font-bold'>Likes</span>
+                                   </div>
+                            </div>
+                                   {/* posts */}
+                                  <div className='w-full'>
+                                  {
+                                          <AllPosts url={url} user={props?.user} />
+                                   }
+                                  </div>
                      </div>
               </div>
        );

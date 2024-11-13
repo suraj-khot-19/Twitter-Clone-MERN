@@ -14,6 +14,10 @@ function AllPosts(props) {
                             return '/api/v2/post'
                      case 'following':
                             return '/api/v2/post/following'
+                     case 'user/like':
+                            return `/api/v2/post/user/${props.user._id}`
+                     case 'user':
+                            return `/api/v2/post//sort/user/${props.user.username}`
                      default:
                             return '/api/v2/post'
               }
@@ -64,7 +68,7 @@ function AllPosts(props) {
                             // if no posts
                             posts?.posts?.length === 0 ?
                                    <div className='flex justify-center items-center h-full mt-3'>
-                                          <span className='text-center text-xl text-stone-500 font-bold'>No Posts ...</span>
+                                          <span className='text-center text-xl text-slate-300 font-bold'>No Posts ...</span>
                                    </div> :
                                    // if posts
                                    posts?.posts?.map((e) => {
