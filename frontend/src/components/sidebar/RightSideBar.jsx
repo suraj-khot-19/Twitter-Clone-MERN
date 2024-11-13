@@ -21,7 +21,7 @@ function RightSideBar() {
                      } catch (error) {
                             throw new Error(error)
                      }
-              }
+              },
        });
 
        return (

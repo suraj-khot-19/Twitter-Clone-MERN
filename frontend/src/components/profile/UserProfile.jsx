@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { formatMemberSinceDate } from '../../utils/FormatDataFun';
 import { IoArrowBack, IoLocationOutline } from "react-icons/io5";
 import { SlCalender } from "react-icons/sl";
@@ -19,7 +19,7 @@ export default function UserProfile(props) {
        // if current user
        const { data: user } = useQuery({ queryKey: ['authUser'] });
        const currentUserItIs = user.user._id === _id;
-
+       
        return (
               <div>
 

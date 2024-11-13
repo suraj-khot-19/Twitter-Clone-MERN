@@ -7,6 +7,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from 'react-hot-toast';
+import { MyLoading } from '../../components/MyButton';
 
 function Login() {
   //state
@@ -30,7 +31,7 @@ function Login() {
   const queryClient = useQueryClient();
 
   //mutate fu
-  const { mutate, isError, isLoading, error } = useMutation({
+  const { mutate, isError, isPending, error } = useMutation({
     mutationFn: async (data) => {
       //destructure data
       const { username, password } = data;
@@ -109,7 +110,7 @@ function Login() {
             {/* error */}
             {isError && <div className='my-3 text-red-400'>{error}</div>}
 
-            <button type='submit' className="btn btn-active btn-primary rounded-full w-full md:w-[60%] text-white font-bold py-3">{isLoading ? 'Loading...' : 'Log in'}</button>
+            <button type='submit' className="btn btn-active btn-primary rounded-full w-full md:w-[60%] text-white font-bold py-3">{isPending ? <MyLoading/>  : 'Log in'}</button>
 
           </form>
         </div>

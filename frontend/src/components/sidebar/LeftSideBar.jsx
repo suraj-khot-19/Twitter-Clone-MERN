@@ -1,63 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import X from '../../assets/X'
 import { GoHomeFill } from "react-icons/go";
 import { FaSearch } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa6";
 import { CgMoreO } from "react-icons/cg";
-import { SlLogout } from "react-icons/sl";
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
 import userimg from '../../assets/userimg.png'
 import { Link } from 'react-router-dom'
+import useLogout from '../../hooks-Query/hooks/useLogout';
+import { MyLoading } from '../MyButton';
 
 
 function LeftSideBar() {
-       //client
-       const queryClient = useQueryClient();
+       // clicked profile
+       const [showLogOut, setShowLogOut] = useState(false)
 
        //query client
        const { data } = useQuery({ queryKey: ["authUser"] });
 
+       //my hook
+       const { loggingOut } = useLogout();
+
        // logout fun
-       const { mutate: loggingOut, isPending } = useMutation({
-              mutationFn: async () => {
-                     try {
-                            const res = await fetch('/api/v2/auth/logout', {
-                                   method: 'POST',
-                                   headers: {
-                                          'Content-Type': 'application/json'
-                                   }
-                            });
+       function handelClick(e) {
+              e.preventDefault();
+              loggingOut();
+       }
 
-                            const jsonData = await res.json();
-
-                            if (!res.ok) {
-                                   throw new Error(jsonData.msg || "Failed to Logout")
-                            }
-
-                     } catch (error) {
-                            throw new Error(error);
-                     }
-              },
-              //on sucess
-              onSuccess: () => {
-                     toast.success(`See you again ${data?.user?.fullname + ' !' || '!'}`, { duration: 5000 })
-                     //removing all queryes
-                     queryClient.removeQueries({ queryKey: ['authUser'] });
-                     queryClient.invalidateQueries({ queryKey: ['authUser'] });
-                     window.location.reload(); //force reload
-              },
-              //error
-              onError: () => {
-                     toast.error('Failed to Logout', { duration: 5000 })
-              }
-       })
        return (
               <div className='flex flex-col justify-center items-start ms-0 xl:ms-20  p-4 h-full'>
                      {/* logo */}
                      <Link to='/'>
-                     <X className='w-8 ml-5 fill-white' />
+                            <X className='w-8 ml-5 fill-white' />
                      </Link>
 
                      {/* first div */}
@@ -85,7 +60,7 @@ function LeftSideBar() {
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Premium</span>
                                    </div>
                                    {/* Profile */}
-                                   <Link to={`/profile/${data.user.username}`} className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
+                                   <Link to={`/profile/${data?.user?.username}`} className='flex my-3 py-2 hover:bg-stone-900 transition-all rounded-full duration-300'>
                                           <FaRegUser className='h-7 w-7 ml-5 mr-5' />
                                           <span className='text-xl font-semibold opacity-80 hover:opacity-100 cursor-pointer'>Profile</span>
                                    </Link>
@@ -104,7 +79,7 @@ function LeftSideBar() {
                             {/* profile */}
                             <div className="flex items-center justify-between w-full px-4  hover:bg-stone-900 transition-all rounded-full duration-300 py-2">
                                    {/* img and name */}
-                                   <div className="flex items-center cursor-pointer">
+                                   <div className="flex items-center cursor-pointer" onClick={() => setShowLogOut((prev) => !prev)} >
                                           {/* img */}
                                           <div className="avatar">
                                                  <div className="w-11 h-11 rounded-full">
@@ -113,21 +88,24 @@ function LeftSideBar() {
                                           </div>
 
                                           {/* name and username */}
-                                          {/* navigate to user profile with username */}
-                                          <Link to={`/profile/${data.user.username}`} className="ms-4 flex flex-col items-start justify-center" >
+                                          <div className="ms-4 flex flex-col items-start justify-center" >
                                                  <span>{data.user.fullname}</span>
                                                  <span>{data.user.username}</span>
-                                          </Link>
+                                          </div>
                                    </div>
 
-                                   {/* logout button */}
-                                   <div className="flex items-center" onClick={(e) => {
-                                          e.preventDefault();
-                                          loggingOut()
-                                   }}>
-                                          {isPending ?
-                                                 <span className="loading loading-spinner text-primary loading-lg "></span> : <SlLogout className='hover:scale-150 transition-all duration-100 cursor-pointer' />}
-                                   </div>
+
+                                   {/* logout div */}
+                                   {
+                                          showLogOut && <div className='absolute left-32 bottom-24 cursor-pointer z-50 bg-black' onClick={(e) => {
+                                                 handelClick(e)
+                                          }}>
+                                                 <div className='border-slate-300 border-2 border-opacity-20 px-4 py-2 rounded-lg flex justify-center items-center gap-1 shadow-slate-500 shadow-md font-semibold text-lg'>
+                                                        <span>Log out</span>
+                                                        <span>@{data.user.username}</span>
+                                                 </div>
+                                          </div>
+                                   }
                             </div>
                      </div>
               </div>

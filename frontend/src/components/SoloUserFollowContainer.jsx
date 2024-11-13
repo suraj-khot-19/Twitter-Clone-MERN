@@ -27,7 +27,11 @@ function SoloUserFollowContainer(props) {
               },
               onSuccess: (jsonData) => {
                      toast.success(`${jsonData.msg}`, { duration: 5000 });
-                     queryClient.invalidateQueries({ queryKey: ['authUser'] })
+                     //promise
+                     Promise.all([
+                            queryClient.invalidateQueries({ queryKey: ['authUser'] }), // changing current user data
+                            queryClient.invalidateQueries({ queryKey: ['whoToFollow'] }) //also changing right side bar
+                     ])
               },
               onError: (jsonData) => {
                      toast.error(error || jsonData.msg || "Something went wrong!", { duration: 5000 });
@@ -37,6 +41,14 @@ function SoloUserFollowContainer(props) {
        // to show what to display on btn
        const trueOrFalse = currentUser?.user?.following.includes(props.user._id);;
 
+       // is error
+       if (isError) {
+              return (
+                     <div className='w-full h-full text-center my-auto'>
+                            <span className='text-center text-stone-600 font-bold text-sm'>{error.message || 'Something is wrong!'}</span>
+                     </div>
+              )
+       }
        return (
               <>
                      <div>

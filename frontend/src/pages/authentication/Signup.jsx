@@ -5,6 +5,7 @@ import { FaApple } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from 'react-router-dom'
+import { MyLoading } from '../../components/MyButton';
 
 
 function Signup() {
@@ -64,8 +65,8 @@ function Signup() {
       //send toast
       toast.success("Account created successfully!", { duration: 5000 });
 
-      //client
-      queryClient.invalidateQueries({ queryKey: ["authUser"] });
+      //removing all queryes before sign up
+      queryClient.setQueryData(['authUser'], null);
 
       //navigate to login
       navigate('/login')
@@ -73,8 +74,8 @@ function Signup() {
       // delete form data
       setData({ username: '', email: '', password: '', fullname: '' });
     },
-    onError:()=>{
-      toast.error(jsonData.msg||"Failed To Login!", { duration: 5000 })
+    onError: () => {
+      toast.error(jsonData.msg || "Failed To Login!", { duration: 5000 })
     }
 
     // !  this provide this much functionality
@@ -166,7 +167,7 @@ function Signup() {
                   {isError && <span className='my-3 text-red-400'>{error}</span>}
 
                   {/* btn */}
-                  <button type='submit' className="btn btn-outline btn-primary rounded-full w-full md:w-[60%] mt-2">{isPending ? 'Loadding...' : 'Create'}</button>
+                  <button type='submit' className="btn btn-outline btn-primary rounded-full w-full md:w-[60%] mt-2">{isPending ? <MyLoading /> : 'Create'}</button>
 
                 </div>
               </form>
