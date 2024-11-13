@@ -3,6 +3,7 @@ import userimg from '../assets/userimg.png'
 import { Link } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import { MyFollowButton, MyLoading, MyUnFollowButton } from './MyButton';
 
 function SoloUserFollowContainer(props) {
        // instance of query client
@@ -33,35 +34,31 @@ function SoloUserFollowContainer(props) {
               }
        })
 
-       // follow/unfollow on btn click
-       const handelFollow = (e) => {
-              e.preventDefault();
-              mutate();
-       }
-
        // to show what to display on btn
        const trueOrFalse = currentUser?.user?.following.includes(props.user._id);;
 
        return (
               <>
                      <div>
-                            <Link to={`/profile/${props.user.username}`} className="flex items-center justify-between w-full px-4 py-2 hover:bg-stone-900 transition-all rounded-full duration-300">
+                            <Link to={`/profile/${props.user.username}`} className={`flex items-center justify-between w-full px-4 py-2 ${props.showOnlybtn ? '' : 'hover:bg-stone-900'} transition-all rounded-full duration-300`}>
                                    {/* img and name */}
-                                   <div className="flex items-center cursor-pointer">
-                                          {/* img */}
-                                          <div className="avatar">
-                                                 <div className="w-11 h-11 rounded-full">
-                                                        <img src={props.user.profileImg || userimg} alt="Profile" />
+                                   {
+                                          !props.showOnlybtn && <div className="flex items-center cursor-pointer">
+                                                 {/* img */}
+                                                 <div className="avatar">
+                                                        <div className="w-11 h-11 rounded-full">
+                                                               <img src={props.user.profileImg || userimg} alt="Profile" />
+                                                        </div>
+                                                 </div>
+
+                                                 {/* name and username */}
+                                                 <div className="ms-4 flex flex-col items-start justify-center">
+                                                        <span className="font-extrabold">{props.user.fullname}</span>
+                                                        <span className="text-customGray text-sm">{props.user.username}</span>
+                                                        <span>{props.isBio && props.user.bio}</span>
                                                  </div>
                                           </div>
-
-                                          {/* name and username */}
-                                          <div className="ms-4 flex flex-col items-start justify-center">
-                                                 <span className="font-extrabold">{props.user.fullname}</span>
-                                                 <span className="text-customGray text-sm">{props.user.username}</span>
-                                                 <span>{props.isBio && props.user.bio}</span>
-                                          </div>
-                                   </div>
+                                   }
 
                                    {/* follow button */}
                                    {
@@ -72,17 +69,14 @@ function SoloUserFollowContainer(props) {
                                                  {
                                                         isPending ?
                                                                // loading
-                                                               <div className='text-center mx-auto'>
-                                                                      <span className="loading loading-spinner loading-md"></span>
-                                                               </div> :
+                                                               <MyLoading /> :
                                                                trueOrFalse ?
 
                                                                       // if unfollow
-                                                                      <button className="transition-all duration-100 btn btn-outline btn-sm px-3 py-1 rounded-full hover:bg-red-600 border-red-500 hover:border-red-500" onClick={(e) => handelFollow(e)} >UnFollow</button> :
+                                                                      <MyUnFollowButton onClick={() => mutate()} /> :
 
                                                                       // if follow
-                                                                      <button onClick={(e) => handelFollow(e)} className='transition-all duration-100  btn bg-white text-black btn-sm px-5 py-1 rounded-full hover:text-white hover:border-white'>Follow</button>
-
+                                                                      <MyFollowButton onClick={() => mutate()} />
                                                  }
                                           </div>
                                    }

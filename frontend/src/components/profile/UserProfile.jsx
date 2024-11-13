@@ -3,10 +3,11 @@ import { formatMemberSinceDate } from '../../utils/FormatDataFun';
 import { IoArrowBack, IoLocationOutline } from "react-icons/io5";
 import { SlCalender } from "react-icons/sl";
 import { MdEdit, MdOutlineVerifiedUser } from "react-icons/md";
-import demo from '../../assets/demo.png';
+import cover from '../../assets/cover.png';
 import userimg from '../../assets/userimg.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query'
+import SoloUserFollowContainer from '../SoloUserFollowContainer';
 
 export default function UserProfile(props) {
        // navigate instance
@@ -33,7 +34,7 @@ export default function UserProfile(props) {
                      <div className="relative group/cover">
 
                             {/* Cover img */}
-                            <img src={coverImg || demo} className="h-44 w-full object-cover" alt="cover image" />
+                            <img src={coverImg || cover} className="h-44 w-full object-cover" alt="cover image" />
 
                             {/* edit btn */}
                             <div className="absolute top-2 right-2 rounded-full p-2 bg-gray-800 bg-opacity-75 cursor-pointer opacity-0 group-hover/cover:opacity-100 transition duration-200">
@@ -60,9 +61,9 @@ export default function UserProfile(props) {
                                           <div className="absolute top-52  right-2 md:right-10 p-1">
                                                  <button className="btn btn-outline rounded-full px-8">Edit Profile</button>
                                           </div> :
-                                          //else fllow
-                                          <div className="absolute top-52 right-2 md:right-10 p-1">
-                                                 <button className='btn bg-white text-black px-8 py-3 rounded-full hover:text-white hover:border-white'>Follow</button>
+                                          //calling solo follow
+                                          <div className='absolute top-52 right-2 md:right-10'>
+                                                 <SoloUserFollowContainer user={props?.user} showOnlybtn={true} />
                                           </div>
                             }
                      </div>
