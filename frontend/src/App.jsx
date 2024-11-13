@@ -1,13 +1,9 @@
+import { Home, Login, Signup, Profile, FollowerFollowingPage, BottomNavBar } from './utils/ImportsInOneFile'
+
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import Home from './pages/home/Home'
-import Login from './pages/authentication/Login'
-import Signup from './pages/authentication/Signup'
 import { Toaster } from "react-hot-toast";
 import { useQuery } from '@tanstack/react-query'
-import Profile from './pages/profile/Profile'
-import FollowerFollowingPage from './components/profile/FollowerFollowingPage'
-import BorromNavBar from './components/sidebar/BorromNavBar'
 
 function App() {
 
@@ -56,12 +52,12 @@ function App() {
 
       <Router>
 
-      {/* bottom bar */}
-      {
-       authUser && <div className='block md:hidden'>
-        <BorromNavBar/>
-      </div>
-      }
+        {/* bottom bar */}
+        {
+          authUser && <div className='block md:hidden'>
+            <BottomNavBar />
+          </div>
+        }
 
         <Routes>
           <Route path="/" element={authUser ? <Home /> : <Navigate to='/login' />} />

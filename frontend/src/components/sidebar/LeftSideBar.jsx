@@ -1,16 +1,9 @@
+import {GoHomeFill,FaSearch,IoNotifications,userimg,CgMoreO,FaRegUser ,X} from '../../utils/ImportsInOneFile'
+
 import React, { useState } from 'react'
-import X from '../../assets/X'
-import { GoHomeFill } from "react-icons/go";
-import { FaSearch } from "react-icons/fa";
-import { IoNotifications } from "react-icons/io5";
-import { FaRegUser } from "react-icons/fa6";
-import { CgMoreO } from "react-icons/cg";
 import { useQuery } from '@tanstack/react-query';
-import userimg from '../../assets/userimg.png'
 import { Link } from 'react-router-dom'
 import useLogout from '../../hooks-Query/hooks/useLogout';
-import { MyLoading } from '../MyButton';
-
 
 function LeftSideBar() {
        // clicked profile

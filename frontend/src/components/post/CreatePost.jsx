@@ -1,6 +1,4 @@
-import { CiImageOn } from "react-icons/ci";
-import { BsEmojiSmileFill } from "react-icons/bs";
-import userimg from '../../assets/userimg.png'
+import { BsEmojiSmileFill, CiImageOn, userimg } from "../../utils/ImportsInOneFile"
 
 function CreatePost() {
 	return (

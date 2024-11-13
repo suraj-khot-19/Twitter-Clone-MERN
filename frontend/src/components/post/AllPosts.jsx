@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
-import SinglePostWithProp from './SinglePostWithProp'
+import { AllPostsSkelton,SinglePostWithProp } from '../../utils/ImportsInOneFile'
+
+import React,{useEffect} from 'react'
 import { useQuery } from '@tanstack/react-query'
-import AllPostsSkelton from '../skeletons/AllPostsSkelton';
 
 function AllPosts(props) {
        // destructure props
@@ -17,7 +17,7 @@ function AllPosts(props) {
                      case 'user/like':
                             return `/api/v2/post/user/${props.user._id}`
                      case 'user':
-                            return `/api/v2/post//sort/user/${props.user.username}`
+                            return `/api/v2/post/sort/user/${props.user.username}`
                      default:
                             return '/api/v2/post'
               }
@@ -48,7 +48,7 @@ function AllPosts(props) {
        //effect to change/refech after url change
        useEffect(() => {
               refetch(); //callling refectch from query client
-       }, [url, refetch])
+       }, [url, refetch, props?.user?.username])
 
        if (isLoading || isRefetching) {
               return (

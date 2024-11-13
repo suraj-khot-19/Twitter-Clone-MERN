@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
-import { formatMemberSinceDate } from '../../utils/FormatDataFun';
-import { IoArrowBack, IoLocationOutline } from "react-icons/io5";
-import { SlCalender } from "react-icons/sl";
-import { MdEdit, MdOutlineVerifiedUser } from "react-icons/md";
-import cover from '../../assets/cover.png';
-import userimg from '../../assets/userimg.png';
+import { IoLocationOutline, SlCalender, MdEdit, MdOutlineVerifiedUser, cover, userimg, SoloUserFollowContainer, AllPosts, IoArrowBack } from '../../utils/ImportsInOneFile';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query'
-import SoloUserFollowContainer from '../SoloUserFollowContainer';
-import SinglePostWithProp from '../post/SinglePostWithProp';
-import AllPosts from '../post/AllPosts';
+import {formatMemberSinceDate} from '../../utils/FormatDataFun'
 
 export default function UserProfile(props) {
        // navigate instance
@@ -97,7 +90,7 @@ export default function UserProfile(props) {
                                    {/* calender */}
                                    <div className="flex items-center gap-1">
                                           <SlCalender className="text-lg" />
-                                          <span>Joined {formatMemberSinceDate(createdAt)}</span>
+                                          <span>{formatMemberSinceDate(createdAt)}</span>
                                    </div>
 
                                    {/* phone verified */}
@@ -136,12 +129,12 @@ export default function UserProfile(props) {
                                           <span className='font-bold'>Likes</span>
                                    </div>
                             </div>
-                                   {/* posts */}
-                                  <div className='w-full'>
-                                  {
+                            {/* posts */}
+                            <div className='w-full'>
+                                   {
                                           <AllPosts url={url} user={props?.user} />
                                    }
-                                  </div>
+                            </div>
                      </div>
               </div>
        );

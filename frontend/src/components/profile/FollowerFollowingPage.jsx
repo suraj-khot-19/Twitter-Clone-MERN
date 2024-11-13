@@ -1,10 +1,8 @@
-import { useParams } from 'react-router-dom'
-import LeftSideBar from '../sidebar/LeftSideBar';
-import RightSideBar from '../sidebar/RightSideBar';
+import { RightSideBar, LeftSideBar, IoArrowBack,SoloUserFollowContainer } from '../../utils/ImportsInOneFile'
+
+import { useNavigate,useParams } from 'react-router-dom'
 import useUserProfile from '../../hooks-Query/hooks/useUserProfile';
-import { useNavigate } from 'react-router-dom'
-import SoloUserFollowContainer from '../SoloUserFollowContainer';
-import { IoArrowBack } from "react-icons/io5";
+
 
 function FollowerFollowingPage() {
        //params

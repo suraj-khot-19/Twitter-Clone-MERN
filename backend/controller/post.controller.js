@@ -143,17 +143,21 @@ export const likeOrUnlikePost = async (req, res) => {
                 type: 'like'
             });
 
+            // new likes for ui expreience
+            const likesArray = post.likes.filter((id) => id.toString() !== currentUserId.toString()); //!unlike remove id
             //send res
-            res.status(200).json({ msg: "unliked the post!" })
+			res.status(200).json(likesArray);
         }
         //or else like
         else {
-            //push uid and save
+            //push uid 
             post.likes.push(currentUserId);
-            await post.save();
 
             //also add to current users liked posts
             await User.updateOne({ _id: currentUserId }, { $push: { liked: postId } }); //add current users liked post with post id
+
+            //and save
+            await post.save();
 
             //sending notification to user which have the post
             const notification = new Notification({
@@ -164,7 +168,8 @@ export const likeOrUnlikePost = async (req, res) => {
             await notification.save();
 
             //send res
-            res.status(200).json({ msg: 'liked the post!' })
+            const likesArray = post.likes; //! return liked array
+			res.status(200).json(likesArray);
         }
     } catch (error) {
         console.log("error in like or unlike,", error.message)

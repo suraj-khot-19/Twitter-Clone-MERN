@@ -1,8 +1,7 @@
+import {AllPosts,userimg,CreatePost} from '../utils/ImportsInOneFile'
+
 import React, { useState } from 'react'
-import CreatePost from './post/CreatePost';
 import { useQuery } from '@tanstack/react-query';
-import userimg from '../assets/userimg.png'
-import AllPosts from './post/AllPosts';
 
 function HomeUi() {
        //states

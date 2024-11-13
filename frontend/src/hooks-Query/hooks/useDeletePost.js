@@ -7,7 +7,7 @@ const useDeletePost = (id) => {
        const queryClient = useQueryClient();
 
        // handel delete
-       const { mutate, isPending } = useMutation({
+       const { mutate:deletePost, isPending:isLoadingDeletePost } = useMutation({
               mutationFn: async () => {
                      const url = `/api/v2/post/delete/${id}`
                      const res = await fetch(url, {
@@ -29,7 +29,7 @@ const useDeletePost = (id) => {
                      toast.success(error)
               }
        })
-       return { mutate, isPending }
+       return { deletePost, isLoadingDeletePost }
 }
 
 export default useDeletePost

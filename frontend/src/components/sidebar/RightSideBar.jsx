@@ -1,8 +1,7 @@
+import {SoloUserFollowContainer,FaSearch,WhoToFollow} from '../../utils/ImportsInOneFile'
+
 import React from 'react'
-import { FaSearch } from "react-icons/fa";
-import SoloUserFollowContainer from '../SoloUserFollowContainer';
 import { useQuery } from '@tanstack/react-query';
-import WhoToFollowSkelton from '../skeletons/WhoToFollow';
 
 function RightSideBar() {
        // function to fetch
@@ -53,10 +52,10 @@ function RightSideBar() {
                             {/* map through suggested user */}
                             {!isError && isLoading ?
                                    <div>
-                                          <WhoToFollowSkelton />
-                                          <WhoToFollowSkelton />
-                                          <WhoToFollowSkelton />
-                                          <WhoToFollowSkelton />
+                                          <WhoToFollow />
+                                          <WhoToFollow />
+                                          <WhoToFollow />
+                                          <WhoToFollow />
                                    </div>
                                    :
                                    whoToFollow?.suggestedUser?.length === 0 ? <p className='text-xsl text-slate-200 font-semibold text-center'>No Suggestions</p> : whoToFollow?.suggestedUser?.map((e) => {

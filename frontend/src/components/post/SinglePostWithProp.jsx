@@ -1,16 +1,10 @@
-import React from 'react'
-import userimg from '../../assets/userimg.png'
+import { BiRepost, FaRegComment, FaRegHeart, Link, MyLoading, RiDeleteBin6Line, ViewSvg, demo, userimg } from '../../utils/ImportsInOneFile';
+
 import { formatPostDate } from '../../utils/FormatDataFun'
-import { FaRegComment } from "react-icons/fa";
-import { BiRepost } from "react-icons/bi";
-import { FaRegHeart } from "react-icons/fa";
-import ViewSvg from '../../assets/ViewSvg'
-import demo from '../../assets/demo.png'
-import { Link } from 'react-router-dom';
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { useQuery } from '@tanstack/react-query'
-import { MyLoading } from '../MyButton';
+import { useQuery } from '@tanstack/react-query';
 import useDeletePost from '../../hooks-Query/hooks/useDeletePost';
+import useLikePost from '../../hooks-Query/hooks/useLikePost';
+
 
 function SinglePostWithProp(props) {
        // destructure post
@@ -18,7 +12,7 @@ function SinglePostWithProp(props) {
 
        // rand num
        const rand = () => {
-              return Math.floor(100 * Math.random());
+              return Math.floor(10 * Math.random());
        }
        const randNum = rand();
 
@@ -26,9 +20,30 @@ function SinglePostWithProp(props) {
        const { data: currentUser } = useQuery({ queryKey: ['authUser'] });
        const currentUserItIs = user._id === currentUser?.user?._id;
 
-       //delete post hook
-       const { mutate, isPending } = useDeletePost(_id);
+       //is liked post
+       const isLikedByMe = likes.includes(currentUser?.user?._id);
 
+       //delete post hook
+       const { deletePost, isLoadingDeletePost } = useDeletePost(_id);
+
+       //like a post hook
+       const { likePost, isLoadingLikePost } = useLikePost(props.post);
+
+       //! handel like
+       function handelLike() {
+              if (isLoadingLikePost)
+                     return; //if data is loading then wait
+              else
+                     likePost(); //call only after data load
+       }
+
+       //! handel delete 
+       function handelDelete() {
+              if (isLoadingDeletePost)
+                     return; //if data is loading then wait
+              else
+                     deletePost(); //call only after data load
+       }
        return (
               <>
                      <div className='border-b border-slate-200 border-opacity-30 flex flex-col items-start justify-between'>
@@ -53,13 +68,10 @@ function SinglePostWithProp(props) {
                                                  {
                                                         currentUserItIs &&
                                                         // click fun
-                                                        <div className='ms-24 md:ms-96' onClick={(e) => {
-                                                               e.preventDefault();
-                                                               mutate();
-                                                        }}>
+                                                        <div className='ms-24 md:ms-96' onClick={handelDelete}>
                                                                {
                                                                       //loading 
-                                                                      isPending ? <MyLoading /> :
+                                                                      isLoadingDeletePost ? <MyLoading /> :
                                                                              //if not
                                                                              <RiDeleteBin6Line className='fill-white h-5 w-5 hover:scale-125 transition-all duration-150' />
                                                                }
@@ -80,10 +92,11 @@ function SinglePostWithProp(props) {
                                           <img
                                                  src={post.img}
                                                  className='h-80 object-contain rounded-2xl border border-gray-700'
-                                                 alt=''
+                                                 onDoubleClick={handelLike}
                                           />
                                    ) : (
-                                          <img src={demo} />
+                                          <img src={demo}
+                                                 onDoubleClick={handelLike} />
                                    )}
                             </div>
 
@@ -107,10 +120,25 @@ function SinglePostWithProp(props) {
 
                                    {/* like */}
                                    <div className='w-[25%]'>
-                                          <div className='flex justify-center items-center w-full '>
-                                                 <FaRegHeart className='h-5 w-5 cursor-pointer opacity-80  hover:opacity-100' />
-                                                 <span className='ms-1 text-base text-stone-500'>{likes.length}</span>
-                                          </div>
+                                          {
+                                                 isLoadingLikePost ?
+                                                        //if loading
+                                                        <MyLoading />
+
+                                                        //if not loading
+                                                        : (!isLoadingLikePost && isLikedByMe) ?
+                                                               //if it is already liked then
+                                                               <div className='flex justify-center items-center w-full ' onClick={handelLike}>
+                                                                      <FaRegHeart className='h-5 w-5 cursor-pointer opacity-80  hover:opacity-100 text-pink-700' />
+                                                                      <span className='ms-1 text-base text-pink-700'>{likes.length}</span>
+                                                               </div> :
+
+                                                               // not liked then
+                                                               <div className='flex justify-center items-center w-full ' onClick={handelLike}>
+                                                                      <FaRegHeart className='h-5 w-5 cursor-pointer opacity-80  hover:opacity-100' />
+                                                                      <span className='ms-1 text-base text-stone-500'>{likes.length}</span>
+                                                               </div>
+                                          }
                                    </div>
                                    {/* view */}
                                    <div className='w-[25%]'>

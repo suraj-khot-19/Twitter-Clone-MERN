@@ -1,11 +1,9 @@
+import { FcGoogle, X, FaApple, MyLoading } from "../../utils/ImportsInOneFile";
+
 import React, { useState } from 'react'
-import X from '../../assets/X'
-import { FcGoogle } from "react-icons/fc";
-import { FaApple } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from 'react-router-dom'
-import { MyLoading } from '../../components/MyButton';
 
 
 function Signup() {

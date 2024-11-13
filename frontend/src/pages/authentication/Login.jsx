@@ -1,13 +1,9 @@
+import { FcGoogle, FaApple, AiOutlineUser, RiLockPasswordFill, X, MyLoading } from "../../utils/ImportsInOneFile";
+
 import React, { useState } from 'react'
-import X from '../../assets/X'
 import { Link, useNavigate } from 'react-router-dom'
-import { FcGoogle } from "react-icons/fc";
-import { FaApple } from "react-icons/fa";
-import { AiOutlineUser } from "react-icons/ai";
-import { RiLockPasswordFill } from "react-icons/ri";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from 'react-hot-toast';
-import { MyLoading } from '../../components/MyButton';
 
 function Login() {
   //state
@@ -62,8 +58,8 @@ function Login() {
       toast.success(`Welcome ${jsonData.user.fullname}!`, { duration: 5000 });
       queryClient.invalidateQueries({ queryKey: ['authUser'] })
     },
-    onError:(jsonData)=>{
-      toast.error(jsonData.msg||"Failed To Login!", { duration: 5000 })
+    onError: (jsonData) => {
+      toast.error(jsonData.msg || "Failed To Login!", { duration: 5000 })
     }
   });
 
@@ -110,7 +106,7 @@ function Login() {
             {/* error */}
             {isError && <div className='my-3 text-red-400'>{error}</div>}
 
-            <button type='submit' className="btn btn-active btn-primary rounded-full w-full md:w-[60%] text-white font-bold py-3">{isPending ? <MyLoading/>  : 'Log in'}</button>
+            <button type='submit' className="btn btn-active btn-primary rounded-full w-full md:w-[60%] text-white font-bold py-3">{isPending ? <MyLoading /> : 'Log in'}</button>
 
           </form>
         </div>

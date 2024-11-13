@@ -1,15 +1,11 @@
+import { GoHome, FaSearch, IoNotificationsOutline, PostSvg,FaRegUser, IoSettingsOutline } from '../../utils/ImportsInOneFile'
+
 import React, { useState } from 'react'
-import { GoHome } from "react-icons/go";
-import { FaSearch } from "react-icons/fa";
-import { IoNotificationsOutline } from "react-icons/io5";
-import { FaRegUser } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
-import PostSvg from '../../assets/PostSvg';
 import { useQuery } from '@tanstack/react-query';
-import { IoSettingsOutline } from "react-icons/io5";
 import useLogout from '../../hooks-Query/hooks/useLogout';
 
-export default function BorromNavBar() {
+export default function BottomNavBar() {
        const { data: user } = useQuery({ queryKey: ['authUser'] })
 
        // clicked profile

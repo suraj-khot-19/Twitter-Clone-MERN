@@ -1,7 +1,5 @@
 import React from 'react'
-import LeftSideBar from '../../components/sidebar/LeftSideBar'
-import RightSideBar from '../../components/sidebar/RightSideBar'
-import HomeUi from '../../components/HomeUi'
+import {LeftSideBar,RightSideBar,HomeUi} from '../../utils/ImportsInOneFile'
 
 function Home() {
 

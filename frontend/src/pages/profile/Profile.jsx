@@ -1,9 +1,6 @@
+import { LeftSideBar, RightSideBar, UserProfile, ProfileSkelton } from '../../utils/ImportsInOneFile'
 import React, { useEffect } from 'react'
-import LeftSideBar from '../../components/sidebar/LeftSideBar'
-import RightSideBar from '../../components/sidebar/RightSideBar'
-import UserProfile from '../../components/profile/UserProfile'
 import { useParams } from 'react-router-dom';
-import ProfileSkelton from '../../components/skeletons/ProfileSkelton';
 import useUserProfile from '../../hooks-Query/hooks/useUserProfile';
 
 export default function Profile() {
@@ -11,7 +8,7 @@ export default function Profile() {
        const { username } = useParams();
 
        // from custom hook
-       const { data: userProfile, isLoading, isError, error,refetch,isRefetching } = useUserProfile(username);
+       const { data: userProfile, isLoading, isError, error, refetch, isRefetching } = useUserProfile(username);
 
        //efffect
        useEffect(() => {

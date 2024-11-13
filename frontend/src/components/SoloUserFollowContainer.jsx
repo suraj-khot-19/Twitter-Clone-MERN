@@ -1,9 +1,9 @@
+import { MyFollowButton, MyLoading, MyUnFollowButton,userimg } from '../utils/ImportsInOneFile';
+
 import React from 'react'
-import userimg from '../assets/userimg.png'
 import { Link } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { MyFollowButton, MyLoading, MyUnFollowButton } from './MyButton';
 
 function SoloUserFollowContainer(props) {
        // instance of query client
