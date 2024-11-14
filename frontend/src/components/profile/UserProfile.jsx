@@ -67,7 +67,7 @@ export default function UserProfile(props) {
                      </div>
 
                      {/* below img */}
-                     <div className="flex flex-col justify-start px-0  md:px-5 pt-16">
+                     <div className="flex flex-col justify-start px-2  md:px-5 pt-16">
                             <div className="flex flex-col">
                                    <span className="font-extrabold text-xl">{fullname}</span>
                                    <span className="text-customGray text-sm">@{username}</span>

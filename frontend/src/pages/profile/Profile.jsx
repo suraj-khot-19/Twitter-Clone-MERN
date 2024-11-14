@@ -1,4 +1,4 @@
-import { LeftSideBar, RightSideBar, UserProfile, ProfileSkelton } from '../../utils/ImportsInOneFile'
+import { UserProfile, ProfileSkelton } from '../../utils/ImportsInOneFile'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import useUserProfile from '../../hooks/useUserProfile';
@@ -15,48 +15,22 @@ export default function Profile() {
               refetch()
        }, [username, refetch])
 
-
        return (
-              <div className='md:flex'>
-
-                     {/* lrft sidebar */}
-                     <div className='hidden lg:block w-[19%] xl:w-[23%] h-screen border-r border-slate-200 border-opacity-30 overflow-hidden'>
-                            <LeftSideBar />
-                     </div>
-
-                     {/* profile page */}
+              <>
                      {/* error */}
                      {
-                            isError &&
-                            <div className='w-full lg:w-[58%] h-screen overflow-hidden'>
-                                   <span className='text-center text-red-700 font-bold'>{error.message}</span>
-                            </div>
+                            isError && <span className='text-center text-red-700 font-bold'>{error.message}</span>
                      }
 
                      {/* for loading */}
                      {
-                            (isLoading || isRefetching) &&
-                            (
-                                   <div className='w-full lg:w-[58%] h-screen overflow-hidden'>
-                                          <ProfileSkelton />
-                                   </div>
-                            )
+                            (isLoading || isRefetching) && (<ProfileSkelton />)
                      }
 
                      {/* if all ok */}
                      {
-                            (!isLoading && !isError && !isRefetching && userProfile &&
-                                   <div className='w-full lg:w-[58%] h-screen overflow-y-auto'>
-                                          <UserProfile user={userProfile?.user} />
-                                   </div>
-                            )
+                            (!isLoading && !isError && !isRefetching && userProfile) && <UserProfile user={userProfile?.user} />
                      }
-
-                     {/* right sidebar */}
-                     <div className='hidden lg:block w-[30%] xl:w-[26%] h-screen border-l border-slate-200 border-opacity-30 overflow-hidden'>
-                            <RightSideBar />
-                     </div>
-
-              </div>
+              </>
        )
 }

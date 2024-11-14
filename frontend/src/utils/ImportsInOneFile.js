@@ -33,7 +33,6 @@ import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
-import HomeUi from '../components/home/HomeUi'
 import UserProfile from '../components/profile/UserProfile';
 import ProfileSkelton from '../components/skeletons/ProfileSkelton';
 import Login from '../pages/authentication/Login';
@@ -47,5 +46,5 @@ import AllPosts from '../components/post/AllPosts'
 import { RiMore2Fill } from "react-icons/ri";
 
 export {
-     RiMore2Fill, SinglePostWithProp, Login, Home, Signup, Profile, FollowerFollowingPage, BottomNavBar, ProfileSkelton, UserProfile, HomeUi, FcGoogle, AiOutlineUser, RiLockPasswordFill, FaApple, MyFollowButton, MyUnFollowButton, CreatePost, WhoToFollow, IoNotifications, GoHomeFill, CgMoreO, X, PostSvg, BiRepost, GoHome, FaSearch, IoNotificationsOutline, FaRegUser, FaRegComment, FaRegHeart, IoSettingsOutline, Link, MyLoading, RiDeleteBin6Line, ViewSvg, demo, userimg, AllPostsSkelton, CiImageOn, BsEmojiSmileFill, LeftSideBar, RightSideBar, IoArrowBack, SoloUserFollowContainer, IoLocationOutline, SlCalender, MdEdit, MdOutlineVerifiedUser, AllPosts, cover,
+     RiMore2Fill, SinglePostWithProp, Login, Home, Signup, Profile, FollowerFollowingPage, BottomNavBar, ProfileSkelton, UserProfile,  FcGoogle, AiOutlineUser, RiLockPasswordFill, FaApple, MyFollowButton, MyUnFollowButton, CreatePost, WhoToFollow, IoNotifications, GoHomeFill, CgMoreO, X, PostSvg, BiRepost, GoHome, FaSearch, IoNotificationsOutline, FaRegUser, FaRegComment, FaRegHeart, IoSettingsOutline, Link, MyLoading, RiDeleteBin6Line, ViewSvg, demo, userimg, AllPostsSkelton, CiImageOn, BsEmojiSmileFill, LeftSideBar, RightSideBar, IoArrowBack, SoloUserFollowContainer, IoLocationOutline, SlCalender, MdEdit, MdOutlineVerifiedUser, AllPosts, cover,
 }

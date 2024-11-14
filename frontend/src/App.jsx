@@ -1,4 +1,4 @@
-import { Home, Login, Signup, Profile, FollowerFollowingPage, BottomNavBar } from './utils/ImportsInOneFile'
+import { Home, Login, Signup, Profile, FollowerFollowingPage, RightSideBar, LeftSideBar, BottomNavBar } from './utils/ImportsInOneFile'
 
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
@@ -51,21 +51,52 @@ function App() {
       </div>
 
       <Router>
+        {/* full page */}
+        <div className='md:flex'>
 
-        {/* bottom bar */}
-        {
-          authUser && <div className='block md:hidden'>
-            <BottomNavBar />
+          {/* Left Sidebar */}
+          {authUser && (
+            <div className='hidden lg:block w-[19%] xl:w-[23%] h-screen border-r border-slate-200 border-opacity-30 overflow-hidden'>
+              <LeftSideBar />
+            </div>
+          )}
+
+          {/* Main Content */}
+          <div className='w-full lg:w-[58%] h-screen overflow-y-auto'>
+
+            <Routes>
+              {/* home */}
+              <Route path="/" element={authUser ? <Home /> : <Navigate to='/login' />} />
+
+              {/* login */}
+              <Route path='/login' element={!authUser ? <Login className='max-w-screen-xl mx-auto flex h-screen px-10 md:flex-row flex-col' /> : <Navigate to='/' />} />
+
+              {/* signup */}
+              <Route path='/signup' element={!authUser ? <Signup /> : <Navigate to='/' />} />
+
+              {/* single profile */}
+              <Route path="/profile/:username" element={authUser ? <Profile className='w-full lg:w-[58%] h-screen overflow-hidden' /> : <Navigate to='/login' />} />
+
+              {/* followers following page */}
+              <Route path="/profile/:username/:followerOrFollowing" element={authUser ? <FollowerFollowingPage className='w-full lg:w-[58%] h-screen overflow-y-auto' /> : <Navigate to='/login' />} />
+
+            </Routes>
           </div>
-        }
 
-        <Routes>
-          <Route path="/" element={authUser ? <Home /> : <Navigate to='/login' />} />
-          <Route path='/login' element={!authUser ? <Login /> : <Navigate to='/' />} />
-          <Route path='/signup' element={!authUser ? <Signup /> : <Navigate to='/' />} />
-          <Route path="/profile/:username" element={authUser ? <Profile /> : <Navigate to='/login' />} />
-          <Route path="/profile/:username/:followerOrFollowing" element={authUser ? <FollowerFollowingPage /> : <Navigate to='/login' />} />
-        </Routes>
+          {/* Right Sidebar */}
+          {authUser && (
+            <div className='hidden lg:block w-[30%] xl:w-[26%] h-screen border-l border-slate-200 border-opacity-30 overflow-hidden'>
+              <RightSideBar />
+            </div>
+          )}
+
+          {/* bottom bar */}
+          {
+            authUser && <div className='block md:hidden'>
+              <BottomNavBar />
+            </div>
+          }
+        </div>
       </Router>
     </>
   )
