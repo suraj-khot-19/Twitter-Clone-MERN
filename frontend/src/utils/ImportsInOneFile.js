@@ -6,7 +6,7 @@ import ViewSvg from '../assets/ViewSvg'
 import PostSvg from '../assets/PostSvg'
 import demo from '../assets/demo.png'
 import cover from '../assets/cover.png'
-import { Link } from 'react-router-dom';
+import { Link,useNavigate,useParams } from 'react-router-dom';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MyFollowButton, MyLoading, MyUnFollowButton } from '../components/common/MyButton'
 import AllPostsSkelton from '../components/skeletons/AllPostsSkelton';
@@ -44,7 +44,8 @@ import BottomNavBar from '../components/sidebar/BottomNavBar'
 import SinglePostWithProp from '../components/post/SinglePostWithProp';
 import AllPosts from '../components/post/AllPosts'
 import { RiMore2Fill } from "react-icons/ri";
+import PostPage from '../pages/post/PostPage';
 
 export {
-     RiMore2Fill, SinglePostWithProp, Login, Home, Signup, Profile, FollowerFollowingPage, BottomNavBar, ProfileSkelton, UserProfile,  FcGoogle, AiOutlineUser, RiLockPasswordFill, FaApple, MyFollowButton, MyUnFollowButton, CreatePost, WhoToFollow, IoNotifications, GoHomeFill, CgMoreO, X, PostSvg, BiRepost, GoHome, FaSearch, IoNotificationsOutline, FaRegUser, FaRegComment, FaRegHeart, IoSettingsOutline, Link, MyLoading, RiDeleteBin6Line, ViewSvg, demo, userimg, AllPostsSkelton, CiImageOn, BsEmojiSmileFill, LeftSideBar, RightSideBar, IoArrowBack, SoloUserFollowContainer, IoLocationOutline, SlCalender, MdEdit, MdOutlineVerifiedUser, AllPosts, cover,
+     useNavigate,useParams, RiMore2Fill, SinglePostWithProp, Login, Home, Signup, Profile, FollowerFollowingPage, BottomNavBar, ProfileSkelton, UserProfile,  FcGoogle, AiOutlineUser, RiLockPasswordFill, FaApple, MyFollowButton, MyUnFollowButton, CreatePost, WhoToFollow, IoNotifications, GoHomeFill, CgMoreO, X, PostSvg, BiRepost, GoHome, FaSearch, IoNotificationsOutline, FaRegUser, FaRegComment, FaRegHeart, IoSettingsOutline, Link, MyLoading, RiDeleteBin6Line, ViewSvg, demo, userimg, AllPostsSkelton, CiImageOn, BsEmojiSmileFill, LeftSideBar, RightSideBar, IoArrowBack, SoloUserFollowContainer, IoLocationOutline, SlCalender, MdEdit, MdOutlineVerifiedUser, AllPosts, cover,PostPage
 }

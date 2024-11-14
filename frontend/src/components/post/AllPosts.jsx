@@ -1,7 +1,7 @@
-import { AllPostsSkelton,SinglePostWithProp } from '../../utils/ImportsInOneFile'
+import { AllPostsSkelton, SinglePostWithProp } from '../../utils/ImportsInOneFile'
 
-import React,{useEffect} from 'react'
-import { useQuery } from '@tanstack/react-query'
+import React, { useEffect } from 'react'
+import useFetchPostWithUrl from '../../hooks/useFetchPostWithUrl';
 
 function AllPosts(props) {
        // destructure props
@@ -22,28 +22,11 @@ function AllPosts(props) {
                             return '/api/v2/post'
               }
        }
-
        //call a function
        const getCorrectedUrl = getUrl();
 
-       // api call
-       const { data: posts, refetch, isLoading, isRefetching } = useQuery({
-              queryKey: ['posts'],
-              queryFn: async () => {
-                     try {
-                            const res = await fetch(getCorrectedUrl) //getting url from props
-                            const jsonData = await res.json();
-
-                            if (!res.ok) {
-                                   throw new Error(jsonData.error || jsonData.msg || "Something is wrong at backend")
-                            }
-                            return jsonData;
-                     } catch (error) {
-                            throw new Error(error);
-                     }
-              },
-              retry: false,
-       })
+       // fetch post using hook
+       const { data: posts, refetch, isLoading, isRefetching } = useFetchPostWithUrl(getCorrectedUrl)
 
        //effect to change/refech after url change
        useEffect(() => {

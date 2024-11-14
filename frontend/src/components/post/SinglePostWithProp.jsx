@@ -1,4 +1,4 @@
-import { BiRepost, FaRegComment, FaRegHeart, Link, MyLoading, RiDeleteBin6Line, ViewSvg, cover, demo, userimg } from '../../utils/ImportsInOneFile';
+import { BiRepost, FaRegComment, FaRegHeart, Link, useNavigate, MyLoading, RiDeleteBin6Line, ViewSvg, demo, userimg } from '../../utils/ImportsInOneFile';
 
 import { formatPostDate } from '../../utils/FormatDataFun'
 import { useQuery } from '@tanstack/react-query';
@@ -7,6 +7,7 @@ import useLikePost from '../../hooks/useLikePost';
 import { useState } from 'react';
 import ShortPostDisc from './ShortPostDisc';
 import useCommentToPost from '../../hooks/useCommentToPost';
+import SinglePostCommentBox from './SinglePostCommentBox';
 
 
 function SinglePostWithProp(props) {
@@ -15,6 +16,7 @@ function SinglePostWithProp(props) {
 
        // destructure post
        const { user, createdAt, title, img, comments, likes, _id } = props.post;
+       const { isShowAllPostIsTrue = false,isinvalidate=false } = props
 
        // rand num
        const rand = () => {
@@ -33,7 +35,10 @@ function SinglePostWithProp(props) {
        const { deletePost, isLoadingDeletePost } = useDeletePost(_id);
 
        //like a post hook
-       const { likePost, isLoadingLikePost } = useLikePost(props.post);
+       const { likePost, isLoadingLikePost } = useLikePost(props.post,isinvalidate);
+
+       //navigate
+       const navigate = useNavigate();
 
        //! handel like
        function handelLike() {
@@ -54,8 +59,8 @@ function SinglePostWithProp(props) {
        //! handel commenting
        function openModal() {
               document.getElementById("comment" + _id).showModal()
-              document.body.style.backgroundColor='rgba(23,23,23,0.5)'
-              document.body.style.filter='5px'
+              document.body.style.backgroundColor = 'rgba(23,23,23,0.5)'
+              document.body.style.filter = '5px'
        }
        const { mutate: commentPost, isPending: isPendingComment, isSuccess } = useCommentToPost(commentToPost, _id);
        function handelCommenting() {
@@ -68,9 +73,9 @@ function SinglePostWithProp(props) {
 
        return (
               <>
-                     <div className='border-b border-slate-200 border-opacity-30 flex flex-col items-start justify-between mx-2'>
+                     <div onClick={() => navigate(`/post/${_id}`)} className='border-b border-slate-200 border-opacity-30 flex flex-col items-start justify-between mx-2 cursor-pointer'>
                             {/* top of post*/}
-                            <Link to={`/profile/${user.username}`} className='flex items-center md:mx-5 mt-4'>
+                            <div className='flex items-start md:mx-5 mt-4'>
                                    {/* img */}
                                    <div className="avatar">
                                           <div className="w-9 h-9 rounded-full">
@@ -82,9 +87,14 @@ function SinglePostWithProp(props) {
                                    <div className='ms-2 flex flex-col justify-center'>
                                           {/* info */}
                                           <div className='flex items-center gap-1 md:gap-0'>
-                                                 <span className='text-base font-semibold'>{user.fullname}</span>
-                                                 <span className='text-base text-stone-500 ms-2'>@{user.username}</span>
-                                                 <span className='text-base text-stone-500 ms-2'><span className='me-1 text-white font-bold'>·</span>{formatPostDate(createdAt)}</span>
+                                                 <div onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        navigate(`/profile/${user.username}`)
+                                                 }}>
+                                                        <span className='text-base font-semibold'>{user.fullname}</span>
+                                                        <span className='text-base text-stone-500 ms-2 hover:underline hover:scale-110 hover:text-blue-500'>@{user.username}</span>
+                                                        <span className='text-base text-stone-500 ms-2'><span className='me-1 text-white font-bold'>·</span>{formatPostDate(createdAt)}</span>
+                                                 </div>
 
                                                  {/* delete btn aligned to the end */}
                                                  {
@@ -106,20 +116,15 @@ function SinglePostWithProp(props) {
                                                  <span className='text-base font-semibold'>{title}</span>
                                           </div>
                                    </div>
-                            </Link>
+                            </div>
 
                             {/* img to center */}
                             <div className='mx-auto w-[80%] overflow-x-hidden my-2 rounded-lg border-stone-400 border-opacity-90'>
-                                   {img ? (
-                                          <img
-                                                 src={post.img}
-                                                 className='h-80 object-contain rounded-2xl border border-gray-700'
-                                                 onDoubleClick={handelLike}
-                                          />
-                                   ) : (
-                                          <img src={demo}
-                                                 onDoubleClick={handelLike} />
-                                   )}
+                                   <img
+                                          src={img || demo}
+                                          className='h-48 md:h-80 object-cover w-full mx-auto rounded-2xl border border-gray-700'
+                                          onDoubleClick={handelLike}
+                                   />
                             </div>
 
                             {/* bottom of post */}
@@ -197,7 +202,32 @@ function SinglePostWithProp(props) {
                                           </div>
                                    </div>
                             </div>
+
                      </div>
+                     {/* comments map */}
+                     {
+                            isShowAllPostIsTrue && (
+                                   <div className='w-full'>
+                                          {
+                                                 comments.length === 0 ?
+                                                        // if no comments
+                                                        <div className='w-full mx-auto flex justify-center ms-2'>
+                                                               <span className='text-center font-bold text-slate-400 text-xl'>No Comments yet 🧐!</span>
+                                                        </div> :
+                                                        //if comments
+                                                        <div>
+                                                               {
+                                                                      comments?.map((e) => {
+                                                                             return <div className='w-full'>
+                                                                                    <SinglePostCommentBox key={e._id} comments={e} />
+                                                                             </div>
+                                                                      })
+                                                               }
+                                                        </div>
+                                          }
+                                   </div>
+                            )
+                     }
               </>
        );
 }

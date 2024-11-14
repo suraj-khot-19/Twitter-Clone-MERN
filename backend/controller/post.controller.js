@@ -146,7 +146,7 @@ export const likeOrUnlikePost = async (req, res) => {
             // new likes for ui expreience
             const likesArray = post.likes.filter((id) => id.toString() !== currentUserId.toString()); //!unlike remove id
             //send res
-			res.status(200).json(likesArray);
+            res.status(200).json(likesArray);
         }
         //or else like
         else {
@@ -169,7 +169,7 @@ export const likeOrUnlikePost = async (req, res) => {
 
             //send res
             const likesArray = post.likes; //! return liked array
-			res.status(200).json(likesArray);
+            res.status(200).json(likesArray);
         }
     } catch (error) {
         console.log("error in like or unlike,", error.message)
@@ -226,7 +226,7 @@ export const likedByMe = async (req, res) => {
                 path: 'comments.user',
                 select: '-password'
             });
-        res.status(200).json({ posts:likedPosts });
+        res.status(200).json({ posts: likedPosts });
     } catch (error) {
         console.log("error in liked by me,", error.message)
         res.status(500).json({ error: error.message });
@@ -278,12 +278,12 @@ export const usersPosts = async (req, res) => {
         if (!user) return res.status(400).json({ msg: "No user found!" })
 
         //if user then sort posts
-        let posts = await Post.find({ user: user._id }).sort({createdAt:-1}).populate({
-            path:'user',
-            select:'-password'
+        let posts = await Post.find({ user: user._id }).sort({ createdAt: -1 }).populate({
+            path: 'user',
+            select: '-password'
         }).populate({
-            path:'comments.user',
-            select:'-password'
+            path: 'comments.user',
+            select: '-password'
         })
 
         //send to res
@@ -291,5 +291,26 @@ export const usersPosts = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message })
         console.log("error in user posts ", error.message)
+    }
+}
+
+// !    getPostById
+export const getPostById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const post = await Post.findById(id).populate({
+            path: 'user',
+            select: '-password'
+        }).populate({
+            path: 'comments.user',
+            select: '-password'
+        });
+
+        if (!post) return res.status(400).json({ msg: 'No Post Found' })
+
+        res.status(200).json({ post })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+        console.log('error in get post by id', error.message)
     }
 }

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
-const useLikePost = (post) => {
+const useLikePost = (post,isinvalidate=false) => {
        const client = useQueryClient();
 
        const { mutate: likePost, isPending: isLoadingLikePost } = useMutation({
@@ -22,7 +22,7 @@ const useLikePost = (post) => {
               },
               onSuccess: (likesArray) => {
                      //load every time
-                     //! client.invalidateQueries({ queryKey: ['posts'] })
+                     isinvalidate && client.invalidateQueries({ queryKey: ['posts'] })
 
                      // ui good
                      client.setQueryData(["posts"], (oldData) => {
