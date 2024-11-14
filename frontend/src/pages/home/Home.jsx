@@ -1,5 +1,6 @@
+import { HomeUi, LeftSideBar, RightSideBar } from '../../utils/ImportsInOneFile'
+
 import React from 'react'
-import {LeftSideBar,RightSideBar,HomeUi} from '../../utils/ImportsInOneFile'
 
 function Home() {
 
@@ -13,14 +14,14 @@ function Home() {
 
       {/* main page */}
       <div className='w-full lg:w-[58%] h-screen overflow-y-auto'>
-        <HomeUi/>
+        <HomeUi />
       </div>
 
       {/* right sidebar */}
       <div className='hidden lg:block w-[30%] xl:w-[26%] h-screen border-l border-slate-200 border-opacity-30 overflow-hidden'>
         <RightSideBar />
       </div>
-      
+
     </div>
   )
 }

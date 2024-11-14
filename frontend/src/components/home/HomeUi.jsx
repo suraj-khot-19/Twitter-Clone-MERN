@@ -1,4 +1,4 @@
-import {AllPosts,userimg,CreatePost} from '../utils/ImportsInOneFile'
+import { CreatePost, userimg,AllPosts } from '../../utils/ImportsInOneFile';
 
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query';

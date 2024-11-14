@@ -1,4 +1,4 @@
-import {GoHomeFill,FaSearch,IoNotifications,userimg,CgMoreO,FaRegUser ,X} from '../../utils/ImportsInOneFile'
+import { GoHomeFill, FaSearch, IoNotifications, userimg, CgMoreO, FaRegUser, X, RiMore2Fill } from '../../utils/ImportsInOneFile'
 
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
@@ -85,6 +85,9 @@ function LeftSideBar() {
                                                  <span>{data.user.fullname}</span>
                                                  <span>{data.user.username}</span>
                                           </div>
+
+                                          {/* more btn */}
+                                          <RiMore2Fill className='ms-4' />
                                    </div>
 
 

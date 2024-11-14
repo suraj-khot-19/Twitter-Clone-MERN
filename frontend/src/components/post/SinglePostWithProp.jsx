@@ -1,12 +1,18 @@
-import { BiRepost, FaRegComment, FaRegHeart, Link, MyLoading, RiDeleteBin6Line, ViewSvg, demo, userimg } from '../../utils/ImportsInOneFile';
+import { BiRepost, FaRegComment, FaRegHeart, Link, MyLoading, RiDeleteBin6Line, ViewSvg, cover, demo, userimg } from '../../utils/ImportsInOneFile';
 
 import { formatPostDate } from '../../utils/FormatDataFun'
 import { useQuery } from '@tanstack/react-query';
 import useDeletePost from '../../hooks/useDeletePost';
 import useLikePost from '../../hooks/useLikePost';
+import { useState } from 'react';
+import ShortPostDisc from './ShortPostDisc';
+import useCommentToPost from '../../hooks/useCommentToPost';
 
 
 function SinglePostWithProp(props) {
+       //state
+       const [commentToPost, setCommentToPost] = useState('')
+
        // destructure post
        const { user, createdAt, title, img, comments, likes, _id } = props.post;
 
@@ -44,9 +50,25 @@ function SinglePostWithProp(props) {
               else
                      deletePost(); //call only after data load
        }
+
+       //! handel commenting
+       function openModal() {
+              document.getElementById("comment" + _id).showModal()
+              document.body.style.backgroundColor='rgba(23,23,23,0.5)'
+              document.body.style.filter='5px'
+       }
+       const { mutate: commentPost, isPending: isPendingComment, isSuccess } = useCommentToPost(commentToPost, _id);
+       function handelCommenting() {
+              isSuccess && setCommentToPost('') //make it null after comment
+              if (isPendingComment)
+                     return;
+              else
+                     commentPost();
+       }
+
        return (
               <>
-                     <div className='border-b border-slate-200 border-opacity-30 flex flex-col items-start justify-between'>
+                     <div className='border-b border-slate-200 border-opacity-30 flex flex-col items-start justify-between mx-2'>
                             {/* top of post*/}
                             <Link to={`/profile/${user.username}`} className='flex items-center md:mx-5 mt-4'>
                                    {/* img */}
@@ -102,9 +124,36 @@ function SinglePostWithProp(props) {
 
                             {/* bottom of post */}
                             <div className='flex w-full my-3 justify-center items-center'>
+                                   {/* comment modal */}
+                                   <button className="btn hidden" onClick={() => document.getElementById("comment" + _id).showModal()}>open modal</button>
+                                   <dialog id={`comment${_id}`} className="modal">
+                                          <div className="modal-box py-2">
+                                                 {/* post details short */}
+                                                 <ShortPostDisc user={user} post={{ createdAt, title }} />
+                                                 <form method="dialog">
+                                                        {/* textarea */}
+                                                        <div className='flex gap-2 mt-3'>
+                                                               <div className="avatar">
+                                                                      <div className="w-11 h-11 rounded-full">
+                                                                             <img src={currentUser?.user?.profileImg || userimg} alt="Profile" />
+                                                                      </div>                                                                                                                                     </div>
+                                                               <textarea
+                                                                      className='textarea w-full p-1 rounded text-md resize-none border focus:outline-none  border-gray-800'
+                                                                      placeholder='Add a comment...'
+                                                                      value={commentToPost}
+                                                                      onChange={(e) => setCommentToPost(e.target.value)}
+                                                               />
+                                                        </div>
+                                                        <div className='flex justify-end gap-4 pt-4'>
+                                                               <button className="btn btn-outline btn-sm btn-error">Close</button>
+                                                               <button onClick={handelCommenting} disabled={commentToPost.length === 0} type='submit' className="btn btn-outline btn-sm btn-primary">Reply</button>
+                                                        </div>
+                                                 </form>
+                                          </div>
+                                   </dialog>
                                    {/* comment */}
                                    <div className='w-[25%]'>
-                                          <div className='flex justify-center items-center w-full'>
+                                          <div className='flex justify-center items-center w-full' onClick={openModal}>
                                                  <FaRegComment className=' h-5 w-5 cursor-pointer opacity-80  hover:opacity-100' />
                                                  <span className='ms-1 text-base text-stone-500'>{comments.length}</span>
                                           </div>
