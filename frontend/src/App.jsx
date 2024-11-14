@@ -3,35 +3,11 @@ import { Home, Login, Signup, Profile, FollowerFollowingPage, RightSideBar, Left
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from "react-hot-toast";
-import { useQuery } from '@tanstack/react-query'
+import useAuthUser from './hooks/useAuthUser';
 
 function App() {
-
   //query
-  const { data: authUser, isLoading } = useQuery({  //data(The last successfully resolved data for the query) will be used as authUser
-    queryKey: ['authUser'],
-    queryFn: async () => {
-      const url = '/api/v2/auth/me'
-      try {
-        const res = await fetch(url)
-
-        //user
-        const jsonData = await res.json();
-
-        //if no query client then set null
-        if (jsonData.error) return null;
-
-        //if not
-        if (!res.ok) throw new Error(jsonData.msg || "Not Authenticate user")
-
-        //if all ok
-        return jsonData;
-      } catch (error) {
-        throw new Error(error);
-      }
-    },
-    retry: false //do not retry api request if user not found
-  });
+  const { data: authUser, isLoading } = useAuthUser();
 
   //if loading
   if (isLoading) {
@@ -51,10 +27,7 @@ function App() {
       </div>
 
       <Router>
-        {/* full page */}
-        <div className='md:flex'>
-
-          {/* Left Sidebar */}
+        <div className={`${!authUser ? 'w-full h-full mx-auto' : 'md:flex'}`}>
           {authUser && (
             <div className='hidden lg:block w-[19%] xl:w-[23%] h-screen border-r border-slate-200 border-opacity-30 overflow-hidden'>
               <LeftSideBar />
@@ -62,35 +35,24 @@ function App() {
           )}
 
           {/* Main Content */}
-          <div className='w-full lg:w-[58%] h-screen overflow-y-auto'>
+          <div className={`${!authUser ? 'w-full h-full' : 'w-full lg:w-[58%] h-screen overflow-y-auto'}`}>
 
             <Routes>
-              {/* home */}
-              <Route path="/" element={authUser ? <Home /> : <Navigate to='/login' />} />
-
-              {/* login */}
-              <Route path='/login' element={!authUser ? <Login className='max-w-screen-xl mx-auto flex h-screen px-10 md:flex-row flex-col' /> : <Navigate to='/' />} />
-
-              {/* signup */}
+              <Route path='/login' element={!authUser ? <Login /> : <Navigate to='/' />} />
               <Route path='/signup' element={!authUser ? <Signup /> : <Navigate to='/' />} />
 
-              {/* single profile */}
+              <Route path="/" element={authUser ? <Home /> : <Navigate to='/login' />} />
               <Route path="/profile/:username" element={authUser ? <Profile className='w-full lg:w-[58%] h-screen overflow-hidden' /> : <Navigate to='/login' />} />
-
-              {/* followers following page */}
               <Route path="/profile/:username/:followerOrFollowing" element={authUser ? <FollowerFollowingPage className='w-full lg:w-[58%] h-screen overflow-y-auto' /> : <Navigate to='/login' />} />
-
             </Routes>
           </div>
 
-          {/* Right Sidebar */}
-          {authUser && (
+                    {authUser && (
             <div className='hidden lg:block w-[30%] xl:w-[26%] h-screen border-l border-slate-200 border-opacity-30 overflow-hidden'>
               <RightSideBar />
             </div>
           )}
 
-          {/* bottom bar */}
           {
             authUser && <div className='block md:hidden'>
               <BottomNavBar />

@@ -65,7 +65,7 @@ function Login() {
 
 
   return (
-    <div className='max-w-screen-xl mx-auto flex h-screen px-10 md:flex-row flex-col'>
+    <div className="flex h-screen px-10 md:flex-row flex-col">
       {/* icon */}
       <div className='md:flex-1 h-1/5 md:h-[35%] lg:h-full flex items-center justify-center'>
         <X className="fill-white w-[10rem] md:w-2/3" />
@@ -75,8 +75,8 @@ function Login() {
       <div className='md:flex-1 h-4/5 md:h-[65%] lg:h-full flex flex-col justify-center items-center md:items-start'>
         <span className='text-2xl md:text-5xl font-bold'>Sign in to X</span>
 
-        <button className="btn btn-outline rounded-full w-full md:w-[60%] mt-8 bg-white text-black"><FcGoogle className='h-6 w-6' />Sign in with Google</button>
-        <button className="btn btn-outline rounded-full w-full md:w-[60%] mt-2 bg-white text-black"><FaApple className='h-6 w-6' />Sign in with Apple</button>
+        <button onClick={()=>toast.success('This feature is not added yet!')} className="btn btn-outline rounded-full w-full md:w-[60%] mt-8 bg-white text-black"><FcGoogle className='h-6 w-6' />Sign in with Google</button>
+        <button onClick={()=>toast.success('This feature is not added yet!')} className="btn btn-outline rounded-full w-full md:w-[60%] mt-2 bg-white text-black"><FaApple className='h-6 w-6' />Sign in with Apple</button>
 
         {/* or div */}
         <div className='flex w-full md:w-[60%] justify-center py-2'>
@@ -106,7 +106,7 @@ function Login() {
             {/* error */}
             {isError && <div className='my-3 text-red-400'>{error}</div>}
 
-            <button type='submit' className="btn btn-active btn-primary rounded-full w-full md:w-[60%] text-white font-bold py-3">{isPending ? <MyLoading /> : 'Log in'}</button>
+            <button disabled={data.username.length === 0 || data.password.length === 0} type='submit' className="btn btn-active btn-primary rounded-full w-full md:w-[60%] text-white font-bold py-3">{isPending ? <MyLoading /> : 'Log in'}</button>
 
           </form>
         </div>
