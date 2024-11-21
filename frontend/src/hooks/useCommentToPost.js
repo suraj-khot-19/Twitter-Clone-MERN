@@ -7,7 +7,6 @@ const useCommentToPost = (title, postId) => {
     return useMutation({
         mutationFn: async () => {
             try {
-                console.log(title)
                 const url = `/api/v2/post/comment/${postId}`
                 const res = await fetch(url, {
                     method: 'POST',

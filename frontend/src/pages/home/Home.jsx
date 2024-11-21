@@ -3,7 +3,8 @@ import { CreatePost, userimg,AllPosts } from '../../utils/ImportsInOneFile';
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
 
-function Home() {
+function Home(props) {
+
        //states
        const [selected, setSelected] = useState(1);
        const [url, setUrl] = useState('all')
@@ -11,6 +12,8 @@ function Home() {
        //query client
        const { data } = useQuery({ queryKey: ["authUser"] });
 
+       
+       props.settitle(`X - ${data?.user?.username}`);
        return (
               <div>
                      {/* div for md screen */}

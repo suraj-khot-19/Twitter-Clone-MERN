@@ -16,7 +16,7 @@ function SinglePostWithProp(props) {
 
        // destructure post
        const { user, createdAt, title, img, comments, likes, _id } = props.post;
-       const { isShowAllPostIsTrue = false,isinvalidate=false } = props
+       const { isShowAllPostIsTrue = false, isinvalidate = false } = props
 
        // rand num
        const rand = () => {
@@ -35,7 +35,7 @@ function SinglePostWithProp(props) {
        const { deletePost, isLoadingDeletePost } = useDeletePost(_id);
 
        //like a post hook
-       const { likePost, isLoadingLikePost } = useLikePost(props.post,isinvalidate);
+       const { likePost, isLoadingLikePost } = useLikePost(props.post, isinvalidate);
 
        //navigate
        const navigate = useNavigate();
@@ -49,17 +49,21 @@ function SinglePostWithProp(props) {
        }
 
        //! handel delete 
-       function handelDelete() {
-              if (isLoadingDeletePost)
-                     return; //if data is loading then wait
-              else
-                     deletePost(); //call only after data load
+       function handelDelete(e) {
+              e.stopPropagation()
+              const confirm = window.confirm('do yo want to delete post?');
+              if (confirm) {
+                     if (isLoadingDeletePost)
+                            return; //if data is loading then wait
+                     else
+                            deletePost(); //call only after data load
+              }
        }
 
        //! handel commenting
        function openModal() {
               document.getElementById("comment" + _id).showModal()
-              document.body.style.backgroundColor = 'rgba(23,23,23,0.5)'
+              document.body.style.backgroundColor = 'rgba(23,23,23,0.7)'
               document.body.style.filter = '5px'
        }
        const { mutate: commentPost, isPending: isPendingComment, isSuccess } = useCommentToPost(commentToPost, _id);
@@ -73,7 +77,7 @@ function SinglePostWithProp(props) {
 
        return (
               <>
-                     <div onClick={() => navigate(`/post/${_id}`)} className='border-b border-slate-200 border-opacity-30 flex flex-col items-start justify-between mx-2 cursor-pointer'>
+                     <div className='border-b border-slate-200 border-opacity-30 flex flex-col items-start justify-between mx-2'>
                             {/* top of post*/}
                             <div className='flex items-start md:mx-5 mt-4'>
                                    {/* img */}
@@ -84,7 +88,7 @@ function SinglePostWithProp(props) {
                                    </div>
 
                                    {/* next to img */}
-                                   <div className='ms-2 flex flex-col justify-center'>
+                                   <div onClick={() => navigate(`/post/${_id}`)} className='ms-2 flex flex-col justify-center cursor-pointer'>
                                           {/* info */}
                                           <div className='flex items-center gap-1 md:gap-0'>
                                                  <div onClick={(e) => {
@@ -100,7 +104,7 @@ function SinglePostWithProp(props) {
                                                  {
                                                         currentUserItIs &&
                                                         // click fun
-                                                        <div className='ms-24 md:ms-96' onClick={handelDelete}>
+                                                        <div className='ms-24 md:ms-96' onClick={(e)=>handelDelete(e)}>
                                                                {
                                                                       //loading 
                                                                       isLoadingDeletePost ? <MyLoading /> :
@@ -119,7 +123,7 @@ function SinglePostWithProp(props) {
                             </div>
 
                             {/* img to center */}
-                            <div className='mx-auto w-[80%] overflow-x-hidden my-2 rounded-lg border-stone-400 border-opacity-90'>
+                            <div className='mx-auto w-[80%] overflow-x-hidden my-2 rounded-lg border-stone-400 border-opacity-90 cursor-pointer'>
                                    <img
                                           src={img || demo}
                                           className='h-48 md:h-80 object-cover w-full mx-auto rounded-2xl border border-gray-700'
@@ -150,7 +154,7 @@ function SinglePostWithProp(props) {
                                                                />
                                                         </div>
                                                         <div className='flex justify-end gap-4 pt-4'>
-                                                               <button className="btn btn-outline btn-sm btn-error">Close</button>
+                                                               <button className="btn btn-outline btn-sm btn-error" onClick={()=>setCommentToPost('')}>Close</button>
                                                                <button onClick={handelCommenting} disabled={commentToPost.length === 0} type='submit' className="btn btn-outline btn-sm btn-primary">Reply</button>
                                                         </div>
                                                  </form>

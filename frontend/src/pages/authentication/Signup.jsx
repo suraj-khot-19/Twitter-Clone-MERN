@@ -6,7 +6,10 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from 'react-router-dom'
 
 
-function Signup() {
+function Signup(props) {
+  //change title
+  props.settitle('X - Signup');
+
   //state
   const [data, setData] = useState({ username: '', email: '', password: '', fullname: '' });
   const [modalActive, setModalActive] = useState(false);
@@ -114,8 +117,8 @@ function Signup() {
         <span className='text-3xl md:text-7xl font-bold'>Happening now</span>
         <span className='text-xl md:text-3xl font-medium mt-10'>Join today.</span>
 
-        <button onClick={()=>toast.success('This feature is not added yet!')} className="btn btn-outline rounded-full w-full md:w-[60%] mt-8 bg-white text-black"><FcGoogle className='h-6 w-6' />Sign up with Google</button>
-        <button onClick={()=>toast.success('This feature is not added yet!')} className="btn btn-outline rounded-full w-full md:w-[60%] mt-2 bg-white text-black"><FaApple className='h-6 w-6' />Sign up with Apple</button>
+        <button onClick={() => toast.success('This feature is not added yet!')} className="btn btn-outline rounded-full w-full md:w-[60%] mt-8 bg-white text-black"><FcGoogle className='h-6 w-6' />Sign up with Google</button>
+        <button onClick={() => toast.success('This feature is not added yet!')} className="btn btn-outline rounded-full w-full md:w-[60%] mt-2 bg-white text-black"><FaApple className='h-6 w-6' />Sign up with Apple</button>
 
         {/* or div */}
         <div className='flex w-full md:w-[60%] justify-center py-2'>

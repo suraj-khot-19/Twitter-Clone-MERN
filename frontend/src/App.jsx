@@ -1,11 +1,14 @@
 import { Home, Login, Signup, Profile, FollowerFollowingPage, RightSideBar, LeftSideBar, BottomNavBar, MyLoading, PostPage } from './utils/ImportsInOneFile'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from "react-hot-toast";
 import useAuthUser from './hooks/useAuthUser';
 
 function App() {
+  // state
+  const [title, settitle] = useState('X. It’s what’s happening')
+
   //query from hook
   const { data: authUser, isLoading } = useAuthUser();
 
@@ -17,6 +20,9 @@ function App() {
       </div>
     )
   }
+
+  // title
+  document.title = title;
 
   //else and navigate with help of authUser
   return (
@@ -47,10 +53,10 @@ function App() {
             'w-full lg:w-[58%] h-screen overflow-y-auto'}`}>
 
             <Routes>
-              <Route path='/login' element={!authUser ? <Login /> : <Navigate to='/' />} />
-              <Route path='/signup' element={!authUser ? <Signup /> : <Navigate to='/' />} />
+              <Route path='/login' element={!authUser ? <Login settitle={settitle} /> : <Navigate to='/' />} />
+              <Route path='/signup' element={!authUser ? <Signup settitle={settitle} /> : <Navigate to='/' />} />
 
-              <Route path="/" element={authUser ? <Home /> : <Navigate to='/login' />} />
+              <Route path="/" element={authUser ? <Home settitle={settitle}/> : <Navigate to='/login' />} />
               <Route path="/profile/:username" element={authUser ? <Profile className='w-full lg:w-[58%] h-screen overflow-hidden' /> : <Navigate to='/login' />} />
               <Route path="/profile/:username/:followerOrFollowing" element={authUser ? <FollowerFollowingPage className='w-full lg:w-[58%] h-screen overflow-y-auto' /> : <Navigate to='/login' />} />
 

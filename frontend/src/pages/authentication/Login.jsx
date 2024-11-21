@@ -1,16 +1,16 @@
 import { FcGoogle, FaApple, AiOutlineUser, RiLockPasswordFill, X, MyLoading } from "../../utils/ImportsInOneFile";
 
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from 'react-hot-toast';
 
-function Login() {
+function Login(props) {
+  //change title
+  props.settitle('X - Login');
+
   //state
   const [data, setData] = useState({ username: '', password: '' })
-
-  //navigator
-  const navigate = useNavigate();
 
   //form change
   const handelOnChange = (e) => {
@@ -75,8 +75,8 @@ function Login() {
       <div className='md:flex-1 h-4/5 md:h-[65%] lg:h-full flex flex-col justify-center items-center md:items-start'>
         <span className='text-2xl md:text-5xl font-bold'>Sign in to X</span>
 
-        <button onClick={()=>toast.success('This feature is not added yet!')} className="btn btn-outline rounded-full w-full md:w-[60%] mt-8 bg-white text-black"><FcGoogle className='h-6 w-6' />Sign in with Google</button>
-        <button onClick={()=>toast.success('This feature is not added yet!')} className="btn btn-outline rounded-full w-full md:w-[60%] mt-2 bg-white text-black"><FaApple className='h-6 w-6' />Sign in with Apple</button>
+        <button onClick={() => toast.success('This feature is not added yet!')} className="btn btn-outline rounded-full w-full md:w-[60%] mt-8 bg-white text-black"><FcGoogle className='h-6 w-6' />Sign in with Google</button>
+        <button onClick={() => toast.success('This feature is not added yet!')} className="btn btn-outline rounded-full w-full md:w-[60%] mt-2 bg-white text-black"><FaApple className='h-6 w-6' />Sign in with Apple</button>
 
         {/* or div */}
         <div className='flex w-full md:w-[60%] justify-center py-2'>
