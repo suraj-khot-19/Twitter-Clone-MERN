@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IoLocationOutline, SlCalender, MdEdit, MdOutlineVerifiedUser, cover, userimg, SoloUserFollowContainer, AllPosts, IoArrowBack } from '../../utils/ImportsInOneFile';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query'
-import {formatMemberSinceDate} from '../../utils/FormatDataFun'
+import { formatMemberSinceDate } from '../../utils/FormatDataFun'
 
 export default function UserProfile(props) {
        // navigate instance
@@ -17,9 +17,111 @@ export default function UserProfile(props) {
 
        //state
        const [selected, setSelected] = useState(1)
-       const [url, setUrl] = useState('user')
+       const [url, setUrl] = useState('user');
+
+       //form change
+       const handelOnChange = (e) => {
+              setData({ ...data, [e.target.name]: e.target.value })
+       }
+
+       //state
+       const [data, setData] = useState({ username: user?.user.username, email: user?.user.email, fullname: user?.user.fullname, bio: user?.user.bio, link: user?.user.link, country: user?.user.country });
+
+       // handelEditProfile
+       const handelEditProfile = (e) => {
+              e.preventDefault();
+       }
        return (
               <div>
+                     {/* edit profile modal */}
+                     <dialog id="edit_account_modal" className="modal">
+                            <div className="modal-box">
+                                   <form method="dialog">
+                                          {/* if there is a button in form, it will close the modal */}
+                                          <button className="btn btn-sm btn-circle btn-ghost absolute left-2 top-2 my-3">✕</button>
+                                   </form>
+
+                                   <div className="py-5 px-2">
+                                          <h3 className="text-center font-bold text-lg my-2">Edit profile @{user?.user.username}</h3>
+                                          {/* username */}
+                                          <div className="my-2 w-full">
+                                                 <label className="block text-sm font-semibold mb-1">Username</label>
+                                                 <input
+                                                        type="text"
+                                                        className="input input-bordered w-full"
+                                                        name="username"
+                                                        value={data.username}
+                                                        onChange={handelOnChange}
+                                                 />
+                                          </div>
+
+                                          {/* email */}
+                                          <div className="my-2 w-full">
+                                                 <label className="block text-sm font-semibold mb-1">Email</label>
+                                                 <input
+                                                        type="text"
+                                                        className="input input-bordered w-full"
+                                                        name="email"
+                                                        value={data.email}
+                                                        onChange={handelOnChange}
+                                                 />
+                                          </div>
+
+                                          {/* full name */}
+                                          <div className="my-2 w-full">
+                                                 <label className="block text-sm font-semibold mb-1">Full Name</label>
+                                                 <input
+                                                        type="text"
+                                                        className="input input-bordered w-full"
+                                                        name="fullname"
+                                                        value={data.fullname}
+                                                        onChange={handelOnChange}
+                                                 />
+                                          </div>
+
+                                          {/* bio */}
+                                          <div className="my-2 w-full">
+                                                 <label className="block text-sm font-semibold mb-1">Bio</label>
+                                                 <input
+                                                        type="text"
+                                                        placeholder={data.bio || "Empty"}
+                                                        className="input input-bordered w-full"
+                                                        name="bio"
+                                                        value={data.bio}
+                                                        onChange={handelOnChange}
+                                                 />
+                                          </div>
+
+                                          {/* link */}
+                                          <div className="my-2 w-full">
+                                                 <label className="block text-sm font-semibold mb-1">Links</label>
+                                                 <input
+                                                        type="text"
+                                                        className="input input-bordered w-full"
+                                                        name="link"
+                                                        placeholder={data.link || "Empty"}
+                                                        value={data.link}
+                                                        onChange={handelOnChange}
+                                                 />
+                                          </div>
+
+                                          {/* country */}
+                                          <div className="my-2 w-full">
+                                                 <label className="block text-sm font-semibold mb-1">Country</label>
+                                                 <input
+                                                        type="text"
+                                                        className="input input-bordered w-full"
+                                                        name="country"
+                                                        value={data.country}
+                                                        onChange={handelOnChange}
+                                                 />
+                                          </div>
+
+                                          {/* submit btn btn */}
+                                          <button onClick={(e) => handelEditProfile(e)} className="w-full btn btn-outline rounded-full px-auto">Edit Profile</button>
+                                   </div>
+                            </div>
+                     </dialog>
 
                      {/* back btn */}
                      <div className='ms-3'>
@@ -57,7 +159,12 @@ export default function UserProfile(props) {
                                    currentUserItIs ?
                                           //currrent user then edit
                                           <div className="absolute top-52  right-2 md:right-10 p-1">
-                                                 <button className="btn btn-outline rounded-full px-8">Edit Profile</button>
+                                                 <button onClick={
+                                                        (e) => {
+                                                               e.preventDefault();
+                                                               document.getElementById('edit_account_modal').showModal();
+                                                        }
+                                                 } className="btn btn-outline rounded-full px-8">Edit Profile</button>
                                           </div> :
                                           //calling solo follow
                                           <div className='absolute top-52 right-2 md:right-10'>

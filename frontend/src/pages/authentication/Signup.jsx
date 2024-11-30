@@ -6,9 +6,9 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from 'react-router-dom'
 
 
-function Signup(props) {
+function Signup() {
   //change title
-  props.settitle('X - Signup');
+  document.title="X-Signup";
 
   //state
   const [data, setData] = useState({ username: '', email: '', password: '', fullname: '' });

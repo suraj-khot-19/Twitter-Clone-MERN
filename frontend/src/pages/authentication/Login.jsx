@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from 'react-hot-toast';
 
-function Login(props) {
+function Login() {
   //change title
-  props.settitle('X - Login');
+  document.title="X-Login";
 
   //state
   const [data, setData] = useState({ username: '', password: '' })

@@ -70,7 +70,7 @@ function LeftSideBar() {
 
                             {/* secound div */}
                             {/* profile */}
-                            <div className="flex items-center justify-between w-full px-4  hover:bg-stone-900 transition-all rounded-full duration-300 py-2">
+                            <div className="flex items-center justify-between w-full px-4  hover:bg-stone-900 transition-all rounded-full duration-300 py-2 relative">
                                    {/* img and name */}
                                    <div className="flex items-center cursor-pointer" onClick={() => setShowLogOut((prev) => !prev)} >
                                           {/* img */}
@@ -93,10 +93,10 @@ function LeftSideBar() {
 
                                    {/* logout div */}
                                    {
-                                          showLogOut && <div className='absolute left-32 bottom-24 cursor-pointer z-50 bg-black' onClick={(e) => {
+                                          showLogOut && <div className='w-full absolute right-0 bottom-20 cursor-pointer z-50 bg-black' onClick={(e) => {
                                                  handelClick(e)
                                           }}>
-                                                 <div className='border-slate-300 border-2 border-opacity-20 px-4 py-2 rounded-lg flex justify-center items-center gap-1 shadow-slate-500 shadow-md font-semibold text-lg'>
+                                                 <div className='border-slate-300 border-2 border-opacity-20 px-4 py-2 rounded-lg flex justify-center items-center gap-1 shadow-slate-500 shadow-md font-semibold'>
                                                         <span>Log out</span>
                                                         <span>@{data.user.username}</span>
                                                  </div>
