@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { IoLocationOutline, SlCalender, MdEdit, MdOutlineVerifiedUser, cover, userimg, SoloUserFollowContainer, AllPosts, IoArrowBack } from '../../utils/ImportsInOneFile';
+import React, { useEffect, useState } from 'react';
+import { IoLocationOutline, SlCalender, MdEdit, MdOutlineVerifiedUser, cover, userimg, SoloUserFollowContainer, AllPosts, IoArrowBack, MyLoading } from '../../utils/ImportsInOneFile';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query'
 import { formatMemberSinceDate } from '../../utils/FormatDataFun'
+import useUpdateUserProfile from '../../hooks/useUpdateUserProfile';
 
 export default function UserProfile(props) {
        // navigate instance
@@ -25,12 +26,24 @@ export default function UserProfile(props) {
        }
 
        //state
-       const [data, setData] = useState({ username: user?.user.username, email: user?.user.email, fullname: user?.user.fullname, bio: user?.user.bio, link: user?.user.link, country: user?.user.country });
+       const [data, setData] = useState({ email: user?.user.email, fullname: user?.user.fullname, bio: user?.user.bio, link: user?.user.link, country: user?.user.country });
+       const [isChanged, setIsChanged] = useState(false);
+
+       // my hook for update profile
+       const { mutate, isPending, isSuccess } = useUpdateUserProfile(data.email, data.bio, data.fullname, data.country, data.link);
 
        // handelEditProfile
        const handelEditProfile = (e) => {
               e.preventDefault();
+              mutate();
        }
+
+       useEffect(() => {
+              if (data.bio != user?.user.bio || data.link != user?.user.link || data.country != user?.user.country || data.email != user?.user.email || data.fullname != user?.user.fullname) {
+                     setIsChanged(true)
+              }
+       }, [data]);
+
        return (
               <div>
                      {/* edit profile modal */}
@@ -47,11 +60,10 @@ export default function UserProfile(props) {
                                           <div className="my-2 w-full">
                                                  <label className="block text-sm font-semibold mb-1">Username</label>
                                                  <input
+                                                        disabled={true}
                                                         type="text"
                                                         className="input input-bordered w-full"
-                                                        name="username"
-                                                        value={data.username}
-                                                        onChange={handelOnChange}
+                                                        value={user?.user.username}
                                                  />
                                           </div>
 
@@ -118,7 +130,7 @@ export default function UserProfile(props) {
                                           </div>
 
                                           {/* submit btn btn */}
-                                          <button onClick={(e) => handelEditProfile(e)} className="w-full btn btn-outline rounded-full px-auto">Edit Profile</button>
+                                          <button disabled={!isChanged} onClick={(e) => handelEditProfile(e)} className="w-full btn btn-outline rounded-full px-auto">{isPending ? <MyLoading /> : 'Edit Profile'}</button>
                                    </div>
                             </div>
                      </dialog>
@@ -191,7 +203,7 @@ export default function UserProfile(props) {
                                    {/* Location */}
                                    <div className="flex items-center gap-1">
                                           <IoLocationOutline className="text-lg" />
-                                          <span>{country === 'IN' && 'India'}</span>
+                                          <span>{country === 'IN' ? 'India' : country}</span>
                                    </div>
 
                                    {/* calender */}
