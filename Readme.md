@@ -1,6 +1,6 @@
 <div align="center">
 
-### Twitter Clone Using MERN
+### Twitter Clone Using MERN Stack
 </div>
 
 <div align="center">
